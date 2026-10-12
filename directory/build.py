@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import base64
 import datetime
+import html
 import json
 import os
 import subprocess
@@ -125,6 +126,47 @@ def font_faces() -> str:
     return "\n".join(rules) + "\n"
 
 
+REPO_URL = "https://github.com/shuenrui/localhost"
+RAW_URL = "https://raw.githubusercontent.com/shuenrui/localhost/main"
+
+
+def agent_brief(data: dict) -> str:
+    """Plain HTML for readers that do not run JavaScript (AI agents' web readers,
+    crawlers). Browsers with JavaScript hide it (.js #agent-brief) and the app
+    renders over it. Generated from the same data, so it cannot drift."""
+    e = html.escape
+    setups = data.get("setups") or []
+    models = data.get("models") or {}
+    order = data.get("model_order") or sorted(models)
+    rows = []
+    for mid in order:
+        m = models.get(mid) or {}
+        mine = [s for s in setups if s.get("model") == mid]
+        if not mine:
+            continue
+        rows.append("<li><b>%s</b> (%d recipes)<ul>%s</ul></li>" % (
+            e(m.get("name") or mid), len(mine), "".join(
+                "<li>%s: <code>%s</code>, needs %s GB, engine %s. JSON: <a href=\"%s/directory/data/setups/%s.json\">%s.json</a></li>" % (
+                    e(s.get("title") or s["id"]), e(s["id"]),
+                    e(str((s.get("requirements") or {}).get("memory_gb"))),
+                    e(str((s.get("engine") or {}).get("id"))), RAW_URL, e(s["id"]), e(s["id"]))
+                for s in mine)))
+    return """<section id="agent-brief">
+<h1>localhost: run open AI models on your own machine</h1>
+<p>A directory of %d source-backed recipes for running %d open model families locally. Each recipe gives the hardware it ran on, the memory it needs, measured speed with its source, and the exact commands. This page is an app; the text below is for readers that do not run JavaScript.</p>
+<h2>For AI agents</h2>
+<ul>
+<li>Use the CLI: <code>pip install "git+%s.git#subdirectory=cli"</code>, then <code>localhost detect --json</code>, <code>localhost fit --json</code>, <code>localhost guide &lt;recipe-id&gt; --json</code>, <code>localhost check --json</code>, <code>localhost connect opencode --json</code>.</li>
+<li>Read the agent guide: <a href="%s/llms.txt">llms.txt</a>.</li>
+<li>Per-recipe JSON is linked below. The whole dataset is also embedded in this page as <code>&lt;script id="data" type="application/json"&gt;</code>.</li>
+<li>Rules: copy only steps marked as commands (<code>"kind": "cmd"</code>), verbatim. Never invent commands. Say when the directory records nothing.</li>
+</ul>
+<h2>Recipes by model</h2>
+<ul>%s</ul>
+<p>Source: <a href="%s">%s</a></p>
+</section>""" % (len(setups), len(rows), REPO_URL, RAW_URL, "".join(rows), REPO_URL, REPO_URL.replace("https://", ""))
+
+
 def render(data: dict) -> str:
     shell = read(os.path.join(SRC, "shell.html"))
     css = font_faces() + read(os.path.join(SRC, "app.css"))
@@ -135,7 +177,7 @@ def render(data: dict) -> str:
     # sequence that can break out of it is a literal closing script tag.
     blob = blob.replace("</", "<\\/")
 
-    for token, value in (("__CSS__", css), ("__DATA__", blob), ("__APP__", app)):
+    for token, value in (("__CSS__", css), ("__AGENT__", agent_brief(data)), ("__DATA__", blob), ("__APP__", app)):
         if token not in shell:
             raise SystemExit(f"site_src/shell.html is missing the {token} slot")
         shell = shell.replace(token, value)

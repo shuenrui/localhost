@@ -12,7 +12,7 @@ a `model` id and a `variation.checkpoint`, which is how the site groups them.
 data/
 ├── models/<id>.json        the brain: architecture, context, modalities, license
 ├── hardware/<id>.json      the box: memory, bandwidth, arch + device spec
-├── engines/<id>.json       the server: SGLang, vLLM, llama.cpp, ...
+├── engines/<id>.json       the server: SGLang, vLLM, llama.cpp, ... (optional `install`, see below)
 ├── techniques/<id>.json    canonical technique packets for evidence claims
 ├── publishers.json         who made things: labs, quant shops, individuals
 ├── setups/<id>.json        one runnable setup  <- the main entity
@@ -465,3 +465,25 @@ through this ladder — the higher the rung, the more of the number survives:
 - `tools/check_schema_v2_fixtures.py` — reproducible positive/negative schema-v2
   fixture suite. It copies the dataset into temporary scratch directories and
   never mutates live `data/`.
+
+## Engine install (`engines/<id>.install`, added 2026-10-12)
+
+How to install the engine, copied from its official install page. The site shows it as "Step 0" in
+Quick start, and `localhost guide` uses it for the visitor's OS.
+
+```jsonc
+"install": {
+  "source": "https://ollama.com/download/linux",   // official page the steps were copied from
+  "retrieved": "2026-10-12",
+  "methods": [
+    {"platforms": ["macos", "linux"], "label": "Install script",
+     "steps": [{"kind": "cmd", "text": "curl -fsSL https://ollama.com/install.sh | sh"}],
+     "note": "optional"}
+  ],
+  "note": "optional, applies to all methods"
+}
+```
+
+Rules (enforced by `validate.py`): `platforms` ⊆ {macos, linux, windows}; steps are `cmd` or `do`. A `cmd`
+is a literal command as printed in the docs. Anything with a placeholder (`<...>`, `{...}`, `/path/to/`)
+must be a `do` step. A fork engine may have `"methods": []` with a note.

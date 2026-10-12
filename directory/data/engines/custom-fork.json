@@ -3,10 +3,16 @@
   "name": "Custom / forked engine",
   "kind": "fork",
   "url": null,
-  "api": ["varies"],
+  "api": [
+    "varies"
+  ],
   "qwen_support": "Depends entirely on the fork. These entries exist because stock engines cannot serve the configuration.",
-  "spec_decode": ["other"],
-  "features": ["builder-specific"],
+  "spec_decode": [
+    "other"
+  ],
+  "features": [
+    "builder-specific"
+  ],
   "notable_flags": [],
   "gotchas": [
     "Not portable: the weights usually only load in the author's engine.",
@@ -14,5 +20,9 @@
     "Always check the license of the engine separately from the license of the weights."
   ],
   "arm64": null,
-  "updated": "2026-09-05"
+  "updated": "2026-10-12",
+  "install": {
+    "methods": [],
+    "note": "A fork has no standard install. Follow the recipe's own steps and repository."
+  }
 }

@@ -13,7 +13,8 @@ from .detect import detect
 from .fit import GROUPS, closest_miss, fit_all, gb
 
 AGENT_NOTE = ("Agents: start with `localhost detect --json`, then `localhost fit --json`, then "
-              "`localhost guide <recipe> --json`. Copy only steps marked copyable; never invent commands.")
+              "`localhost guide <recipe> --json`. Copy only steps marked copyable; never invent commands. "
+              "Or run `localhost mcp` as an MCP server.")
 
 
 def out(args, obj, text):
@@ -140,45 +141,95 @@ def cmd_fit(args):
 
 
 def cmd_guide(args):
+    from .guide import build
     d, _ = get_dir(args)
-    s = d.setup(args.recipe)
-    eid = d.engine_id(s)
-    eng = d.engines.get(eid) or {}
-    e_in = s.get("engine") if isinstance(s.get("engine"), dict) else {}
-    run = s.get("run") or {}
-    steps = []
-    steps.append({"phase": "engine", "copyable": False,
-                  "text": "Install %s. The directory does not record install commands; use the engine's own "
-                          "instructions: %s" % (eng.get("name", eid), eng.get("url") or "(no link recorded)")})
-    if e_in.get("requires_fork"):
-        steps.append({"phase": "engine", "copyable": False,
-                      "text": "Heads up: this recipe needs a modified engine build, not the standard release. %s"
-                              % (e_in.get("config") or "")})
-    seen = set()
-    for st in run.get("steps") or []:
-        st = st or {}
-        txt = st.get("text") or ""
-        steps.append({"phase": "setup", "copyable": st.get("kind") == "cmd", "kind": st.get("kind"), "text": txt})
-        seen.add(txt.strip())
-    if run.get("command") and run["command"].strip() not in seen:
-        steps.append({"phase": "start", "copyable": True, "kind": "cmd", "text": run["command"]})
-    steps.append({"phase": "check", "copyable": True, "kind": "cmd", "text": "localhost check"})
-    steps.append({"phase": "connect", "copyable": True, "kind": "cmd",
-                  "text": "localhost connect opencode --engine %s" % eid})
-    warn = []
-    for g in eng.get("gotchas") or []:
-        warn.append(g if isinstance(g, str) else json.dumps(g))
-    for c in s.get("caveats") or []:
-        warn.append(c if isinstance(c, str) else (c.get("text") or json.dumps(c)))
-    payload = {"recipe": s["id"], "title": s.get("title"), "model": s.get("model"), "engine": eid,
-               "repo": run.get("repo"), "requirements": s.get("requirements"), "steps": steps,
-               "warnings": warn, "rule": "Run only copyable=true steps verbatim. Other steps are instructions, not commands."}
-    lines = [s.get("title", s["id"]), "repo: %s" % run.get("repo"), ""]
-    for i, st in enumerate(steps, 1):
-        lines.append("%d. [%s] %s%s" % (i, st["phase"], "$ " if st["copyable"] else "", st["text"]))
-    if warn:
-        lines += ["", "Warnings:"] + ["- %s" % w[:300] for w in warn[:8]]
-    out(args, payload, "\n".join(lines))
+    g = build(d, d.setup(args.recipe), args.os)
+    lines = [g["title"] or g["recipe"], "repo: %s   (steps for %s; --os to change)" % (g["repo"], g["os"]), ""]
+    for st in g["steps"]:
+        lines.append("%d. [%s] %s%s" % (st["n"], st["phase"], "$ " if st["copyable"] else "", st["text"]))
+    if g["install_source"]:
+        lines.append("\nInstall steps copied from %s" % g["install_source"])
+    if g["warnings"]:
+        lines += ["", "Warnings:"] + ["- %s" % w[:300] for w in g["warnings"][:8]]
+    lines.append("\nRun it step by step, asking first each time: localhost run %s" % g["recipe"])
+    out(args, g, "\n".join(lines))
+
+
+def cmd_run(args):
+    """Walk the guide. Every command is shown and needs a yes before it runs."""
+    import subprocess
+    from .guide import build
+    d, _ = get_dir(args)
+    g = build(d, d.setup(args.recipe), args.os)
+    steps = [st for st in g["steps"] if st["n"] >= args.from_step and st["phase"] not in ("check", "connect")]
+    interactive = sys.stdin.isatty()
+    if not args.yes and not interactive:
+        sys.stderr.write("No terminal to ask for confirmation. Re-run in a terminal, or pass --yes once the user "
+                         "has agreed to run every step below.\n")
+        out(args, {"ok": False, "error": "needs confirmation", "plan": steps}, "\n".join(
+            "%d. %s%s" % (st["n"], "$ " if st["copyable"] else "", st["text"]) for st in steps))
+        return 2
+    log = []
+    for st in steps:
+        if not st["copyable"]:
+            print("\n%d. [%s] %s" % (st["n"], st["phase"], st["text"]), flush=True)
+            if st.get("kind") == "do" and interactive and not args.yes:
+                input("   Do this yourself, then press Enter to continue... ")
+            log.append({"n": st["n"], "ran": False, "kind": st.get("kind")})
+            continue
+        print("\n%d. [%s] $ %s" % (st["n"], st["phase"], st["text"]), flush=True)
+        if not args.yes:
+            ans = input("   Run this? [y]es / [s]kip / [q]uit: ").strip().lower()
+            if ans.startswith("q"):
+                log.append({"n": st["n"], "ran": False, "quit": True})
+                break
+            if not ans.startswith("y"):
+                log.append({"n": st["n"], "ran": False, "skipped": True})
+                continue
+        sys.stdout.flush()
+        rc = subprocess.call(st["text"], shell=True)
+        log.append({"n": st["n"], "ran": True, "exit": rc})
+        if rc != 0:
+            print("   Step %d failed (exit %d). Stopping. Fix it, then resume with --from-step %d." % (st["n"], rc, st["n"]))
+            break
+    ok = all(x.get("exit", 0) == 0 for x in log)
+    if ok:
+        print("\nDone. Next: localhost check, then localhost connect opencode")
+    if args.json:
+        out(args, {"ok": ok, "log": log}, "")
+    return 0 if ok else 1
+
+
+def cmd_report(args):
+    """Turn a check result into a contribution: a prefilled GitHub issue link (no login needed here)."""
+    import urllib.parse
+    from .check import check
+    from .detect import detect
+    d, _ = get_dir(args)
+    s = d.setup(args.recipe) if args.recipe else None
+    r = check(args.endpoint, args.model, max_tokens=args.max_tokens)
+    if not r.get("ok"):
+        out(args, {"ok": False, "error": r.get("error")}, "Cannot report: %s" % r.get("error"))
+        return 1
+    p = detect()
+    machine = {k: p.get(k) for k in ("os", "arch", "chip", "gpu", "gpuCount", "ramGb", "vramGb", "unified")}
+    body = {"recipe": s["id"] if s else None, "model_served": r["model"], "endpoint_engine": r.get("engine_guess"),
+            "machine": machine, "decode_tok_s": r["decode_tok_s"], "time_to_first_token_s": r["time_to_first_token_s"],
+            "tokens": r["tokens"], "token_count_source": r["token_count_source"], "method": r["method"],
+            "nonce": r["nonce"], "cli": "localhost %s" % __version__}
+    title = "Measurement: %s on %s" % (s["id"] if s else r["model"], machine.get("gpu") or machine.get("chip"))
+    text = ("A localhost CLI measurement (single run). Maintainers: this is a lead for a recipe or a "
+            "measurement, and needs the usual provenance review.\n\n```json\n%s\n```\n" % json.dumps(body, indent=2))
+    url = "https://github.com/shuenrui/localhost/issues/new?" + urllib.parse.urlencode({"title": title, "body": text})
+    out(args, {"ok": True, "report": body, "issue_url": url},
+        "Measured %s tok/s decode, first token %.2fs.\nOpen this link to send it (you can edit before submitting):\n%s"
+        % (r["decode_tok_s"], r["time_to_first_token_s"], url))
+    return 0
+
+
+def cmd_mcp(args):
+    from .mcp import serve
+    return serve(args.data)
 
 
 def cmd_check(args):
@@ -252,7 +303,19 @@ def main(argv=None):
     p.add_argument("--unified", choices=["unified", "separate"])
     p.set_defaults(fn=cmd_fit)
     p = sub.add_parser("guide", parents=[common], help="ordered setup steps for a recipe")
-    p.add_argument("recipe"); p.set_defaults(fn=cmd_guide)
+    p.add_argument("recipe"); p.add_argument("--os", choices=["macos", "linux", "windows"])
+    p.set_defaults(fn=cmd_guide)
+    p = sub.add_parser("run", parents=[common], help="walk a recipe's steps, asking before each command")
+    p.add_argument("recipe"); p.add_argument("--os", choices=["macos", "linux", "windows"])
+    p.add_argument("--from-step", type=int, default=1)
+    p.add_argument("--yes", action="store_true", help="run every command without asking (only after the user agreed)")
+    p.set_defaults(fn=cmd_run)
+    p = sub.add_parser("report", parents=[common], help="measure the running model and make a contribution link")
+    p.add_argument("--recipe"); p.add_argument("--endpoint"); p.add_argument("--model")
+    p.add_argument("--max-tokens", type=int, default=128)
+    p.set_defaults(fn=cmd_report)
+    p = sub.add_parser("mcp", parents=[common], help="run as an MCP server (stdio) for AI agents")
+    p.set_defaults(fn=cmd_mcp)
     p = sub.add_parser("check", parents=[common], help="test a running local server (cold prompt)")
     p.add_argument("--endpoint"); p.add_argument("--model"); p.add_argument("--max-tokens", type=int, default=48)
     p.set_defaults(fn=cmd_check)

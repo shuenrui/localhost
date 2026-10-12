@@ -3,10 +3,30 @@
   "name": "SGLang",
   "kind": "server",
   "url": "https://github.com/sgl-project/sglang",
-  "api": ["openai", "anthropic"],
+  "api": [
+    "openai",
+    "anthropic"
+  ],
   "qwen_support": "First-class. Native qwen3, qwen3_coder, qwen3_5_moe architectures; GDN hybrid support; vision tower served live.",
-  "spec_decode": ["mtp", "eagle", "dspark", "dflash2", "ngram"],
-  "features": ["fp8-kv", "nvfp4", "yarn-long-context", "vision", "video", "tool-calling", "thinking-parser", "cuda-graphs", "torch-compile", "prometheus-metrics"],
+  "spec_decode": [
+    "mtp",
+    "eagle",
+    "dspark",
+    "dflash2",
+    "ngram"
+  ],
+  "features": [
+    "fp8-kv",
+    "nvfp4",
+    "yarn-long-context",
+    "vision",
+    "video",
+    "tool-calling",
+    "thinking-parser",
+    "cuda-graphs",
+    "torch-compile",
+    "prometheus-metrics"
+  ],
   "notable_flags": [
     "--speculative-algorithm {EAGLE,DSPARK,DFLASH}",
     "--reasoning-parser qwen3",
@@ -25,5 +45,57 @@
     "If speculative decoding errors at boot, try --attention-backend triton."
   ],
   "arm64": true,
-  "updated": "2026-09-05"
+  "updated": "2026-10-12",
+  "install": {
+    "source": "https://docs.sglang.io/get_started/install.html",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "linux"
+        ],
+        "label": "pip / uv (NVIDIA, CUDA 13)",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "pip install --upgrade pip"
+          },
+          {
+            "kind": "cmd",
+            "text": "pip install uv"
+          },
+          {
+            "kind": "cmd",
+            "text": "uv venv --python 3.12"
+          },
+          {
+            "kind": "cmd",
+            "text": "source .venv/bin/activate"
+          },
+          {
+            "kind": "cmd",
+            "text": "uv pip install --prerelease=allow sglang"
+          }
+        ],
+        "note": "Needs Python 3.10+ and a CUDA 13 environment. SGLang 0.5.19 was the last release with a CUDA 12 lane."
+      },
+      {
+        "platforms": [
+          "linux"
+        ],
+        "label": "Docker (NVIDIA)",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "docker pull lmsysorg/sglang:latest"
+          },
+          {
+            "kind": "do",
+            "text": "Start the container with --gpus all, port 30000 and your Hugging Face cache mounted, as shown on the install page (it needs your own cache path)."
+          }
+        ],
+        "note": "Needs Docker Engine, the NVIDIA Container Toolkit and a CUDA 13-compatible driver."
+      }
+    ]
+  }
 }

@@ -31,8 +31,55 @@
     "The widest hardware reach of any engine: runs on CPU-only, 24GB cards, and Apple Silicon alike."
   ],
   "arm64": true,
-  "updated": "2026-09-05",
+  "updated": "2026-10-12",
   "caveats": [
-    "Qwen3.8-27B on CUDA: builds around commit 221f0f6 (shallow clones reporting 'build 1') produce corrupted garbage completions at full speed with normal VRAM usage \u2014 silent corruption, no OOM or crash. Fixed by ece963f41 (~b10450): rebuild with -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=<arch> and Flash Attention on. (Forum report, WSL + RTX 3090, 2026-09.)"
-  ]
+    "Qwen3.8-27B on CUDA: builds around commit 221f0f6 (shallow clones reporting 'build 1') produce corrupted garbage completions at full speed with normal VRAM usage — silent corruption, no OOM or crash. Fixed by ece963f41 (~b10450): rebuild with -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=<arch> and Flash Attention on. (Forum report, WSL + RTX 3090, 2026-09.)"
+  ],
+  "install": {
+    "source": "https://github.com/ggml-org/llama.cpp/blob/master/docs/install.md",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "macos",
+          "linux"
+        ],
+        "label": "Homebrew",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "brew install llama.cpp"
+          }
+        ]
+      },
+      {
+        "platforms": [
+          "windows"
+        ],
+        "label": "Winget",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "winget install llama.cpp"
+          }
+        ]
+      },
+      {
+        "platforms": [
+          "macos",
+          "linux",
+          "windows"
+        ],
+        "label": "conda-forge",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "conda install -c conda-forge llama.cpp"
+          }
+        ],
+        "note": "The install page says conda-forge builds include CUDA (Windows and Linux), Vulkan (Windows and Linux) and Apple Metal (macOS). It does not say which GPU backends the Homebrew or Winget builds include."
+      }
+    ],
+    "note": "Some recipes need a specific llama.cpp build or a fork. Read the recipe's own steps and this engine's gotchas before you install."
+  }
 }

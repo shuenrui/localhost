@@ -1,9 +1,10 @@
-"""Fit check: a line-for-line port of the site's classify() (site_src/app.js).
+"""Fit check: a port of the site's classify() and memFit() (site_src/app.js).
 
-Keep this in step with app.js. tests/test_fit_parity.py compares the two on every
-recipe. The one deliberate addition: a machine with no GPU and no unified memory gets
-the arch family "cpu", because the site's default ("nvidia") would wrongly mark every
-NVIDIA recipe as architecture-compatible on a CPU-only box.
+Keep this in step with app.js. tests/test_fit_parity.py runs the site's own JS beside
+it on every recipe. One deliberate addition: a machine with no GPU and no unified memory
+gets the arch family "cpu". The site's default ("nvidia") would wrongly mark every NVIDIA
+recipe as architecture-compatible on a CPU-only box. The site has no way to enter such a
+profile, so parity is unaffected.
 """
 import re
 
@@ -88,17 +89,31 @@ def profile_arch(p, HW):
     return "nvidia"
 
 
-def classify(s, p, HW, reserve=None, context=8192, concurrency=1):
-    reserve = default_reserve(p, reserve)
-    req = (s.get("requirements") or {}).get("memory_gb")
+def mem_fit(s, p, reserve):
+    """Port of memFit() in app.js. See the comment there for the rules."""
+    rq = s.get("requirements") or {}
+    req, min_v = rq.get("memory_gb"), rq.get("min_vram_gb")
+    if p.get("unified") == "separate" and p.get("vramGb") is not None:
+        vram = p["vramGb"]
+        host = None if p.get("ramGb") is None else max(0, p["ramGb"] - reserve)
+        offload = min_v is not None and req is not None and min_v < req and req > vram
+        if offload and host is not None:
+            return {"req": req, "avail": vram + host, "fits": req is None or (vram >= min_v and vram + host >= req),
+                    "kind": "offload", "vram": vram, "host": host}
+        return {"req": req, "avail": vram, "fits": req is None or req <= vram, "kind": "gpu", "vram": vram, "host": host}
     raw = available_gb(p)
     avail = None if raw is None else max(0, raw - reserve)
+    return {"req": req, "avail": avail, "fits": req is None or avail is None or req <= avail, "kind": "shared"}
+
+
+def classify(s, p, HW, reserve=None, context=8192, concurrency=1):
+    reserve = default_reserve(p, reserve)
+    m = mem_fit(s, p, reserve)
+    req, avail = m["req"], m["avail"]
     classes = profile_classes(p, HW)
     entries = [(h["id"], h.get("count") or 1) if isinstance(h, dict) else (h, 1) for h in s.get("hardware") or []]
     hw = [i for i, _ in entries]
-    # Deliberate fix over the site: entries like {"id": "rtx-5090", "count": 2} mean the
-    # recipe ran on 2 devices. The site's indexOf() never matches object entries; here we
-    # match them only when this machine has at least that many devices.
+    # Entries like {"id": "rtx-5090", "count": 2} ran on 2 devices: match only a machine with that many.
     have = p.get("gpuCount") or 1
     on_hw = [i for i, n in entries if i in classes and n <= have]
     measured = len(s.get("measurements") or []) > 0
@@ -107,10 +122,16 @@ def classify(s, p, HW, reserve=None, context=8192, concurrency=1):
     parch = profile_arch(p, HW)
     arch_ok = any(arch_family(i, HW) == parch for i in hw)
 
-    if req is not None and avail is not None and req > avail:
+    if req is not None and avail is not None and not m["fits"]:
         group = "unsupported"
-        verdict = "Will not fit as recorded: needs %s, you have %s after a %s reserve." % (
-            gb(req), gb(round(avail * 10) / 10), gb(reserve))
+        if m["kind"] == "offload":
+            verdict = "Will not fit as recorded: needs %s (at least %s on the GPU); you have %s GPU + %s RAM after a %s reserve." % (
+                gb(req), gb((s.get("requirements") or {}).get("min_vram_gb")), gb(m["vram"]), gb(round(m["host"] * 10) / 10), gb(reserve))
+        elif m["kind"] == "gpu":
+            verdict = "Will not fit as recorded: needs %s; your GPU memory is %s." % (gb(req), gb(m["vram"]))
+        else:
+            verdict = "Will not fit as recorded: needs %s, you have %s after a %s reserve." % (
+                gb(req), gb(round(avail * 10) / 10), gb(reserve))
     elif exact:
         group, verdict = "exact", "Verified on this exact machine."
     elif on_hw and (measured or req is not None):
@@ -133,8 +154,10 @@ def classify(s, p, HW, reserve=None, context=8192, concurrency=1):
             " and ".join(fams), FAMILY_LABEL[parch])
         if group == "estimated":
             group = "uncertain"
+    if group != "unsupported" and m["kind"] == "gpu" and req is not None and m["vram"] - req < 1:
+        verdict += " Tight: uses all of the card's memory; close other programs using the GPU."
     return {"group": group, "verdict": verdict, "req": req, "avail": avail, "reserve": reserve,
-            "on_hw": on_hw, "exact": exact, "arch_ok": arch_ok}
+            "on_hw": on_hw, "exact": exact, "arch_ok": arch_ok, "memory_model": m["kind"]}
 
 
 def fit_all(directory, p, model=None, reserve=None):

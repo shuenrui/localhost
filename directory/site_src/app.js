@@ -1,4 +1,4 @@
-/* Qwen Local-Run Directory — application.
+/* localhost (formerly the Qwen Local-Run Directory) — application.
    Hash-routed, no dependencies, no network requests after load.
    See docs/redesign-2026-09-10/ for the design this implements. */
 (function () {
@@ -512,6 +512,25 @@ function needsLine(s) {
     ' <a href="#/models/' + esc(s.model) + '">' + esc("Different hardware? See the other recipes for this model.") + "</a></p>";
   return h;
 }
+/* "Install the engine first": copied from the engine's official install page
+   (engines/<id>.install). Not part of "Copy all commands", because the right
+   method depends on the visitor's operating system. */
+var OS_WORD = { macos: "macOS", linux: "Linux", windows: "Windows" };
+function installHtml(s) {
+  var e = ENG[(s.engine || {}).id] || {}, ins = e.install;
+  if (!ins || !(ins.methods || []).length) return "";
+  var h = '<details class="qs-install"><summary>' + esc("Step 0: install " + (e.name || "the engine") + " (if you have not already)") + "</summary>";
+  ins.methods.forEach(function (m) {
+    h += '<p class="qs-needs"><b>' + esc(m.label) + "</b> " + esc("(" + (m.platforms || []).map(function (p) { return OS_WORD[p] || p; }).join(", ") + ")") + "</p>" +
+      '<ol class="steps">' + (m.steps || []).map(function (x) {
+        return x.kind === "cmd" ? "<li>" + cmdBlock(x.text) + "</li>" : '<li><span class="do">' + esc(x.text) + "</span></li>";
+      }).join("") + "</ol>" + (m.note ? '<p class="qs-note">' + esc(m.note) + "</p>" : "");
+  });
+  if (ins.note) h += '<p class="qs-note">' + esc(ins.note) + "</p>";
+  h += '<p class="qs-note">' + esc("Copied from ") + '<a href="' + esc(ins.source) + '" target="_blank" rel="noopener">' +
+    esc(e.name + "'s install page") + "</a>" + esc(" on " + ins.retrieved + ".") + "</p></details>";
+  return h;
+}
 function quickStartBody(s, opts) {
   opts = opts || {};
   var r = s.run || {}, cmds = cmdTexts(s), h = "";
@@ -531,6 +550,7 @@ function quickStartBody(s, opts) {
     if (cmds.length > 3) h += '<p class="qs-note">' + esc((cmds.length - 3) + " more command" + (cmds.length - 3 === 1 ? "" : "s") + " on the full recipe.") + "</p>";
     return h;
   }
+  h += installHtml(s);
   h += stepsHtml(s, cmds);
   /* The recorded launch command must stay visible whenever the copy button copies it:
      show it after the steps unless a step already carries the exact same text. */
@@ -1958,23 +1978,55 @@ function kvGb(s, assume) {
   if (b == null) return null;
   return (b * assume.context * assume.concurrency) / (1024 * 1024 * 1024);
 }
-function classify(s, p) {
-  var a = state.assume, reserve = defaultReserve(p);
-  var req = (s.requirements || {}).memory_gb;
+/* Memory the recipe can use on this machine.
+   Unified memory (Mac, Strix Halo, GB10): one pool shared with the OS, so the
+   safety reserve comes off it. Separate memory (discrete GPU): the reserve comes
+   off system RAM only. Dedicated VRAM is compared as-is, because recipes record
+   the resident figure measured on that size of card. A recipe that does not fit
+   on the GPU alone but records a min_vram_gb below its memory_gb offloads to
+   system RAM, so it needs VRAM >= min_vram_gb and VRAM + usable RAM >= memory_gb. */
+function memFit(s, p, reserve) {
+  var rq = s.requirements || {}, req = rq.memory_gb, minV = rq.min_vram_gb;
+  if (p.unified === "separate" && p.vramGb != null) {
+    var host = p.ramGb == null ? null : Math.max(0, p.ramGb - reserve);
+    var offload = minV != null && req != null && minV < req && req > p.vramGb;
+    if (offload && host != null) {
+      return { req: req, avail: p.vramGb + host, fits: req == null || (p.vramGb >= minV && p.vramGb + host >= req),
+        kind: "offload", vram: p.vramGb, host: host };
+    }
+    return { req: req, avail: p.vramGb, fits: req == null || req <= p.vramGb, kind: "gpu", vram: p.vramGb, host: host };
+  }
   var raw = availableGb(p);
   var avail = raw == null ? null : Math.max(0, raw - reserve);
+  return { req: req, avail: avail, fits: req == null || avail == null || req <= avail, kind: "shared" };
+}
+function hwEntries(s) {
+  if ((s.hwRefs || []).length) return s.hwRefs.map(function (r) { return { id: r.id, n: r.count || 1 }; });
+  return (s.hardware || []).map(function (h) { return typeof h === "object" ? { id: h.id, n: h.count || 1 } : { id: h, n: 1 }; });
+}
+function classify(s, p) {
+  var a = state.assume, reserve = defaultReserve(p);
+  var m = memFit(s, p, reserve), req = m.req, avail = m.avail;
   var classes = profileClasses(p);
-  var onHw = (s.hardware || []).filter(function (id) { return classes.indexOf(id) >= 0; });
+  /* Entries like {"id": "rtx-5090", "count": 2} ran on 2 devices: they match only a
+     machine with at least that many. */
+  var have = p.gpuCount || 1;
+  var ents = hwEntries(s);
+  var onHw = ents.filter(function (e) { return classes.indexOf(e.id) >= 0 && e.n <= have; }).map(function (e) { return e.id; });
   var measured = (s.measurements || []).length > 0;
   var exact = onHw.some(function (id) { return (HW[id] || {}).measured_by_us === true; }) &&
     p.deviceId && onHw.indexOf(p.deviceId) >= 0 && measured;
-  var archOk = (s.hardware || []).some(function (id) { return archFamily(id) === profileArch(p); });
+  var hwIds = ents.map(function (e) { return e.id; });
+  var archOk = hwIds.some(function (id) { return archFamily(id) === profileArch(p); });
 
   var group, verdict;
-  if (req != null && avail != null && req > avail) {
+  if (req != null && avail != null && !m.fits) {
     group = "unsupported";
-    verdict = "Will not fit as recorded: this recipe records a " + gb(req) + " resident requirement and " +
-      gb(Math.round(avail * 10) / 10) + " is available after a " + gb(reserve) + " reserve.";
+    verdict = "Will not fit as recorded: this recipe records a " + gb(req) + " resident requirement" +
+      (m.kind === "offload" ? " (at least " + gb((s.requirements || {}).min_vram_gb) + " on the GPU), and you have " +
+        gb(m.vram) + " of GPU memory plus " + gb(Math.round(m.host * 10) / 10) + " of system RAM after a " + gb(reserve) + " reserve."
+        : m.kind === "gpu" ? " and your GPU memory is " + gb(m.vram) + "."
+        : " and " + gb(Math.round(avail * 10) / 10) + " is available after a " + gb(reserve) + " reserve.");
   } else if (exact) {
     group = "exact";
     verdict = "Verified on this exact machine. Measurements on this record were taken on " +
@@ -1998,12 +2050,15 @@ function classify(s, p) {
   }
   if (!archOk) {
     verdict += " Note: this recipe is only recorded on " +
-      uniq((s.hardware || []).map(function (id) { return familyLabel(archFamily(id)); })).join(" and ") +
+      uniq(hwIds.map(function (id) { return familyLabel(archFamily(id)); })).join(" and ") +
       ", and your profile is " + familyLabel(profileArch(p)) +
       ". Memory is not the binding constraint here — the engine path is.";
     if (group === "estimated") group = "uncertain";
   }
-  return { group: group, verdict: verdict, req: req, avail: avail, reserve: reserve, onHw: onHw, exact: exact, archOk: archOk };
+  if (group !== "unsupported" && m.kind === "gpu" && req != null && m.vram - req < 1) {
+    verdict += " Tight: this uses all of the card's memory, so close other programs that use the GPU.";
+  }
+  return { group: group, verdict: verdict, req: req, avail: avail, reserve: reserve, onHw: onHw, exact: exact, archOk: archOk, mem: m };
 }
 var GROUPS = [
   ["exact", "● Verified on this exact machine", "v-ok", "A measurement on this record was taken on the device this profile names."],
@@ -2025,7 +2080,9 @@ function calcTable(s, r, p) {
         : "this model family does not record bytes per token, so no KV figure can be computed. It is never estimated from parameter count."],
     ["Assumed context", ctx(state.assume.context) + " tokens", "your assumption, adjustable above"],
     ["Assumed concurrency", state.assume.concurrency === 1 ? "1 stream" : state.assume.concurrency + " streams", "your assumption, adjustable above"],
-    ["Safety reserve", gb(r.reserve), "an assumption about your machine, not a claim about this recipe"],
+    ["Safety reserve", gb(r.reserve), (r.mem && r.mem.kind !== "shared")
+      ? "taken from system RAM only; dedicated GPU memory is compared as recorded. An assumption about your machine, not a claim about this recipe"
+      : "an assumption about your machine, not a claim about this recipe"],
     ["CPU / disk offload", /offload|stream|ssd|mmap/i.test(req2.notes || "") ? req2.notes : "none recorded", ""]
   ];
   var h = '<table class="calc-tab"><tbody>' + rows.map(function (x) {
@@ -2034,7 +2091,10 @@ function calcTable(s, r, p) {
   }).join("");
   h += '<tr class="tot"><th>Recorded resident</th><td><b>' + esc(gb(r.req) || "not recorded") + "</b></td></tr>" +
     "<tr><th>Your usable memory</th><td><b>" + esc(r.avail != null ? gb(Math.round(r.avail * 10) / 10) : "not recorded") + "</b>" +
-    (r.avail != null ? '<br><span class="g">' + esc(gb(availableGb(p)) + " less the " + gb(r.reserve) + " reserve") + "</span>" : "") + "</td></tr>" +
+    (r.avail != null ? '<br><span class="g">' + esc(
+      r.mem && r.mem.kind === "gpu" ? gb(r.mem.vram) + " of GPU memory"
+        : r.mem && r.mem.kind === "offload" ? gb(r.mem.vram) + " of GPU memory + " + gb(Math.round(r.mem.host * 10) / 10) + " of system RAM after the " + gb(r.reserve) + " reserve"
+        : gb(availableGb(p)) + " less the " + gb(r.reserve) + " reserve") + "</span>" : "") + "</td></tr>" +
     "<tr><th>Remaining</th><td><b>" + esc(r.req != null && r.avail != null ? gb(Math.round((r.avail - r.req) * 10) / 10) : "not derivable") + "</b></td></tr>" +
     "<tr><th>Evidence</th><td>" + esc(r.exact ? "Exact device." : r.onHw.length ? "Similar hardware — recorded on a class, not your device." : "No evidence on your hardware.") +
     (r.onHw.length ? '<br><span class="g">' + esc("Recorded on: " + r.onHw.map(function (id) { return (HW[id] || {}).name; }).join("; ")) + "</span>" : "") + "</td></tr>";
@@ -2494,7 +2554,7 @@ function viewContribute() {
     esc("A slow figure with a method, a quantization that turned out worse than its label suggests, a speculative-decoding path that silently corrupts output — these are among the most valuable rows here. They stay in the dataset, they stay visible in the interface, and they are promoted rather than buried.") + "</p></div>";
   h += '<div class="psec"><h2>The gate</h2><p>' +
     esc("Every change runs directory/check.sh, which validates the data, re-fetches every cited URL, rebuilds the site and exercises the real interface in a headless browser at several widths. Every stage must pass before anything is published. The generated page is never edited by hand.") + "</p>" +
-    '<p><a href="https://github.com/shuenrui/qwen-local-run" target="_blank" rel="noopener">' + esc("The repository, the schema and the agent brief") + "</a></p></div></div>";
+    '<p><a href="https://github.com/shuenrui/localhost" target="_blank" rel="noopener">' + esc("The repository, the schema and the agent brief") + "</a></p></div></div>";
   el("main").innerHTML = h;
 }
 
@@ -2622,7 +2682,7 @@ function route() {
   window.scrollTo(0, 0);
 }
 function setDocTitle() {
-  var base = "Qwen Local-Run Directory", id = (state.params || {}).id, t = "";
+  var base = "localhost", id = (state.params || {}).id, t = "";
   if (state.route === "recipe") { var s = SETUPS.filter(function (x) { return x.id === id; })[0]; t = s ? s.title : "Recipe not found"; }
   else if (state.route === "model") { var m = MODELS[id]; t = m ? m.name + " — recipes" : "Model not found"; }
   else if (state.route === "publisher") { t = ((PUB[id] || {}).name || id || "Publisher"); }

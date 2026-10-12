@@ -1,4 +1,4 @@
-# AGENTS.md — cold-start brief for the Qwen Local-Run Directory
+# AGENTS.md — cold-start brief for localhost (formerly the Qwen Local-Run Directory)
 
 Read this first. It states the mission and the inviolable rules; `SCHEMA.md`
 states the data model; `README.md` states current coverage and workflows.
@@ -44,7 +44,7 @@ fast it goes *according to whom*, and can run it from the copyable command.
    source in `site_src/` (`shell.html`, `app.css`, `app.js`), `build.py`, or the
    data, and rebuild.
 6. **Confirm the remote before pushing.** `origin` is the owner's own repo
-   (`shuenrui/qwen-local-run`), branch `main`; pushing there is how work is
+   (`shuenrui/localhost`, renamed from `shuenrui/qwen-local-run` on 2026-10-12), branch `main`; pushing there is how work is
    backed up and reviewed. This law used to read "never push to `origin`"
    because `origin` once pointed at
    `MiaAI-Lab/Qwen3.8-27B-SGLang-DGX-Spark` — a third party's serving stack

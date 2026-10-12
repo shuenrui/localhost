@@ -1265,6 +1265,8 @@ tr.det>td{padding:0;border-bottom:1px solid var(--rule-2)}
 .qs-needs{margin:0 0 8px;color:var(--ink-2);font-size:13.5px;line-height:1.5}
 .qs-needs b{font-weight:600;color:var(--ink)}
 .qs-note,.qs-lead{margin:8px 0;color:var(--ink-2);font-size:13.5px;line-height:1.5}
+.qs-install{margin:6px 0 12px;border-left:2px solid var(--rule-2);padding:2px 0 2px 12px}
+.qs-install>summary{cursor:pointer;min-height:var(--ctl-h);display:flex;align-items:center;font:600 13.5px/1.4 var(--font-ui);color:var(--ink)}
 .baseline-qs{margin-top:14px}
 .baseline-qs .steps{margin:6px 0}
 .baseline-qs .btn{margin-top:6px}

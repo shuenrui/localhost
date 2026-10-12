@@ -187,6 +187,43 @@ ALLOWED_ENGINE_KEYS = {
 } | V2_ENGINE_KEYS
 
 V2_RUN_KEYS = {"repo_revision"}
+
+INSTALL_PLATFORMS = {"macos", "linux", "windows"}
+
+
+def check_engine_install(rep, w, inst):
+    """engines/<id>.install: how to install the engine, copied from its official docs.
+    Optional. When present: a source URL and retrieval date for any method, methods with
+    platforms and cmd/do steps. A `cmd` must be a literal command from the docs, never a
+    template; anything with a placeholder is a `do` step."""
+    if inst is None:
+        return
+    if not isinstance(inst, dict):
+        rep.err(w, "install must be an object")
+        return
+    methods = inst.get("methods")
+    if not isinstance(methods, list):
+        rep.err(w, "install.methods must be a list")
+        return
+    if methods:
+        check_url(rep, w, "install.source", inst.get("source"))
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(inst.get("retrieved") or "")):
+            rep.err(w, "install.retrieved must be YYYY-MM-DD")
+    for i, m in enumerate(methods):
+        mw = f"{w}.install.methods[{i}]"
+        plats = m.get("platforms") or []
+        if not plats or not set(plats) <= INSTALL_PLATFORMS:
+            rep.err(mw, f"platforms {plats!r} must be a non-empty subset of {sorted(INSTALL_PLATFORMS)}")
+        if not m.get("label"):
+            rep.err(mw, "missing label")
+        steps = m.get("steps") or []
+        if not steps:
+            rep.err(mw, "no steps")
+        for j, st in enumerate(steps):
+            if st.get("kind") not in ("cmd", "do") or not (st.get("text") or "").strip():
+                rep.err(f"{mw}.steps[{j}]", "step needs kind cmd|do and text")
+            elif st["kind"] == "cmd" and re.search(r"[<{]\s*[\w-]+\s*[>}]|/path/to/", st["text"]):
+                rep.err(f"{mw}.steps[{j}]", "cmd step contains a placeholder; make it a `do` step")
 ALLOWED_RUN_KEYS = {
     "command", "repo", "repo_commit", "profile", "steps", "auto_bootable",
 } | V2_RUN_KEYS
@@ -1979,6 +2016,7 @@ def main(data_dir: str | None = None, strict: bool | None = None,
             pass
         else:
             check_url(rep, w, "url", e.get("url"))
+        check_engine_install(rep, w, e.get("install"))
 
     for tid, technique in techniques.items():
         if not isinstance(technique, dict):

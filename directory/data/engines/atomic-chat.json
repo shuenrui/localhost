@@ -6,7 +6,7 @@
   "api": [
     "openai"
   ],
-  "qwen_support": "Open-source local-AI app (fork of Jan) running Qwen GGUFs through its own llama.cpp fork (atomic-llama-cpp-turboquant), upstream llama.cpp, or MLX-VLM on Apple Silicon \u2014 all behind one OpenAI-compatible API at localhost:1337/v1. One-click agents (OpenCode, Cline, Hermes, OpenClaw). Publisher of the AtomicChat GGUF/MLX quants (own imatrix, held-out perplexity per quant).",
+  "qwen_support": "Open-source local-AI app (fork of Jan) running Qwen GGUFs through its own llama.cpp fork (atomic-llama-cpp-turboquant), upstream llama.cpp, or MLX-VLM on Apple Silicon — all behind one OpenAI-compatible API at localhost:1337/v1. One-click agents (OpenCode, Cline, Hermes, OpenClaw). Publisher of the AtomicChat GGUF/MLX quants (own imatrix, held-out perplexity per quant).",
   "spec_decode": [
     "none",
     "mtp",
@@ -25,16 +25,37 @@
     "desktop+mobile"
   ],
   "notable_flags": [
-    "TurboQuant KV cache turbo3/turbo4 on the in-house fork \u2014 up to ~4.3x smaller KV footprint, CUDA/Vulkan/CPU on macOS/Windows/Linux",
+    "TurboQuant KV cache turbo3/turbo4 on the in-house fork — up to ~4.3x smaller KV footprint, CUDA/Vulkan/CPU on macOS/Windows/Linux",
     "DFlash2 block-diffusion drafting on 'Auto' (16 candidates ranked on next-token fit + previous-token connection)",
     "MTP on MLX for Qwen 3.5/3.6; EAGLE-3 for Gemma 4 (Apple Silicon)"
   ],
   "gotchas": [
-    "Three swappable backends behind one API \u2014 a benchmark must state which backend ran, or the number is not attributable to an engine.",
+    "Three swappable backends behind one API — a benchmark must state which backend ran, or the number is not attributable to an engine.",
     "Contradiction unresolved: README says DFlash is Apple-Silicon-only, but the vendor benchmarked DFlash2 on a rented RTX 6000 (2026-08, ledger [63]). Verify NVIDIA DFlash2 status before treating those numbers as engine-attributable.",
     "TurboQuant headline claims (8x attention, 6x KV, zero accuracy loss at 3-bit) are Google H100 research figures, not Qwen-on-consumer-hardware measurements.",
     "Repo license is 'Other'; began as a fork of Jan (Menlo Research). Repo: github.com/AtomicBot-ai/Atomic-Chat (1.4k stars, TypeScript)."
   ],
   "arm64": true,
-  "updated": "2026-09-12"
+  "updated": "2026-10-12",
+  "install": {
+    "source": "https://atomic.chat/",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "macos",
+          "windows",
+          "linux"
+        ],
+        "label": "Desktop app",
+        "steps": [
+          {
+            "kind": "do",
+            "text": "Download Atomic Chat for your system from https://atomic.chat/ and install it."
+          }
+        ],
+        "note": "The site lists macOS 13.6+ (Intel and Apple Silicon), Windows x64 and Linux x86_64."
+      }
+    ]
+  }
 }

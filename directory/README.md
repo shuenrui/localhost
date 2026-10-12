@@ -1,10 +1,10 @@
-# Qwen Local-Run Directory
+# localhost (formerly the Qwen Local-Run Directory)
 
 A data-driven directory of every community way to run a Qwen model on hardware
-you own. It scales the hand-written dashboard at `local.host.impossibuild.ai`
+you own. It scales the hand-written dashboard at `local.innstance.app`
 from a single shelf to hundreds of filterable entries without hand-editing HTML.
 
-[Open the live directory](https://local.host.impossibuild.ai/) or read the
+[Open the live directory](https://local.innstance.app/) or read the
 [repository overview](../README.md) for a visitor-focused tour.
 
 The unit of an entry is a **runnable setup**: one specific checkpoint, one
@@ -165,34 +165,22 @@ non-zero on any failure. See its docstring for the Playwright setup, and
 check-by-check mapping from the previous suite. Pass a URL as the first argument
 to verify a deployed copy:
 
-    directory/tools/.pwenv/bin/python directory/verify_browser.py https://local.host.impossibuild.ai/
+    directory/tools/.pwenv/bin/python directory/verify_browser.py https://local.innstance.app/
 
 ## Live
 
-Published as a static site on ifhost from the Pro account
-(`shuenrui0003@gmail.com`):
+Live at **https://local.innstance.app/**, a static Innstance site owned by the Pro account
+`shuenrui0003@gmail.com`. Publishing replaces the whole site:
 
-    ifhost publish --name local directory/site/index.html
+    innstance publish --name local directory/site/index.html
 
-Live at **https://local.host.impossibuild.ai** — the directory's original
-address, now served from the Pro plan (no expiry window). A second name,
-`qwen-local-run`, points at the same build as a spare alias; delete it with
-`ifhost sites rm qwen-local-run` if one URL is preferred. Re-running `publish`
-with the same name replaces the site's entire content, so this one command is
-the whole deployment step after any data change.
-
-History: the site first went out on the free account
-(`shuen.rui@impossible.finance`), whose 24-hour window paused it on
-2026-09-06. That paused site still held the name `local`, so it was deleted
-(its content was already superseded and lives in this repo, including the old
-hand-written dashboard at `dashboard/index.html`) to free the name, which was
-then re-claimed from the Pro account. Site names are global across ifhost
-accounts and first-claim-wins, which is why the reclaim had to happen in the
-same breath as the delete.
+(`ifhost` is the same binary under its old name.) The old address local.host.impossibuild.ai now
+redirects here. After publishing, fetch the page with a cache-buster and compare the bytes with the
+build.
 
 ## Repository
 
-Canonical home: **https://github.com/shuenrui/qwen-local-run** (branch `main`,
+Canonical home: **https://github.com/shuenrui/localhost** (renamed from `qwen-local-run` on 2026-10-12; old links redirect) (branch `main`,
 pushed from this box's `qwen-directory-standalone` branch). The history starts
 with this project; it contains no commits from any other repository. The
 serving and benchmarking stack this directory measures against lives in a

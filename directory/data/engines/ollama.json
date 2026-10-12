@@ -3,12 +3,60 @@
   "name": "Ollama",
   "kind": "runtime",
   "url": "https://github.com/ollama/ollama",
-  "api": ["openai", "native"],
+  "api": [
+    "openai",
+    "native"
+  ],
   "qwen_support": "GGUF-based, one-command pulls for mainstream Qwen sizes. Latest generations and unusual quants lag.",
-  "spec_decode": ["none"],
-  "features": ["one-command-install", "gguf", "modelfile", "vision", "tool-calling"],
-  "notable_flags": ["ollama run <model>", "OLLAMA_NUM_PARALLEL", "num_ctx"],
-  "gotchas": ["Lowest ceiling of the group: no speculative decoding, no NVFP4, limited control over KV dtype."],
+  "spec_decode": [
+    "none"
+  ],
+  "features": [
+    "one-command-install",
+    "gguf",
+    "modelfile",
+    "vision",
+    "tool-calling"
+  ],
+  "notable_flags": [
+    "ollama run <model>",
+    "OLLAMA_NUM_PARALLEL",
+    "num_ctx"
+  ],
+  "gotchas": [
+    "Lowest ceiling of the group: no speculative decoding, no NVFP4, limited control over KV dtype."
+  ],
   "arm64": true,
-  "updated": "2026-09-05"
+  "updated": "2026-10-12",
+  "install": {
+    "source": "https://ollama.com/download/linux",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "macos",
+          "linux"
+        ],
+        "label": "Install script",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "curl -fsSL https://ollama.com/install.sh | sh"
+          }
+        ]
+      },
+      {
+        "platforms": [
+          "windows"
+        ],
+        "label": "PowerShell",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "irm https://ollama.com/install.ps1 | iex"
+          }
+        ]
+      }
+    ]
+  }
 }

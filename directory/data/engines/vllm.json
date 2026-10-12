@@ -3,16 +3,67 @@
   "name": "vLLM",
   "kind": "server",
   "url": "https://github.com/vllm-project/vllm",
-  "api": ["openai"],
+  "api": [
+    "openai"
+  ],
   "qwen_support": "Broad. Official FP8 and most NVFP4 quants. Community mixed-precision quants sometimes need a fork.",
-  "spec_decode": ["mtp", "eagle", "ngram"],
-  "features": ["fp8-kv", "nvfp4", "yarn-long-context", "vision", "tool-calling", "tensor-parallel", "structured-output"],
-  "notable_flags": ["--enable-auto-tool-choice", "--tool-call-parser", "--tensor-parallel-size", "--max-model-len", "--gpu-memory-utilization"],
+  "spec_decode": [
+    "mtp",
+    "eagle",
+    "ngram"
+  ],
+  "features": [
+    "fp8-kv",
+    "nvfp4",
+    "yarn-long-context",
+    "vision",
+    "tool-calling",
+    "tensor-parallel",
+    "structured-output"
+  ],
+  "notable_flags": [
+    "--enable-auto-tool-choice",
+    "--tool-call-parser",
+    "--tensor-parallel-size",
+    "--max-model-len",
+    "--gpu-memory-utilization"
+  ],
   "gotchas": [
     "Tool calling requires --enable-auto-tool-choice explicitly; SGLang does not.",
     "No DSpark or DFlash2 support.",
     "The single-Spark 180B builds rely on memory-mapping the embedding lookup table from disk, which is a builder patch, not stock vLLM behaviour."
   ],
   "arm64": true,
-  "updated": "2026-09-05"
+  "updated": "2026-10-12",
+  "install": {
+    "source": "https://docs.vllm.ai/en/latest/getting_started/quickstart.html",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "linux"
+        ],
+        "label": "uv (NVIDIA CUDA)",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "uv venv --python 3.12 --seed"
+          },
+          {
+            "kind": "cmd",
+            "text": "source .venv/bin/activate"
+          },
+          {
+            "kind": "cmd",
+            "text": "uv pip install vllm --torch-backend=auto"
+          },
+          {
+            "kind": "cmd",
+            "text": "vllm download-kernels"
+          }
+        ],
+        "note": "Quickstart prerequisites: Linux, Python 3.11-3.14. AMD ROCm, Intel, TPU and Apple Silicon have their own tabs in the vLLM installation guide."
+      }
+    ]
+  }
 }

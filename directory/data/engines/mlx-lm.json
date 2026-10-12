@@ -3,12 +3,58 @@
   "name": "MLX / mlx-lm",
   "kind": "runtime",
   "url": "https://github.com/ml-explore/mlx-lm",
-  "api": ["openai"],
+  "api": [
+    "openai"
+  ],
   "qwen_support": "Apple Silicon native. mlx-community publishes 2/3/4/6/8-bit conversions of most Qwen sizes.",
-  "spec_decode": ["none"],
-  "features": ["apple-silicon-native", "unified-memory", "quantized", "vision-via-mlx-vlm"],
-  "notable_flags": ["mlx_lm.generate", "mlx_lm.server", "--max-kv-size"],
-  "gotchas": ["Apple Silicon only. Vision needs mlx-vlm rather than mlx-lm."],
+  "spec_decode": [
+    "none"
+  ],
+  "features": [
+    "apple-silicon-native",
+    "unified-memory",
+    "quantized",
+    "vision-via-mlx-vlm"
+  ],
+  "notable_flags": [
+    "mlx_lm.generate",
+    "mlx_lm.server",
+    "--max-kv-size"
+  ],
+  "gotchas": [
+    "Apple Silicon only. Vision needs mlx-vlm rather than mlx-lm."
+  ],
   "arm64": true,
-  "updated": "2026-09-05"
+  "updated": "2026-10-12",
+  "install": {
+    "source": "https://github.com/ml-explore/mlx-lm",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "macos"
+        ],
+        "label": "pip",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "pip install mlx-lm"
+          }
+        ]
+      },
+      {
+        "platforms": [
+          "macos"
+        ],
+        "label": "conda",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "conda install -c conda-forge mlx-lm"
+          }
+        ]
+      }
+    ],
+    "note": "MLX runs on Apple silicon."
+  }
 }

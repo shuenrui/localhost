@@ -21,7 +21,7 @@ from localhost_cli.fit import classify  # noqa: E402
 APP = os.path.join(REPO, "directory", "site_src", "app.js")
 SITE = sys.argv[1] if len(sys.argv) > 1 else os.path.join(REPO, "directory", "site", "index.html")
 FUNCS = ["gb", "ctx", "uniq", "blankProfile", "defaultReserve", "availableGb", "profileClasses",
-         "archFamily", "familyLabel", "profileArch", "classify"]
+         "archFamily", "familyLabel", "profileArch", "hwRefId", "hwRefCount", "memFit", "hwEntries", "classify"]
 
 PROFILES = {
     "4090_64": {"os": "linux", "gpu": "RTX 4090", "gpuCount": 1, "ramGb": 64, "vramGb": 24, "unified": "separate"},
@@ -33,6 +33,10 @@ PROFILES = {
     "5090win": {"os": "windows", "gpu": "RTX 5090", "gpuCount": 1, "ramGb": 64, "vramGb": 32, "unified": "separate"},
     "dev_strix": {"os": "linux", "ramGb": 128, "unified": "unified", "deviceId": "strix-halo"},
     "pro6000": {"os": "linux", "gpu": "RTX PRO 6000 Blackwell", "gpuCount": 1, "ramGb": 256, "vramGb": 96, "unified": "separate"},
+    "4090_128": {"os": "linux", "gpu": "RTX 4090", "gpuCount": 1, "ramGb": 128, "vramGb": 24, "unified": "separate"},
+    "2x5090": {"os": "linux", "gpu": "RTX 5090", "gpuCount": 2, "ramGb": 128, "vramGb": 64, "unified": "separate"},
+    "3060_16": {"os": "windows", "gpu": "RTX 3060", "gpuCount": 1, "ramGb": 16, "vramGb": 12, "unified": "separate"},
+    "vram_only": {"os": "linux", "gpu": "RTX 4090", "gpuCount": 1, "vramGb": 24, "unified": "separate"},
 }
 
 
@@ -56,6 +60,12 @@ def main():
     js = "\n".join(extract(src, f) for f in FUNCS)
     harness = js + """
 var DATA = %s, HW = DATA.hardware, SETUPS = DATA.setups, P = %s;
+/* same load-time normalization as app.js: keep counts in hwRefs, ids in hardware */
+SETUPS.forEach(function (s) {
+  s.hwRefs = (s.hardware || []).map(function (h) { return { id: hwRefId(h), count: hwRefCount(h) }; })
+    .filter(function (r) { return r.id; });
+  s.hardware = s.hwRefs.map(function (r) { return r.id; });
+});
 var state = {assume: {context: 8192, concurrency: 1, reserve: null}};
 function modelOf(s) { return DATA.models[s.model] || {}; }
 var out = {};
@@ -68,14 +78,8 @@ console.log(JSON.stringify(out));
         path = f.name
     site = json.loads(subprocess.run(["node", path], capture_output=True, text=True, check=True).stdout)
     os.unlink(path)
-    # Known, deliberate divergence: the site never matches hardware entries written as
-    # {"id": ..., "count": N} (indexOf on an object). The CLI matches them when the
-    # machine has >= N devices. Those pairs are reported, not failed.
-    multi = {s["id"]: max((h.get("count") or 1) for h in s["hardware"] if isinstance(h, dict))
-             for s in d.setups if any(isinstance(h, dict) for h in s.get("hardware") or [])}
     bad = 0
     total = 0
-    known = 0
     for k, prof in PROFILES.items():
         base = {"os": "", "chip": "", "gpu": "", "gpuCount": None, "ramGb": None, "vramGb": None, "unified": "", "deviceId": ""}
         base.update(prof)
@@ -83,14 +87,9 @@ console.log(JSON.stringify(out));
             total += 1
             py = classify(s, base, d.hardware)["group"]
             if py != site[k][s["id"]]:
-                if s["id"] in multi and (base.get("gpuCount") or 1) >= multi[s["id"]] and py == "similar":
-                    known += 1
-                    print("KNOWN %s %s: site=%s cli=%s (multi-device entry; site bug)" % (k, s["id"], site[k][s["id"]], py))
-                    continue
                 bad += 1
                 print("MISMATCH %s %s: site=%s cli=%s" % (k, s["id"], site[k][s["id"]], py))
-    print("parity: %d/%d recipe-profile pairs match across %d profiles; %d known divergences; %d unexpected" % (
-        total - bad - known, total, len(PROFILES), known, bad))
+    print("parity: %d/%d recipe-profile pairs match across %d profiles" % (total - bad, total, len(PROFILES)))
     return 1 if bad else 0
 
 

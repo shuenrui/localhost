@@ -1,9 +1,18 @@
-# Qwen Local-Run Directory
+# localhost
+
+Find, set up and run open AI models on your own machine. Formerly the Qwen Local-Run Directory;
+Qwen is the only model family covered today.
+
+- Site: https://local.innstance.app/
+- CLI for people and AI agents: [`cli/`](cli/README.md) (`localhost detect`, `fit`, `guide`, `check`, `connect opencode`)
+- Agent guide: [`llms.txt`](llms.txt)
+
+## The directory
 
 **Find a Qwen setup that fits your hardware, see what performance someone
 actually observed, and get the recipe to run it.**
 
-[Explore the live directory](https://local.host.impossibuild.ai/) |
+[Explore the live directory](https://local.innstance.app/) |
 [Read the data model](directory/SCHEMA.md) |
 [See the technical workflow](directory/README.md)
 
@@ -11,7 +20,7 @@ Every entry is one runnable setup: a specific checkpoint, engine configuration,
 and hardware class. That is the unit that gets run and measured, so the
 directory does not collapse several incompatible recipes into one model row.
 
-![The Qwen Local-Run Directory filtered to owner-measured setups](docs/dashboard-preview.png)
+![The directory filtered to owner-measured setups](docs/dashboard-preview.png)
 
 ## Four tabs
 

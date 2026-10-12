@@ -1,0 +1,40 @@
+# localhost
+
+> Find, set up and run open AI models on your own machine. A directory of source-backed recipes
+> (hardware, memory, measured speed and exact commands), plus a CLI for people and AI agents.
+> Qwen is the only model family covered today.
+
+Site: https://local.innstance.app/ (a JavaScript app; agents should use the CLI or the JSON below)
+
+## Use the CLI (recommended for agents)
+
+```
+pip install "git+https://github.com/shuenrui/localhost.git#subdirectory=cli"
+localhost detect --json            # this machine: GPU, VRAM, RAM, OS, engines, running servers
+localhost fit --json               # every recipe, grouped: exact / similar / estimated / uncertain / unsupported
+localhost guide <recipe-id> --json # ordered steps: engine install (from official docs), setup, start, check
+localhost check --json             # test the running local server with a cold prompt
+localhost connect opencode --json  # OpenCode config for the local model (add --write to apply)
+```
+
+Rules:
+- Copy only steps with `"copyable": true` (or `"kind": "cmd"` in the raw data), word for word.
+  Never invent a command. If the directory records nothing, say so.
+- Prefer `exact`, then `similar`, then `estimated`. Don't attempt `unsupported` recipes. Treat
+  `uncertain` ones as unverified.
+- Run nothing on the user's machine without their agreement.
+
+## Raw data
+
+- One JSON file per recipe: https://github.com/shuenrui/localhost/tree/main/directory/data/setups
+  (raw: https://raw.githubusercontent.com/shuenrui/localhost/main/directory/data/setups/<id>.json)
+- Models: directory/data/models/<id>.json (`practical_baseline` names the simplest recipe)
+- Hardware classes: directory/data/hardware/<id>.json
+- Engines and install steps: directory/data/engines/<id>.json (`install` comes from each engine's official docs)
+- Field reference: https://github.com/shuenrui/localhost/blob/main/directory/SCHEMA.md
+
+## Docs
+
+- [CLI README](https://github.com/shuenrui/localhost/blob/main/cli/README.md)
+- [CLI spec](https://github.com/shuenrui/localhost/blob/main/docs/localhost-cli/SPEC.md)
+- [Methodology and provenance tiers](https://github.com/shuenrui/localhost/blob/main/directory/README.md)

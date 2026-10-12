@@ -3,12 +3,77 @@
   "name": "LM Studio",
   "kind": "app",
   "url": "https://lmstudio.ai/",
-  "api": ["openai"],
+  "api": [
+    "openai"
+  ],
   "qwen_support": "GGUF and MLX via a GUI. Simplest path on Apple Silicon and Windows.",
-  "spec_decode": ["none"],
-  "features": ["gui", "gguf", "mlx", "openai-server", "vision"],
-  "notable_flags": ["lms load <model>", "lms server start"],
-  "gotchas": ["Closed source. Fine for trying a model, not for reproducible benchmarking."],
+  "spec_decode": [
+    "none"
+  ],
+  "features": [
+    "gui",
+    "gguf",
+    "mlx",
+    "openai-server",
+    "vision"
+  ],
+  "notable_flags": [
+    "lms load <model>",
+    "lms server start"
+  ],
+  "gotchas": [
+    "Closed source. Fine for trying a model, not for reproducible benchmarking."
+  ],
   "arm64": true,
-  "updated": "2026-09-05"
+  "updated": "2026-10-12",
+  "install": {
+    "source": "https://lmstudio.ai/download",
+    "retrieved": "2026-10-12",
+    "methods": [
+      {
+        "platforms": [
+          "macos",
+          "linux",
+          "windows"
+        ],
+        "label": "Desktop app",
+        "steps": [
+          {
+            "kind": "do",
+            "text": "Download LM Studio from https://lmstudio.ai/download, install it, and open it once."
+          },
+          {
+            "kind": "cmd",
+            "text": "lms --help"
+          }
+        ],
+        "note": "The lms CLI ships with the app. LM Studio's CLI docs say to run the app at least once before using lms."
+      },
+      {
+        "platforms": [
+          "macos",
+          "linux"
+        ],
+        "label": "Headless (llmster)",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "curl -fsSL https://lmstudio.ai/install.sh | bash"
+          }
+        ]
+      },
+      {
+        "platforms": [
+          "windows"
+        ],
+        "label": "Headless (llmster)",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "irm https://lmstudio.ai/install.ps1 | iex"
+          }
+        ]
+      }
+    ]
+  }
 }
