@@ -2618,7 +2618,17 @@ function route() {
   else if (state.route === "contribute") viewContribute();
   else notFound("The route “" + location.hash + "” does not exist in this directory.");
   renderRail();
+  setDocTitle();
   window.scrollTo(0, 0);
+}
+function setDocTitle() {
+  var base = "Qwen Local-Run Directory", id = (state.params || {}).id, t = "";
+  if (state.route === "recipe") { var s = SETUPS.filter(function (x) { return x.id === id; })[0]; t = s ? s.title : "Recipe not found"; }
+  else if (state.route === "model") { var m = MODELS[id]; t = m ? m.name + " — recipes" : "Model not found"; }
+  else if (state.route === "publisher") { t = ((PUB[id] || {}).name || id || "Publisher"); }
+  else t = { "models-home": "Models", directory: "All recipes", hardware: "Check my hardware", compare: "Compare recipes",
+    methodology: "Methodology", contribute: "Contribute" }[state.route] || "Page not found";
+  document.title = t + " · " + base;
 }
 function setRail(html) { var r = el("rail"); r.innerHTML = html; r.hidden = !html; }
 function announce(msg) { var l = el("live"); if (l) l.textContent = msg; }
