@@ -9,7 +9,7 @@ Qwen is the only model family covered today.
 
 ## The directory
 
-**Find a Qwen setup that fits your hardware, see what performance someone
+**Find a model setup that fits your hardware, see what performance someone
 actually observed, and get the recipe to run it.**
 
 [Explore the live directory](https://local.innstance.app/) |
@@ -26,8 +26,8 @@ directory does not collapse several incompatible recipes into one model row.
 
 | Tab | URL | What it answers |
 |---|---|---|
-| **Models** | `/#/` | *Which Qwen model do I want, and what is its practical hardware floor?* Curated baselines reference exact sourced recipes; missing evidence says `Not verified yet`. |
-| **Recipes** | `/#/recipes` | *What ways exist to run Qwen locally?* Every recipe, grouped into model-family shelves, with no machine selection and no personalization gate. |
+| **Models** | `/#/` | *Which model do I want, and what is its practical hardware floor?* Curated baselines reference exact sourced recipes; missing evidence says `Not verified yet`. |
+| **Recipes** | `/#/recipes` | *What ways exist to run it locally?* Every recipe, grouped into model-family shelves, with no machine selection and no personalization gate. |
 | **My Hardware** | `/#/hardware` | *What can this machine run, and how confident is that?* Every compatibility result states its own memory arithmetic, its assumptions, and whether the evidence came from that exact device or merely a similar one. There is no unconditional "fits" verdict. |
 | **Compare** | `/#/compare` | *How do these 2–4 recipes actually differ?* Seven sections, every axis of incomparability named explicitly, and no winner declared. |
 

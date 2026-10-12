@@ -2490,7 +2490,7 @@ function viewDirectory() {
     "<b>" + SETUPS.length + "</b>" + esc(" recipes across ") + "<b>" + D.model_order.length + "</b>" +
     esc(" model families, each number carrying its source.");
 
-  var h = '<h1 class="sr">Every recorded recipe for running Qwen on hardware you own</h1>' +
+  var h = '<h1 class="sr">Every recorded recipe for running open models on hardware you own</h1>' +
     barHtml(list.length);
   if (state.sort === "speed") {
     h += '<div class="disclose"><b>' + esc("▲ This ordering is a discovery aid, not a leaderboard.") + "</b> " +
@@ -2882,7 +2882,7 @@ function renderModelBar() {
 function viewModelsHome() {
   setRail("");
   var list = modelList();
-  el("mast-note").innerHTML = esc("Every Qwen family with a recorded local lane. Open a family to preview featured recipes, then view the complete recipe list.");
+  el("mast-note").innerHTML = esc("Every model family you can run on your own machine. Open a family to see its featured recipes, then the full list.");
 
   var h = '<div class="models-home">' + miBand() + tocControls(list);
   if (!list.length) {
@@ -3889,7 +3889,7 @@ function viewMethodology() {
     "</ul></div>";
 
   h += '<div class="psec"><h2>Scope</h2><p>' +
-    esc("The family list covers Qwen 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches with a plausible single-box local lane. Deliberately excluded: cluster-scale models with no single-box lane, sub-4B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
+    esc("Today the directory covers one model line, Qwen: the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches with a plausible single-box local lane. Deliberately excluded: cluster-scale models with no single-box lane, sub-4B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
     "</p></div></div>";
   el("main").innerHTML = h;
 }
