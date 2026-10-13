@@ -4,7 +4,7 @@
   "family": "Qwen3.6",
   "generation": "3.6",
   "publisher": "qwen",
-  "released": "2026",
+  "released": "2026-04",
   "license": "Apache-2.0",
   "architecture": {
     "kind": "moe",
@@ -37,5 +37,6 @@
     "rationale": "The most accessible reported 4-bit lane: a 32-64 GB Apple Silicon class with its SSD-streaming dependency stated.",
     "reviewed": "2026-09-12"
   },
-  "updated": "2026-09-12"
+  "updated": "2026-09-12",
+  "released_note": "Month of the Hugging Face repo's creation date (retrieved 2026-10-13); the publisher's exact launch day is not recorded here."
 }

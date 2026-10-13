@@ -33,5 +33,7 @@
     "reason": "One recipe on record; not reviewed as a practical baseline yet.",
     "reviewed": "2026-10-13"
   },
-  "updated": "2026-10-13"
+  "updated": "2026-10-13",
+  "released": "2026-04",
+  "released_note": "Month of the Hugging Face repo's creation date (retrieved 2026-10-13); the publisher's exact launch day is not recorded here."
 }

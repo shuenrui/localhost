@@ -4,7 +4,7 @@
   "family": "Qwen3.6",
   "generation": "3.6",
   "publisher": "qwen",
-  "released": "2026",
+  "released": "2026-04",
   "license": "Apache-2.0",
   "architecture": {
     "kind": "dense",
@@ -31,5 +31,6 @@
     "rationale": "A reported quality-gated Q4 lane that remains within one 24 GB consumer GPU.",
     "reviewed": "2026-09-12"
   },
-  "updated": "2026-09-12"
+  "updated": "2026-09-12",
+  "released_note": "Month of the Hugging Face repo's creation date (retrieved 2026-10-13); the publisher's exact launch day is not recorded here."
 }

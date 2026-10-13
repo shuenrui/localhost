@@ -4,7 +4,7 @@
   "family": "Qwen3.0",
   "generation": "3.0",
   "publisher": "qwen",
-  "released": "2025",
+  "released": "2025-04",
   "license": "Apache-2.0",
   "architecture": {
     "kind": "moe",
@@ -32,5 +32,6 @@
     "rationale": "The only reported stable 4-bit-or-better lane, with a reproducible MLX server recipe and single-stream decode measurement.",
     "reviewed": "2026-09-12"
   },
-  "updated": "2026-09-12"
+  "updated": "2026-09-12",
+  "released_note": "Month of the Hugging Face repo's creation date (retrieved 2026-10-13); the publisher's exact launch day is not recorded here."
 }

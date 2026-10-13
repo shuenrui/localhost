@@ -4,7 +4,7 @@
   "family": "Qwen3.5",
   "generation": "3.5",
   "publisher": "qwen",
-  "released": "2026",
+  "released": "2026-02",
   "license": "Apache-2.0",
   "architecture": {
     "kind": "dense",
@@ -31,5 +31,6 @@
     "reason": "No reported or measured stable 4-bit-or-better run is currently recorded.",
     "reviewed": "2026-09-12"
   },
-  "updated": "2026-09-12"
+  "updated": "2026-09-12",
+  "released_note": "Month of the Hugging Face repo's creation date (retrieved 2026-10-13); the publisher's exact launch day is not recorded here."
 }

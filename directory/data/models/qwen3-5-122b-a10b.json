@@ -4,7 +4,7 @@
   "family": "Qwen3.5",
   "generation": "3.5",
   "publisher": "qwen",
-  "released": "2026",
+  "released": "2026-02",
   "license": "Apache-2.0",
   "architecture": {
     "kind": "moe",
@@ -32,5 +32,6 @@
     "rationale": "The smallest well-documented reported 4-bit single-appliance lane, with substantial headroom and single-stream measurements.",
     "reviewed": "2026-09-12"
   },
-  "updated": "2026-09-12"
+  "updated": "2026-09-12",
+  "released_note": "Month of the Hugging Face repo's creation date (retrieved 2026-10-13); the publisher's exact launch day is not recorded here."
 }

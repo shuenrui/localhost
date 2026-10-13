@@ -329,7 +329,24 @@ function makerOf(m) {
   var cls = m.publisher === "qwen" ? "mk-qwen" : m.publisher === "google" ? "mk-google" : "mk-other";
   return { name: name, cls: cls };
 }
-function genCompare(a, b) { return (genRank(a) - genRank(b)) || ((parseFloat(b) || 0) - (parseFloat(a) || 0)); }
+/* Series are ordered newest first by when the series started: the month of its
+   earliest recorded release. Same month: model lines first, then derived, then decision. */
+var SERIES_START = null;
+function seriesStart(g) {
+  if (!SERIES_START) {
+    SERIES_START = {};
+    Object.keys(MODELS).forEach(function (id) {
+      var m = MODELS[id], k = String(m.generation || ""), r = String(m.released || "").slice(0, 7);
+      if (r && (!SERIES_START[k] || r < SERIES_START[k])) SERIES_START[k] = r;
+    });
+  }
+  return SERIES_START[String(g || "")] || "";
+}
+function genCompare(a, b) {
+  var sa = seriesStart(a), sb = seriesStart(b);
+  if (sa !== sb) return sb.localeCompare(sa);
+  return (genRank(a) - genRank(b)) || ((parseFloat(b) || 0) - (parseFloat(a) || 0));
+}
 function pubOf(s) { return (s.variation || {}).publisher || ""; }
 /* Featured recipes give every provider a turn: a provider already in the strip
    only gets another slot once no other provider has a recipe left, except the
@@ -1423,7 +1440,6 @@ function miGroups(list, sel) {
         var shown = showAll ? all : all.slice(0, LIMIT);
         var h = shown.map(function (m) { n += 1; return miFam(m, pad2(n), m.id === sel); }).join("");
         if (extra > 0) {
-          n += showAll ? 0 : extra;
           h += '<li class="mi-more"><button type="button" class="mi-more-btn" data-smore="' + esc(sec.g) + '" aria-expanded="' + showAll + '">' +
             esc(showAll ? "Show fewer" : "Show " + extra + " more in " + genLabel(sec.g)) + "</button></li>";
         }
