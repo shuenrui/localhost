@@ -1,8 +1,8 @@
 {
-  "id": "qwen38-27b-saluki-iq2mix-llamacpp",
-  "title": "Qwen3.8-27B as Underdog Saluki (7.9 GB 2-bit) on stock llama.cpp",
+  "id": "underdog-saluki-27b-iq2mix-llamacpp",
+  "title": "Underdog Saluki 27B (7.9 GB 2-bit) on stock llama.cpp",
   "slug_note": "A 2-bit Qwen3.8-27B tuned to keep tool calling; one GGUF for stock llama.cpp, fits a 12 GB card.",
-  "model": "qwen3-8-27b",
+  "model": "underdog-saluki-27b",
   "status": "reported",
   "variation": {
     "license": "Apache-2.0",

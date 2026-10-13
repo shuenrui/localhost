@@ -1,0 +1,37 @@
+{
+  "id": "minicpm-v-4-7-35b-a3b",
+  "name": "MiniCPM-V 4.7 35B-A3B",
+  "family": "MiniCPM-V 4.7",
+  "generation": "derived",
+  "publisher": "openbmb",
+  "released": "2026-10-07",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-6-35b-a3b",
+    "note": "OpenBMB's vision model on the Qwen3.6-35B-A3B language backbone (the card credits 'Qwen3.6 for providing the language backbone'), with its own vision encoder."
+  },
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 35.2,
+    "params_active_b": 3,
+    "anatomy": "35,212,875,824 parameters per the Hugging Face API; '3B active' from the A3B name and the Qwen3.6-35B-A3B backbone"
+  },
+  "context": {
+    "native": null,
+    "max": null
+  },
+  "modalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B",
+  "summary": "A vision-first MoE from OpenBMB on the Qwen3.6-35B-A3B backbone. OpenBMB reports it ahead of Qwen3.6-35B-A3B on 5 of 8 text benchmarks and most vision ones; not independently checked.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run is recorded yet, and the card gives no literal llama.cpp command.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

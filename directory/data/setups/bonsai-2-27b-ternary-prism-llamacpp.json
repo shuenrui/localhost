@@ -1,8 +1,8 @@
 {
-  "id": "qwen38-27b-bonsai2-ternary-prism-llamacpp",
-  "title": "Qwen3.8-27B as Ternary Bonsai 2 (5.95-7.2 GB) on PrismML's llama.cpp",
+  "id": "bonsai-2-27b-ternary-prism-llamacpp",
+  "title": "Bonsai 2 27B (ternary, 5.95-7.2 GB) on PrismML's llama.cpp",
   "slug_note": "PrismML retrained Qwen3.8-27B to ternary weights: the whole 27B in about 6-7 GB, 262K context on a 12 GB card.",
-  "model": "qwen3-8-27b",
+  "model": "bonsai-2-27b",
   "status": "reported",
   "variation": {
     "license": "Apache-2.0",

@@ -313,15 +313,34 @@ function featureNovelty(s, chosen) {
   });
   return (newHardware ? 2 : 0) + (newEngine ? 1 : 0);
 }
+/* Series = model line + generation. Qwen generations are numbers; Gemma 4 is "4";
+   models built on another model (Bonsai, Saluki, MiniCPM-V) are "derived". */
+function genLabel(g) {
+  g = String(g || "");
+  return g === "4" ? "Gemma 4" : g === "derived" ? "Built on other models" : "Qwen" + g;
+}
+function genRank(g) { g = String(g || ""); return g === "derived" ? 2 : g === "4" ? 1 : 0; }
+function genCompare(a, b) { return (genRank(a) - genRank(b)) || ((parseFloat(b) || 0) - (parseFloat(a) || 0)); }
+function pubOf(s) { return (s.variation || {}).publisher || ""; }
+/* Featured recipes give every provider a turn: a provider already in the strip
+   only gets another slot once no other provider has a recipe left, except the
+   single fastest recorded recipe, which is always eligible. */
 function featuredRecipes(m, list) {
   var chosen = [], baseline = baselineSetup(m);
+  var fastest = list.filter(repDecode).sort(function (a, b) { return repDecode(b).value - repDecode(a).value; })[0] || null;
   if (baseline && list.some(function (s) { return s.id === baseline.id; })) chosen.push(baseline);
   while (chosen.length < 5 && chosen.length < list.length) {
     var candidates = list.filter(function (s) {
       return !chosen.some(function (x) { return x.id === s.id; });
     });
+    var seen = function (s) {
+      if (fastest && s.id === fastest.id) return 0;
+      return chosen.some(function (x) { return pubOf(x) === pubOf(s); }) ? 1 : 0;
+    };
     candidates.sort(function (a, b) {
-      var d = featureEvidenceRank(a) - featureEvidenceRank(b);
+      var d = seen(a) - seen(b);
+      if (d) return d;
+      d = featureEvidenceRank(a) - featureEvidenceRank(b);
       if (d) return d;
       d = featureNovelty(b, chosen) - featureNovelty(a, chosen);
       if (d) return d;
@@ -402,7 +421,7 @@ function facetValues(key) {
     (Array.isArray(v) ? v : [v]).forEach(function (x) { if (x !== "" && x != null) counts[x] = (counts[x] || 0) + 1; });
   });
   return Object.keys(counts).sort(function (a, b) {
-    if (key === "gen") return ((a === "4") - (b === "4")) || parseFloat(b) - parseFloat(a);  /* Gemma 4 after Qwen */
+    if (key === "gen") return genCompare(a, b);
     return counts[b] - counts[a] || String(a).localeCompare(String(b));
   }).map(function (v) { return { v: v, n: counts[v], name: (f.name ? f.name(v) : v) }; });
 }
@@ -440,7 +459,7 @@ function activeFilters() {
 
 var SORTS = {
   updated: { label: "Recently updated", key: function (s) { return -(days(s.updated) == null ? 1e9 : days(s.updated)); } },
-  generation: { label: "Model generation", key: function (s) { var m = modelOf(s); return parseFloat(m.generation || 0) * 1e4 + ((m.architecture || {}).params_total_b || 0); } },
+  generation: { label: "Model generation", key: function (s) { var m = modelOf(s); return (parseFloat(m.generation) || 0) * 1e4 + ((m.architecture || {}).params_total_b || 0); } },
   size: { label: "Model size", key: function (s) { return (modelOf(s).architecture || {}).params_total_b || 0; } },
   easiest: { label: "Easiest to run", key: function (s) { return -complexity(s) * 10 - ((s.run || {}).command ? 0 : 1); } },
   complete: { label: "Most complete", key: function (s) {
@@ -975,7 +994,8 @@ function shelfHead(mid, shown, total) {
     '<span class="shelf-meta"><b>' + esc(shown === total ? plural(total, "recipe") : shown + " of " + total + " recipes") +
     "</b> · " + esc(measured + " measured") + " · " + esc("updated " + (upd || "—")) + "</span></div>" +
     '<div class="spec">' +
-    fld("Generation", esc(m.generation || "")) +
+    fld("Generation", esc(genLabel(m.generation))) +
+    (m.based_on ? fld("Based on", basedOnHtml(m)) : "") +
     fld("Architecture", esc(a.kind === "moe" ? "MoE" : a.kind || "")) +
     fld("Total params", a.params_total_b != null ? esc(a.params_total_b + "B") : null) +
     fld("Active params", active) +
@@ -1079,7 +1099,7 @@ function railHtml(groups) {
   var gens = facetValues("gen");
   h += '<div class="rail-grp"><span class="lbl">Generation</span><ul>' + gens.map(function (g) {
     var fams = uniq(SETUPS.filter(function (s) { return String(modelOf(s).generation) === g.v; }).map(function (s) { return s.model; })).length;
-    return item((g.v === "4" ? "Gemma " : "Qwen ") + g.v, fams, '<button type="button" data-rail-f="gen" data-rail-v="' + esc(g.v) + '"' +
+    return item(genLabel(g.v), fams, '<button type="button" data-rail-f="gen" data-rail-v="' + esc(g.v) + '"' +
       (state.f.gen === g.v ? ' aria-pressed="true"' : "") + ">");
   }).join("") + "</ul></div>";
 
@@ -1188,10 +1208,10 @@ function modelOptions(field) {
     if (v) counts[v] = (counts[v] || 0) + 1;
   });
   return Object.keys(counts).sort(function (a, b) {
-    return field === "generation" ? (((a === "4") - (b === "4")) || parseFloat(b) - parseFloat(a)) : a.localeCompare(b);
+    return field === "generation" ? genCompare(a, b) : a.localeCompare(b);
   }).map(function (v) {
     var selected = (field === "generation" ? state.modelGen : state.modelArch) === v;
-    var label = (field === "generation" ? (v === "4" ? "Gemma " : "Qwen ") : "") + (v === "moe" ? "MoE" : v) + " (" + counts[v] + ")";
+    var label = (field === "generation" ? genLabel(v) : (v === "moe" ? "MoE" : v)) + " (" + counts[v] + ")";
     return '<option value="' + esc(v) + '"' + (selected ? " selected" : "") + '>' + esc(label) + '</option>';
   }).join("");
 }
@@ -1326,10 +1346,7 @@ function seriesOf(list) {
     if (!row) { row = { g: g, models: [] }; gens.push(row); }
     row.models.push(m);
   });
-  gens.sort(function (a, b) {
-    var ga = a.g === "4" ? 1 : 0, gb = b.g === "4" ? 1 : 0;  /* Gemma 4 series after the Qwen series */
-    return ga !== gb ? ga - gb : parseFloat(b.g) - parseFloat(a.g);
-  });
+  gens.sort(function (a, b) { return genCompare(a.g, b.g); });
   return gens;
 }
 function seriesRange(models) {
@@ -1378,7 +1395,7 @@ function miGroups(list, sel) {
     var recipes = sec.models.reduce(function (acc, m) { return acc + modelRecipes(m.id).length; }, 0);
     var range = seriesRange(sec.models);
     return '<li class="toc-sec" data-toc-series="' + esc(sec.g) + '">' +
-      '<div class="mi-rail"><div class="mi-rail-t">' + esc((sec.g === "4" ? "Gemma 4" : "Qwen" + sec.g) + " series") + "</div>" +
+      '<div class="mi-rail"><div class="mi-rail-t">' + esc(sec.g === "derived" ? genLabel(sec.g) : genLabel(sec.g) + " series") + "</div>" +
       '<div class="mi-rail-m">' + esc(sec.models.length + (sec.models.length === 1 ? " family" : " families") +
         " \u00b7 " + recipes + (recipes === 1 ? " recipe" : " recipes")) + "</div>" +
       (range ? '<div class="mi-rail-d">' + esc(range) + "</div>" : "") + "</div>" +
@@ -2383,11 +2400,17 @@ function featuredRecipeTable(m, list) {
     '</tbody></table></div><a class="btn btn-p featured-all" href="#/recipes?family=' + encodeURIComponent(m.id) + '">' +
     esc("View all " + plural(list.length, "recipe")) + "</a></section>";
 }
+function basedOnHtml(m) {
+  var b = m.based_on || {}, base = MODELS[b.model];
+  return (base ? '<a href="#/models/' + esc(b.model) + '">' + esc(base.name) + "</a>" : esc(b.model || "")) +
+    (b.note ? ' <span class="g">' + esc(b.note) + "</span>" : "");
+}
 function modelDetails(m) {
   var a = m.architecture || {}, c = m.context || {};
   var h = '<details class="model-details"><summary>Model details and limits</summary><div class="model-details-body">';
   if (m.summary) h += '<p class="lede">' + esc(m.summary) + "</p>";
-  h += '<div class="kv two"><dt>Generation</dt><dd>' + esc(m.generation) + "</dd>" +
+  h += '<div class="kv two"><dt>Generation</dt><dd>' + esc(genLabel(m.generation)) + "</dd>" +
+    (m.based_on ? "<dt>Based on</dt><dd>" + basedOnHtml(m) + "</dd>" : "") +
     "<dt>Architecture</dt><dd>" + esc(a.kind === "moe" ? "MoE" : a.kind || "") + (a.hybrid ? esc(" · hybrid") : "") + "</dd>" +
     "<dt>Total params</dt><dd>" + (a.params_total_b != null ? esc(a.params_total_b + "B") : na()) + "</dd>" +
     "<dt>Active params</dt><dd>" + (a.params_active_b != null ? esc(a.params_active_b + "B") : (a.kind === "dense" ? esc("all — dense") : na())) + "</dd>" +

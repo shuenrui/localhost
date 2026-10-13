@@ -1,0 +1,46 @@
+{
+  "id": "underdog-saluki-27b",
+  "name": "Underdog Saluki 27B",
+  "family": "Saluki",
+  "generation": "derived",
+  "publisher": "underdog",
+  "released": "2026-10-08",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-27b",
+    "note": "A 2-bit (IQ2-mix) Qwen3.8-27B tuned by Underdog to keep tool calling, built from ISTA-DASLab's GSQ-RCO GGUF. Underdog's own benchmark: 96% average retention across 9 benchmarks."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 27.8,
+    "params_active_b": 27.8,
+    "layers": 64,
+    "layer_mix": "48 linear (Gated DeltaNet) + 16 full attention, every 4th layer full",
+    "hybrid": true,
+    "mtp_head": true,
+    "thinking_depths": [
+      "low",
+      "medium",
+      "xhigh"
+    ],
+    "default_thinking": "xhigh"
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "kv_bytes_per_token": 32768,
+  "url": "https://huggingface.co/ConwayResearch/Underdog-Saluki-27B-1.0",
+  "summary": "Underdog's tool-calling-tuned 2-bit Qwen3.8-27B: one 7.9 GB GGUF for stock llama.cpp, aimed at 12 GB GPUs.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Only sub-4-bit builds exist for this model, so the directory's 4-bit-or-better baseline policy cannot select one. Pick by your hardware.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "bonsai-2-27b",
+  "name": "Bonsai 2 27B",
+  "family": "Bonsai 2",
+  "generation": "derived",
+  "publisher": "prismml",
+  "released": "2026-09-17",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-27b",
+    "note": "PrismML retrained Qwen3.8-27B's weights to ternary {-1, 0, +1}. Same architecture; 5.9 GB instead of 54 GB. PrismML's 20-benchmark suite: 83.9 vs 85.4 for Qwen3.8-27B (98.2% retained)."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 27.8,
+    "params_active_b": 27.8,
+    "layers": 64,
+    "layer_mix": "48 linear (Gated DeltaNet) + 16 full attention, every 4th layer full",
+    "hybrid": true,
+    "mtp_head": true,
+    "thinking_depths": [
+      "low",
+      "medium",
+      "xhigh"
+    ],
+    "default_thinking": "xhigh"
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "kv_bytes_per_token": 32768,
+  "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf",
+  "summary": "A ternary retrain of Qwen3.8-27B by PrismML: the 27B design in about 6-7 GB, so it runs on a 12 GB GPU or a 16 GB laptop with the full 262K window. Needs PrismML's own llama.cpp or MLX build.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Only sub-4-bit builds exist for this model, so the directory's 4-bit-or-better baseline policy cannot select one. Pick by your hardware.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}
