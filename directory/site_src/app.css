@@ -1273,7 +1273,8 @@ tr.det>td{padding:0;border-bottom:1px solid var(--rule-2)}
 .qs-new{margin:0 0 6px;color:var(--ink);font-size:14px;line-height:1.5}
 
 /* Models index: maker badge and the per-series "Show N more" toggle */
-.mi-maker{flex:none;align-self:center;font:600 10px/1 var(--font-ui);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.mi-maker{flex:none;align-self:center;font:650 9.5px/1 var(--font-ui);letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 6px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
 .mk-qwen{color:#6a4cc2}
 .mk-google{color:#1a6fd8}
 .mk-other{color:#a0611c}
@@ -1286,6 +1287,7 @@ tr.det>td{padding:0;border-bottom:1px solid var(--rule-2)}
   :root:not([data-theme="light"]) .mk-other{color:#e0a45c}
 }
 .mi-more{list-style:none;padding:6px 0 10px}
-.mi-more-btn{min-height:var(--ctl-h);background:none;border:1px solid var(--rule-2);border-radius:4px;padding:6px 12px;
-  font:600 13px/1.2 var(--font-ui);color:var(--ink-2);cursor:pointer}
-.mi-more-btn:hover{border-color:var(--rule-3);color:var(--ink)}
+.mi-more-btn{background:none;border:0;padding:4px 0;min-height:0;
+  font:500 13px/1.3 var(--font-ui);color:var(--ink-3);cursor:pointer}
+.mi-more-btn:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.mi-more-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
