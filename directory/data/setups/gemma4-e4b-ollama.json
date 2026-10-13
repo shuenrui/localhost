@@ -1,0 +1,80 @@
+{
+  "id": "gemma4-e4b-ollama",
+  "title": "Gemma 4 E4B via Ollama (default tag)",
+  "slug_note": "The one-command way to run Gemma 4's edge model on a laptop or small GPU.",
+  "model": "gemma-4-e4b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:gemma4:e4b",
+    "publisher": "ollama",
+    "quant": "gguf-q4",
+    "quant_detail": "Ollama's default `gemma4:e4b` tag, 4-bit class; the tag page lists 6.6GB - 9.5GB and does not name the exact quant",
+    "format": "gguf",
+    "size_gb": 6.6,
+    "url": "https://ollama.com/library/gemma4"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 10,
+    "disk_gb": 6.6,
+    "min_vram_gb": null,
+    "notes": "Estimate from the tag size (6.6GB - 9.5GB) plus KV headroom at Ollama's default context. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://ollama.com/library/gemma4",
+    "command": "ollama run gemma4:e4b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run gemma4:e4b"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
+    "The model card lists audio input, but Ollama's tag page lists text and image input only."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/gemma4",
+      "kind": "docs",
+      "note": "Ollama library page: tags, sizes and run commands"
+    },
+    {
+      "url": "https://huggingface.co/google/gemma-4-E4B-it",
+      "kind": "model",
+      "note": "official model card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

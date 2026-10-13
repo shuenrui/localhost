@@ -1,0 +1,36 @@
+{
+  "id": "gemma-4-12b",
+  "name": "Gemma 4 12B",
+  "family": "Gemma 4",
+  "generation": "4",
+  "line": "Gemma",
+  "publisher": "google",
+  "released": "2026-05",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 11.95,
+    "params_active_b": 11.95,
+    "layers": 48,
+    "layer_mix": "sliding-window attention with periodic full-attention layers (see config.json layer_types)",
+    "hybrid": false
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image",
+    "audio"
+  ],
+  "url": "https://huggingface.co/google/gemma-4-12B-it",
+  "summary": "Mid-size dense model, 256K context, text + image + audio in. About 7-8 GB at 4-bit, so it fits a 12 GB card with room for context.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run is recorded yet. The Ollama default tag is the simplest recorded path.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

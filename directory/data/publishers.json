@@ -216,6 +216,36 @@
       "kind": "individual",
       "role": "Community uncensored GGUF quants of Qwen3.8-27B.",
       "url": "https://huggingface.co/JonathanColetti"
+    },
+    "google": {
+      "name": "Google DeepMind",
+      "kind": "lab",
+      "role": "Original Gemma 4 weights (E2B, E4B, 12B, 26B-A4B, 31B) plus official QAT Q4_0 GGUF exports.",
+      "url": "https://huggingface.co/google"
+    },
+    "prismml": {
+      "name": "PrismML",
+      "kind": "lab",
+      "role": "Bonsai: end-to-end ternary (1.58-bit) and 1-bit retrains of Qwen models, with their own llama.cpp and MLX kernels.",
+      "url": "https://huggingface.co/prism-ml"
+    },
+    "underdog": {
+      "name": "Underdog AI (ConwayResearch)",
+      "kind": "lab",
+      "role": "Saluki: a 2-bit Qwen3.8-27B GGUF tuned to keep tool calling, for stock llama.cpp.",
+      "url": "https://huggingface.co/ConwayResearch"
+    },
+    "ista-daslab": {
+      "name": "IST Austria DASLab",
+      "kind": "lab",
+      "role": "GSQ-RCO mixed-precision GGUFs (2-3.5 bits) with per-file accuracy tables against BF16 and Unsloth UD.",
+      "url": "https://huggingface.co/ISTA-DASLab"
+    },
+    "openbmb": {
+      "name": "OpenBMB",
+      "kind": "lab",
+      "role": "MiniCPM-V vision models; MiniCPM-V 4.7 35B-A3B uses Qwen3.6 as its language backbone.",
+      "url": "https://huggingface.co/openbmb"
     }
   }
 }

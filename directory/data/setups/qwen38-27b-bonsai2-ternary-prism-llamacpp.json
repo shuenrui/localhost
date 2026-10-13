@@ -1,0 +1,224 @@
+{
+  "id": "qwen38-27b-bonsai2-ternary-prism-llamacpp",
+  "title": "Qwen3.8-27B as Ternary Bonsai 2 (5.95-7.2 GB) on PrismML's llama.cpp",
+  "slug_note": "PrismML retrained Qwen3.8-27B to ternary weights: the whole 27B in about 6-7 GB, 262K context on a 12 GB card.",
+  "model": "qwen3-8-27b",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+    "publisher": "prismml",
+    "quant": "other",
+    "quant_detail": "Ternary {-1,0,+1} weights. PTQ1_0 packing 1.75 bits/weight (5.95 GB); PQ2_0 2.13 bits/weight (7.21 GB). Card: 98.2% of FP16 benchmark average retained.",
+    "format": "gguf",
+    "size_gb": 5.95,
+    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "PrismML llama.cpp fork (ternary hybrid-attention kernels). Stock llama.cpp rejects PTQ1_0/PQ2_0.",
+    "image": null,
+    "requires_fork": true,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [],
+    "fork_revision": {
+      "repo": "https://github.com/PrismML-Eng/llama.cpp",
+      "branch": "prism",
+      "anchor_date": "2026-09-16",
+      "resolution": "page_retrieval",
+      "source": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf",
+      "locator": "card: 'These files need our llama.cpp build'",
+      "retrieved": "2026-10-13",
+      "note": "The card states stock llama.cpp rejects PTQ1_0/PQ2_0 as unknown types."
+    },
+    "kernel_patches": [
+      {
+        "id": "ternary-hybrid-attention",
+        "purpose": "Ternary hybrid-attention kernels for Bonsai's {-1,0,+1} weights",
+        "source": "https://github.com/PrismML-Eng/llama.cpp",
+        "locator": "PrismML-Eng/llama.cpp fork, prism branch"
+      }
+    ]
+  },
+  "hardware": [
+    "gpu-12gb"
+  ],
+  "requirements": {
+    "memory_gb": 8,
+    "disk_gb": 8,
+    "min_vram_gb": null,
+    "notes": "RTX 3060 12 GB report (PTQ1_0, q4 KV cache, flash attention): 7.3 GB resident at a 64K window, 11.7 GB at the full 262K window. The demo downloads PQ2_0 plus the vision projector (7.8 GB)."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://github.com/PrismML-Eng/Bonsai-demo",
+    "command": "./scripts/start_llama_server.sh",
+    "steps": [
+      {
+        "kind": "cmd",
+        "text": "git clone https://github.com/PrismML-Eng/Bonsai-demo.git"
+      },
+      {
+        "kind": "cmd",
+        "text": "cd Bonsai-demo"
+      },
+      {
+        "kind": "cmd",
+        "text": "./setup.sh"
+      },
+      {
+        "kind": "cmd",
+        "text": "./scripts/start_llama_server.sh"
+      },
+      {
+        "kind": "do",
+        "text": "Open http://localhost:8080. setup.sh fetches PrismML's llama.cpp binaries and the PQ2_0 weights (7.8 GB with the vision projector); set BONSAI_OPENWEBUI=0 and BONSAI_CODE_INTERPRETER=0 to skip the extras."
+      },
+      {
+        "kind": "do",
+        "text": "The 12 GB report used the smaller PTQ1_0 file (5.95 GB) to fit the full 262K window; PrismML's card says PTQ1_0 also decodes faster on Ada cards (RTX 4090)."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "m001",
+      "metric": "decode_per_stream",
+      "value": 24.4,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-09-18",
+      "source": "https://x.com/sudoingX/status/2101034100778004564",
+      "context": "7k deep, live server, thinking on",
+      "conditions": {
+        "context_label": "7k deep",
+        "hardware_count": 1,
+        "hardware_variant_id": null,
+        "kv_dtype": "q4",
+        "thinking": true
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "sudoingx-bonsai2-3060",
+        "quality_status": "unchecked"
+      }
+    },
+    {
+      "id": "m002",
+      "metric": "decode_per_stream",
+      "value": 13.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-09-18",
+      "source": "https://x.com/sudoingX/status/2101034100778004564",
+      "context": "77k deep",
+      "conditions": {
+        "context_label": "77k deep",
+        "hardware_count": 1,
+        "kv_dtype": "q4",
+        "thinking": true
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "sudoingx-bonsai2-3060",
+        "quality_status": "unchecked"
+      }
+    },
+    {
+      "id": "m003",
+      "metric": "prefill_tok_s",
+      "value": 295,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-09-18",
+      "source": "https://x.com/sudoingX/status/2101034100778004564",
+      "context": "prefill at 2k of context",
+      "conditions": {
+        "context_label": "2k",
+        "hardware_count": 1,
+        "kv_dtype": "q4"
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "sudoingx-bonsai2-3060",
+        "quality_status": "unchecked"
+      }
+    }
+  ],
+  "caveats": [
+    "Not stock llama.cpp: the files need PrismML's fork. Stock llama.cpp rejects PTQ1_0/PQ2_0 and loads Q2_0 silently as garbage (per the card).",
+    "m001-m003 are one builder's RTX 3060 12 GB report (PTQ1_0, prebuilt CUDA 12.4 fork binary, full 262K window, q4 KV). m004-m005 are PrismML's own llama-bench table.",
+    "Quality figures (83.9 vs 85.4 for Qwen3.8-27B, 98.2% retained) are PrismML's own 20-benchmark suite, not independently reproduced.",
+    "Thinking is on by default at xhigh effort; give a large output limit (the card suggests -n 16384)."
+  ],
+  "provenance_tier": "forum",
+  "sources": [
+    {
+      "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf",
+      "kind": "model",
+      "note": "GGUF card: packings, fork requirement, llama-bench table",
+      "lineage_id": "prismml-bonsai2-card"
+    },
+    {
+      "url": "https://github.com/PrismML-Eng/Bonsai-demo",
+      "kind": "repo",
+      "note": "PrismML's demo repo: setup.sh and server scripts (the card calls it the source of truth)",
+      "lineage_id": "prismml-bonsai2-card"
+    },
+    {
+      "url": "https://x.com/sudoingX/status/2101034100778004564",
+      "kind": "post",
+      "note": "RTX 3060 12 GB receipt sheet: speed by depth, memory by window",
+      "lineage_id": "sudoingx-bonsai2-3060"
+    },
+    {
+      "url": "https://www.prnewswire.com/news-releases/prismml-launches-bonsai-2-27b-its-most-capable-model-yet-302882228.html",
+      "kind": "blog",
+      "note": "launch press release, 2026-09-17",
+      "lineage_id": "prismml-bonsai2-card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2,
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "prismml-bonsai2-card",
+        "actor": "PrismML",
+        "publisher": "prismml",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf"
+        ],
+        "locator": "GGUF card: packings, throughput table, llama-bench numbers",
+        "note": "Vendor-published card; llama-bench numbers are vendor-run."
+      },
+      {
+        "id": "sudoingx-bonsai2-3060",
+        "actor": "sudoingX",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/sudoingX/status/2101034100778004564"
+        ],
+        "locator": "post 2101034100778004564, 2026-09-18T19:42:19Z",
+        "note": "Single-post builder report: RTX 3060 12 GB, PTQ1_0, PrismML fork binary, full 262K window."
+      }
+    ]
+  }
+}

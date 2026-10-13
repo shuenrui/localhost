@@ -1,0 +1,175 @@
+{
+  "id": "qwen38-27b-saluki-iq2mix-llamacpp",
+  "title": "Qwen3.8-27B as Underdog Saluki (7.9 GB 2-bit) on stock llama.cpp",
+  "slug_note": "A 2-bit Qwen3.8-27B tuned to keep tool calling; one GGUF for stock llama.cpp, fits a 12 GB card.",
+  "model": "qwen3-8-27b",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ConwayResearch/Underdog-Saluki-27B-1.0",
+    "publisher": "underdog",
+    "quant": "gguf-q2",
+    "quant_detail": "IQ2-mix GGUF, 7.9 GB; built from ISTA-DASLab's GSQ-RCO GGUF and tuned for tool calling",
+    "format": "gguf",
+    "size_gb": 7.9,
+    "url": "https://huggingface.co/ConwayResearch/Underdog-Saluki-27B-1.0"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "stock llama-server, all layers on GPU, flash attention",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "--jinja",
+      "-ngl 99",
+      "-fa on",
+      "-c 32768"
+    ]
+  },
+  "hardware": [
+    "gpu-12gb"
+  ],
+  "requirements": {
+    "memory_gb": 10,
+    "disk_gb": 8.8,
+    "min_vram_gb": null,
+    "notes": "Estimate: 7.9 GB weights plus KV. One RTX 3060 12 GB report ran 170K context with a q4_0 KV cache."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/ConwayResearch/Underdog-Saluki-27B-1.0",
+    "command": "llama-server -m Underdog-Saluki-27B-1.0-IQ2-mix.gguf --jinja -ngl 99 -fa on -c 32768",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "huggingface-cli download ConwayResearch/Underdog-Saluki-27B-1.0 Underdog-Saluki-27B-1.0-IQ2-mix.gguf --local-dir ."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -m Underdog-Saluki-27B-1.0-IQ2-mix.gguf --jinja -ngl 99 -fa on -c 32768"
+      },
+      {
+        "kind": "do",
+        "text": "For image input, also download mmproj-Underdog-Saluki-27B-1.0-F16.gguf (928 MB) and add --mmproj with that file, as shown on the model card."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "m001",
+      "metric": "decode_per_stream",
+      "value": 22,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-10-10",
+      "source": "https://x.com/DogukanUrker/status/2108834418450206912",
+      "context": "~22 tok/s decode at 170K context, q4_0 KV",
+      "conditions": {
+        "context_label": "170K window",
+        "hardware_count": 1,
+        "kv_dtype": "q4_0",
+        "thinking": true
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "dogukanurker-saluki-3060",
+        "quality_status": "unchecked"
+      },
+      "note": "author wrote '~22 tok/s'"
+    },
+    {
+      "id": "m002",
+      "metric": "prefill_tok_s",
+      "value": 490,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-10-10",
+      "source": "https://x.com/DogukanUrker/status/2108834418450206912",
+      "context": "~490 tok/s prefill",
+      "conditions": {
+        "context_label": "170K window",
+        "hardware_count": 1,
+        "kv_dtype": "q4_0"
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "dogukanurker-saluki-3060",
+        "quality_status": "unchecked"
+      },
+      "note": "author wrote '~490 tok/s'"
+    }
+  ],
+  "caveats": [
+    "Speeds are one builder's RTX 3060 12 GB report, with a 170K window, q4_0 KV cache and medium reasoning effort.",
+    "Same builder's agentic coding test (PatchEval, Pi agent, 20 tasks): Saluki 11/20, ahead of other 2-bit builds he tried, but Qwen3.8-27B GSQ-RCO scored 16/20; he kept GSQ-RCO as his 12 GB pick.",
+    "Underdog's tool-calling numbers (88 vs 84 for the full model) are their own benchmark."
+  ],
+  "provenance_tier": "forum",
+  "sources": [
+    {
+      "url": "https://huggingface.co/ConwayResearch/Underdog-Saluki-27B-1.0",
+      "kind": "model",
+      "note": "model card: file, sizes and llama-server commands",
+      "lineage_id": "underdog-saluki-card"
+    },
+    {
+      "url": "https://x.com/DogukanUrker/status/2108834418450206912",
+      "kind": "post",
+      "note": "RTX 3060 12 GB run with full config",
+      "lineage_id": "dogukanurker-saluki-3060"
+    },
+    {
+      "url": "https://x.com/DogukanUrker/status/2109207879571927068",
+      "kind": "post",
+      "note": "PatchEval 20-task comparison vs other 27B quants",
+      "lineage_id": "dogukanurker-saluki-3060"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2,
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "underdog-saluki-card",
+        "actor": "Underdog AI",
+        "publisher": "underdog",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/ConwayResearch/Underdog-Saluki-27B-1.0"
+        ],
+        "locator": "model card: IQ2-mix file, llama-server commands, tool-calling numbers",
+        "note": "Vendor-published card; tool-calling numbers are vendor-run."
+      },
+      {
+        "id": "dogukanurker-saluki-3060",
+        "actor": "DogukanUrker",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/DogukanUrker/status/2108834418450206912",
+          "https://x.com/DogukanUrker/status/2109207879571927068"
+        ],
+        "locator": "posts 2108834418450206912 and 2109207879571927068, 2026-10-10 and 2026-10-11",
+        "note": "Two-post builder report: RTX 3060 12 GB speed and PatchEval 20-task comparison."
+      }
+    ]
+  }
+}

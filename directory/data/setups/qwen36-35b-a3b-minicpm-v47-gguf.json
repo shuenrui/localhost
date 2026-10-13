@@ -1,0 +1,109 @@
+{
+  "id": "qwen36-35b-a3b-minicpm-v47-gguf",
+  "title": "MiniCPM-V 4.7 35B-A3B (Qwen3.6-35B-A3B backbone) GGUF, vision-focused",
+  "slug_note": "OpenBMB's vision model on the Qwen3.6-35B-A3B language backbone; Q4_K_M is 21.2 GB. A lead, not a full recipe yet.",
+  "model": "qwen3-6-35b-a3b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+    "publisher": "openbmb",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M 21.17 GB + vision projector 1.12 GB (mmproj-model-f16.gguf). Other files from 15.5 GB (mix_q3) to 69.4 GB (F16).",
+    "format": "gguf",
+    "size_gb": 21.17,
+    "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama.cpp with the vision projector; OpenBMB's on-device speed numbers use their llama.cpp-omni fork",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-24gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 24,
+    "disk_gb": 22.3,
+    "min_vram_gb": null,
+    "notes": "Estimate: 21.17 GB Q4_K_M + 1.12 GB projector + KV. Tight on a 24 GB card."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": true,
+    "tools": true,
+    "thinking": true,
+    "long_context": null,
+    "max_context": null
+  },
+  "run": {
+    "repo": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Download MiniCPM-V-4_7-35B-A3B-Q4_K_M.gguf and mmproj-model-f16.gguf from openbmb/MiniCPM-V-4.7-35B-A3B-gguf."
+      },
+      {
+        "kind": "do",
+        "text": "Serve them with llama.cpp's server, passing the projector with --mmproj. The model card gives no literal llama.cpp command, so none is copied here."
+      },
+      {
+        "kind": "do",
+        "text": "Ollama: only a 1B tag (openbmb/minicpm-v4.7:1b) exists as of 2026-10-13; there is no 35B Ollama build yet."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Built on Qwen3.6-35B-A3B: the card credits 'Qwen3.6 for providing the language backbone'. Listed here as a vision-focused variant of that family.",
+    "OpenBMB's own table: ahead of Qwen3.6-35B-A3B on 5 of 8 text benchmarks (e.g. IFBench 47.67 vs 35.33) and behind on 3 (MMLU-Pro 83.45 vs 84.11, SuperGPQA 61.23 vs 63.37, BFCL 60.06 vs 60.20). Not independently reproduced.",
+    "No literal run command on the card and no speed numbers yet: a lead, not a recipe."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+      "kind": "model",
+      "note": "GGUF files and sizes",
+      "lineage_id": "openbmb-minicpm-v47-card"
+    },
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B",
+      "kind": "model",
+      "note": "full model card and benchmark charts",
+      "lineage_id": "openbmb-minicpm-v47-card"
+    },
+    {
+      "url": "https://ollama.com/openbmb/minicpm-v4.7",
+      "kind": "docs",
+      "note": "Ollama page (1B tag only)",
+      "lineage_id": "openbmb-minicpm-v47-card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2,
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "openbmb-minicpm-v47-card",
+        "actor": "OpenBMB",
+        "publisher": "openbmb",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B",
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf"
+        ],
+        "locator": "model card and GGUF card: files, benchmark charts, llama.cpp guidance",
+        "note": "Vendor-published card with benchmark charts vs Qwen3.6-35B-A3B."
+      }
+    ]
+  }
+}

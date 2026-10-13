@@ -1,0 +1,36 @@
+{
+  "id": "gemma-4-e4b",
+  "name": "Gemma 4 E4B",
+  "family": "Gemma 4",
+  "generation": "4",
+  "line": "Gemma",
+  "publisher": "google",
+  "released": "2026-03",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 8.0,
+    "params_active_b": 4.5,
+    "layers": 42,
+    "layer_mix": "sliding-window attention with periodic full-attention layers (see config.json layer_types)",
+    "hybrid": false
+  },
+  "context": {
+    "native": 131072,
+    "max": 131072
+  },
+  "modalities": [
+    "text",
+    "image",
+    "audio"
+  ],
+  "url": "https://huggingface.co/google/gemma-4-E4B-it",
+  "summary": "Edge model: 4.5B effective parameters (8B with embeddings), 128K context, text + image + audio in. Runs on almost any laptop or 8-12 GB GPU at 4-bit.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run is recorded yet. The Ollama default tag is the simplest recorded path.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

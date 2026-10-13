@@ -1,0 +1,79 @@
+{
+  "id": "gemma4-26b-a4b-ollama",
+  "title": "Gemma 4 26B-A4B via Ollama (default tag)",
+  "slug_note": "The MoE Gemma 4 in one command; 3.8B active parameters keep decode fast on a 24 GB card.",
+  "model": "gemma-4-26b-a4b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:gemma4:26b",
+    "publisher": "ollama",
+    "quant": "gguf-q4",
+    "quant_detail": "Ollama's default `gemma4:26b` tag, 4-bit class; the tag page lists 16GB - 19GB and does not name the exact quant",
+    "format": "gguf",
+    "size_gb": 16,
+    "url": "https://ollama.com/library/gemma4"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-24gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 20,
+    "disk_gb": 16,
+    "min_vram_gb": null,
+    "notes": "Estimate from the tag size (16GB - 19GB) plus KV headroom at Ollama's default context. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://ollama.com/library/gemma4",
+    "command": "ollama run gemma4:26b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run gemma4:26b"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/gemma4",
+      "kind": "docs",
+      "note": "Ollama library page: tags, sizes and run commands"
+    },
+    {
+      "url": "https://huggingface.co/google/gemma-4-26B-A4B-it",
+      "kind": "model",
+      "note": "official model card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

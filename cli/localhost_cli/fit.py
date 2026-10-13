@@ -59,6 +59,8 @@ def profile_classes(p, HW):
         return ["rtx-5090", "gpu-multigpu-72gb", "gpu-24gb"] if (p.get("gpuCount") or 1) > 1 else ["rtx-5090", "gpu-24gb"]
     if re.search(r"RTX PRO 6000|PRO 6000 Blackwell|RTX 6000", chip, re.I):
         return ["rtx-pro-6000"]
+    if (p.get("gpuCount") or 1) <= 1 and p.get("vramGb") is not None and p["vramGb"] <= 16:
+        return ["gpu-12gb", "gpu-24gb"]
     if (p.get("gpuCount") or 1) > 1:
         return ["gpu-multigpu-72gb", "gpu-24gb"]
     return ["gpu-24gb"]

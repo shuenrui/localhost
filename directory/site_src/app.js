@@ -402,7 +402,7 @@ function facetValues(key) {
     (Array.isArray(v) ? v : [v]).forEach(function (x) { if (x !== "" && x != null) counts[x] = (counts[x] || 0) + 1; });
   });
   return Object.keys(counts).sort(function (a, b) {
-    if (key === "gen") return parseFloat(b) - parseFloat(a);
+    if (key === "gen") return ((a === "4") - (b === "4")) || parseFloat(b) - parseFloat(a);  /* Gemma 4 after Qwen */
     return counts[b] - counts[a] || String(a).localeCompare(String(b));
   }).map(function (v) { return { v: v, n: counts[v], name: (f.name ? f.name(v) : v) }; });
 }
@@ -1079,7 +1079,7 @@ function railHtml(groups) {
   var gens = facetValues("gen");
   h += '<div class="rail-grp"><span class="lbl">Generation</span><ul>' + gens.map(function (g) {
     var fams = uniq(SETUPS.filter(function (s) { return String(modelOf(s).generation) === g.v; }).map(function (s) { return s.model; })).length;
-    return item("Qwen " + g.v, fams, '<button type="button" data-rail-f="gen" data-rail-v="' + esc(g.v) + '"' +
+    return item((g.v === "4" ? "Gemma " : "Qwen ") + g.v, fams, '<button type="button" data-rail-f="gen" data-rail-v="' + esc(g.v) + '"' +
       (state.f.gen === g.v ? ' aria-pressed="true"' : "") + ">");
   }).join("") + "</ul></div>";
 
@@ -1188,10 +1188,10 @@ function modelOptions(field) {
     if (v) counts[v] = (counts[v] || 0) + 1;
   });
   return Object.keys(counts).sort(function (a, b) {
-    return field === "generation" ? parseFloat(b) - parseFloat(a) : a.localeCompare(b);
+    return field === "generation" ? (((a === "4") - (b === "4")) || parseFloat(b) - parseFloat(a)) : a.localeCompare(b);
   }).map(function (v) {
     var selected = (field === "generation" ? state.modelGen : state.modelArch) === v;
-    var label = (field === "generation" ? "Qwen " : "") + (v === "moe" ? "MoE" : v) + " (" + counts[v] + ")";
+    var label = (field === "generation" ? (v === "4" ? "Gemma " : "Qwen ") : "") + (v === "moe" ? "MoE" : v) + " (" + counts[v] + ")";
     return '<option value="' + esc(v) + '"' + (selected ? " selected" : "") + '>' + esc(label) + '</option>';
   }).join("");
 }
@@ -1326,7 +1326,10 @@ function seriesOf(list) {
     if (!row) { row = { g: g, models: [] }; gens.push(row); }
     row.models.push(m);
   });
-  gens.sort(function (a, b) { return parseFloat(b.g) - parseFloat(a.g); });
+  gens.sort(function (a, b) {
+    var ga = a.g === "4" ? 1 : 0, gb = b.g === "4" ? 1 : 0;  /* Gemma 4 series after the Qwen series */
+    return ga !== gb ? ga - gb : parseFloat(b.g) - parseFloat(a.g);
+  });
   return gens;
 }
 function seriesRange(models) {
@@ -1375,7 +1378,7 @@ function miGroups(list, sel) {
     var recipes = sec.models.reduce(function (acc, m) { return acc + modelRecipes(m.id).length; }, 0);
     var range = seriesRange(sec.models);
     return '<li class="toc-sec" data-toc-series="' + esc(sec.g) + '">' +
-      '<div class="mi-rail"><div class="mi-rail-t">' + esc("Qwen" + sec.g + " series") + "</div>" +
+      '<div class="mi-rail"><div class="mi-rail-t">' + esc((sec.g === "4" ? "Gemma 4" : "Qwen" + sec.g) + " series") + "</div>" +
       '<div class="mi-rail-m">' + esc(sec.models.length + (sec.models.length === 1 ? " family" : " families") +
         " \u00b7 " + recipes + (recipes === 1 ? " recipe" : " recipes")) + "</div>" +
       (range ? '<div class="mi-rail-d">' + esc(range) + "</div>" : "") + "</div>" +
@@ -1954,6 +1957,7 @@ function profileClasses(p) {
       : ["rtx-5090", "gpu-24gb"];
   }
   if (/RTX PRO 6000|PRO 6000 Blackwell|RTX 6000/i.test(chip)) return ["rtx-pro-6000"];
+  if ((p.gpuCount || 1) <= 1 && p.vramGb != null && p.vramGb <= 16) return ["gpu-12gb", "gpu-24gb"];
   if ((p.gpuCount || 1) > 1) return ["gpu-multigpu-72gb", "gpu-24gb"];
   return ["gpu-24gb"];
 }
@@ -2529,7 +2533,7 @@ function viewMethodology() {
     "</ul></div>";
 
   h += '<div class="psec"><h2>Scope</h2><p>' +
-    esc("Today the directory covers one model line, Qwen: the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches with a plausible single-box local lane. Deliberately excluded: cluster-scale models with no single-box lane, sub-4B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
+    esc("The directory now covers two model lines: Qwen (the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches) and Gemma 4 (Google DeepMind, E2B/E4B/12B/26B-A4B/31B). Deliberately excluded: cluster-scale models with no single-box lane, sub-2B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
     "</p></div></div>";
   el("main").innerHTML = h;
 }

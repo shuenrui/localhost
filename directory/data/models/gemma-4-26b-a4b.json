@@ -1,0 +1,36 @@
+{
+  "id": "gemma-4-26b-a4b",
+  "name": "Gemma 4 26B-A4B",
+  "family": "Gemma 4",
+  "generation": "4",
+  "line": "Gemma",
+  "publisher": "google",
+  "released": "2026-03",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 25.2,
+    "params_active_b": 3.8,
+    "layers": 30,
+    "layer_mix": "sliding-window attention with periodic full-attention layers (see config.json layer_types)",
+    "hybrid": false,
+    "experts": 128
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/google/gemma-4-26B-A4B-it",
+  "summary": "Mixture-of-experts: 25.2B total, 3.8B active per token, 256K context. About 16-19 GB at 4-bit; fast for its size because only 3.8B weights are read per token.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run is recorded yet. The Ollama default tag is the simplest recorded path.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

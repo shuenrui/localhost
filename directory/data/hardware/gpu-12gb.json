@@ -1,0 +1,46 @@
+{
+  "id": "gpu-12gb",
+  "name": "12 GB consumer GPU (RTX 3060 12 GB class)",
+  "vendor": "NVIDIA",
+  "chip": "GA106",
+  "arch": "x86_64 host + discrete GPU, sm_86",
+  "form_factor": "discrete-gpu",
+  "memory_gb": 12,
+  "memory_usable_gb": 11.5,
+  "memory_type": "GDDR6, dedicated VRAM",
+  "bandwidth_gbs": 360,
+  "cpu": "host CPU varies",
+  "gpu": "12 GB VRAM, 360 GB/s (RTX 3060 12 GB)",
+  "notes": [
+    "A class entry for 12 GB cards. The reference card is the RTX 3060 12 GB, the most common GPU in Steam's hardware survey per the builders who report on it.",
+    "Bandwidth is derived from the card's published memory configuration: 15 Gbps GDDR6 on a 192-bit bus = 360 GB/s.",
+    "27B-class models only fit here as 2-bit or ternary builds (Bonsai 2, Saluki, GSQ-RCO IQ2/IQ3). A standard Q4 27B (about 17-18 GB) does not fit without CPU offload.",
+    "Ampere tensor cores: no native FP8/FP4 path."
+  ],
+  "device": {
+    "identity": {
+      "name": "GeForce RTX 3060 12 GB",
+      "chip": "GA106 (Ampere)",
+      "manufacturer": "NVIDIA",
+      "os": null,
+      "form_factor": "discrete-gpu"
+    },
+    "memory": {
+      "total_gb": 12,
+      "type": "GDDR6",
+      "bandwidth_gbs": 360,
+      "unified": false,
+      "usable_gb": 11.5,
+      "note": "dedicated VRAM; host RAM is separate and matters only for offload lanes. 360 GB/s derived from 15 Gbps x 192-bit / 8."
+    },
+    "sources": [
+      {
+        "url": "https://videocardz.net/nvidia-geforce-rtx-3060",
+        "note": "RTX 3060: 3584 cores, 1777 MHz boost, 15 Gbps, 12 GB GDDR6 192-bit"
+      }
+    ]
+  },
+  "measured_by_us": false,
+  "url": "https://videocardz.net/nvidia-geforce-rtx-3060",
+  "updated": "2026-10-13"
+}

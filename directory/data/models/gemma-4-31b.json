@@ -1,0 +1,35 @@
+{
+  "id": "gemma-4-31b",
+  "name": "Gemma 4 31B",
+  "family": "Gemma 4",
+  "generation": "4",
+  "line": "Gemma",
+  "publisher": "google",
+  "released": "2026-03",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 30.7,
+    "params_active_b": 30.7,
+    "layers": 60,
+    "layer_mix": "sliding-window attention with periodic full-attention layers (see config.json layer_types)",
+    "hybrid": false
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/google/gemma-4-31B-it",
+  "summary": "Largest Gemma 4: dense 30.7B, 256K context. About 19-20 GB at 4-bit, which fills a 24 GB card; every weight is read per token, so it is slower than the 26B-A4B.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run is recorded yet. The Ollama default tag is the simplest recorded path.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

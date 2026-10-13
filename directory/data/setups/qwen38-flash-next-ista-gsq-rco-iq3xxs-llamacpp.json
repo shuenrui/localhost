@@ -1,0 +1,101 @@
+{
+  "id": "qwen38-flash-next-ista-gsq-rco-iq3xxs-llamacpp",
+  "title": "Qwen3.8-Flash-Next GSQ-RCO IQ3_XXS (47 GB resident) on llama.cpp",
+  "slug_note": "The 180B MoE at 3 bits: 47 GB must sit in memory, the 28.8 GB n-gram table can stay on SSD.",
+  "model": "qwen3-8-flash-next",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+    "publisher": "ista-daslab",
+    "quant": "gguf-q3",
+    "quant_detail": "GSQ-RCO IQ3_XXS, 3.00 bits/weight: 75.8 GB download = 47.0 GB resident shard + 28.8 GB n-gram shard that can stay memory-mapped on disk. Q2_0: 37.6 GB resident.",
+    "format": "gguf",
+    "size_gb": 75.8,
+    "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama.cpp with the n-gram shard memory-mapped (-lm mmap --lazy-mode on)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "-lm mmap",
+      "--lazy-mode on",
+      "-ngl 99"
+    ]
+  },
+  "hardware": [
+    "mac-64gb",
+    "dgx-spark",
+    "strix-halo"
+  ],
+  "requirements": {
+    "memory_gb": 50,
+    "disk_gb": 75.8,
+    "min_vram_gb": null,
+    "notes": "Card: shard 1 (47.0 GB) must be resident; shard 2 (28.8 GB) can stay on an SSD. Add KV headroom and 0.91 GB for the vision projector. Estimate, not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": null,
+    "max_context": null
+  },
+  "run": {
+    "repo": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+    "command": "llama-cli -m IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf -lm mmap --lazy-mode on -p \"Explain mixed-precision quantization.\" -ngl 99",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "Download both IQ3_XXS shards from ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF (the card's command: hf download <this-repo> --include \"IQ3_XXS/*\" --local-dir .). Keep shard 2 on an SSD."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-cli -m IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf -lm mmap --lazy-mode on -p \"Explain mixed-precision quantization.\" -ngl 99"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Card accuracy: IQ3_XXS keeps 99.4% of the BF16 task average (92.57 vs 93.12) at 75.8 GB vs 354 GB.",
+    "The card's speed table (Q2_0 93.79 decode tok/s, IQ2_XS 70.30) does not say which hardware, so it is not recorded as a measurement here.",
+    "Whether the -lm/--lazy-mode flags exist in your llama.cpp build is not checked here; the card states them."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+      "kind": "model",
+      "note": "GGUF card: memory table, accuracy, llama.cpp commands",
+      "lineage_id": "ista-gsq-rco-flash-card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2,
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "ista-gsq-rco-flash-card",
+        "actor": "IST Austria DASLab",
+        "publisher": "ista-daslab",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF"
+        ],
+        "locator": "GGUF card: memory table, accuracy, llama.cpp commands",
+        "note": "Vendor-published card with accuracy numbers vs BF16."
+      }
+    ]
+  }
+}

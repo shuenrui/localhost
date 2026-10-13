@@ -1,0 +1,107 @@
+{
+  "id": "qwen38-27b-ista-gsq-rco-iq3xxs-llamacpp",
+  "title": "Qwen3.8-27B GSQ-RCO IQ3_XXS (10.1 GB) on stock llama.cpp",
+  "slug_note": "ISTA DASLab's mixed-precision 3-bit GGUF: matches BF16 on AIME25 at 10.1 GB; the 12 GB card pick of one tester.",
+  "model": "qwen3-8-27b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+    "publisher": "ista-daslab",
+    "quant": "gguf-q3",
+    "quant_detail": "GSQ-RCO IQ3_XXS, 3.00 bits/weight, 10.1 GB. Other files: IQ2_XS 8.4 GB, IQ2_S 9.3 GB, IQ3_S 11.8 GB; each also as -mtp (+0.35 GB).",
+    "format": "gguf",
+    "size_gb": 10.09,
+    "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "stock llama.cpp, all layers on GPU",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "-ngl 99"
+    ]
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 12,
+    "disk_gb": 10.1,
+    "min_vram_gb": null,
+    "notes": "Estimate: 10.1 GB file plus KV headroom. Tight on a 12 GB card; use IQ2_S (9.3 GB) or IQ2_XS (8.4 GB) for longer context."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+    "command": "llama-cli -m Qwen3.8-27B-GSQ-RCO-IQ3_XXS.gguf -p \"Explain mixed-precision quantization.\" -ngl 99",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "hf download ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF Qwen3.8-27B-GSQ-RCO-IQ3_XXS.gguf --local-dir ."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-cli -m Qwen3.8-27B-GSQ-RCO-IQ3_XXS.gguf -p \"Explain mixed-precision quantization.\" -ngl 99"
+      },
+      {
+        "kind": "do",
+        "text": "The card's command is a one-shot prompt. To serve an API, run llama-server with the same -m file and -ngl 99."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Card accuracy (vs BF16): IQ3_XXS 100.00 AIME25 / 88.89 GPQA-Diamond / 84.57 LiveCodeBench v6, against 100.00 / 89.90 / 85.71. IQ3_S (11.8 GB) is the card's 'task-lossless' pick.",
+    "A 12 GB tester scored 'Qwen3.8-27B GSQ-RCO' 16/20 on a 20-task agentic coding test (PatchEval), best of the 27B quants he tried, but did not say which file (https://x.com/DogukanUrker/status/2109207879571927068).",
+    "No speed numbers recorded yet."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+      "kind": "model",
+      "note": "GGUF card: files, accuracy table, llama.cpp commands",
+      "lineage_id": "ista-gsq-rco-27b-card"
+    },
+    {
+      "url": "https://x.com/DogukanUrker/status/2109207879571927068",
+      "kind": "post",
+      "note": "12 GB agentic-coding comparison naming GSQ-RCO as the pick"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2,
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "ista-gsq-rco-27b-card",
+        "actor": "IST Austria DASLab",
+        "publisher": "ista-daslab",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF"
+        ],
+        "locator": "GGUF card: files, accuracy table, llama.cpp commands",
+        "note": "Vendor-published card with accuracy numbers vs BF16 and Unsloth UD."
+      }
+    ]
+  }
+}

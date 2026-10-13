@@ -1,0 +1,86 @@
+{
+  "id": "gemma4-12b-unsloth-gguf-llamacpp",
+  "title": "Gemma 4 12B unsloth GGUF on llama.cpp (12 GB card or Mac)",
+  "slug_note": "Unsloth's UD-Q4_K_XL build (7.37 GB) served by llama-server, straight from the model card.",
+  "model": "gemma-4-12b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "unsloth/gemma-4-12b-it-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q4",
+    "quant_detail": "UD-Q4_K_XL, 7.37 GB",
+    "format": "gguf",
+    "size_gb": 7.37,
+    "url": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server with the model's Jinja chat template, 8K context as on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "--jinja",
+      "-c 8192"
+    ]
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 9,
+    "disk_gb": 7.4,
+    "min_vram_gb": null,
+    "notes": "Estimate: 7.37 GB file plus KV headroom at 8K context. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF",
+    "command": "llama-server -hf unsloth/gemma-4-12b-it-GGUF:UD-Q4_K_XL --jinja -c 8192",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf unsloth/gemma-4-12b-it-GGUF:UD-Q4_K_XL --jinja -c 8192"
+      },
+      {
+        "kind": "do",
+        "text": "Raise -c for longer context; the model supports up to 256K, and memory grows with it."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet.",
+    "Image input needs the vision projector; this command serves text only unless llama.cpp fetches the projector with -hf."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF",
+      "kind": "model",
+      "note": "quant card with the llama-server command"
+    },
+    {
+      "url": "https://huggingface.co/google/gemma-4-12B-it",
+      "kind": "model",
+      "note": "official model card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}
