@@ -1,0 +1,78 @@
+{
+  "id": "tev1-ollama",
+  "title": "Together Tev1 4B via Ollama (4.4 GB)",
+  "slug_note": "Together AI's experimental decision model; 0.8B tag (797 MB) for very small machines.",
+  "model": "together-tev1",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:tev1:4b",
+    "publisher": "ollama",
+    "quant": "gguf-q8",
+    "quant_detail": "tev1:latest 4.4 GB (4B); tev1:4b-q4_K_M 2.7 GB; tev1:0.8b 797 MB",
+    "format": "gguf",
+    "size_gb": 4.4,
+    "url": "https://ollama.com/library/tev1"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama /v1/systemone (needs Ollama 0.35 or later)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 6,
+    "disk_gb": 4.4,
+    "min_vram_gb": null,
+    "notes": "Estimate: 4.4 GB tag plus runtime."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://ollama.com/library/tev1",
+    "command": "ollama pull tev1:4b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama pull tev1:4b"
+      },
+      {
+        "kind": "do",
+        "text": "Smaller machine: ollama pull tev1:0.8b (797 MB) instead."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "Together calls Tev1 experimental (Ollama page)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/tev1",
+      "kind": "docs",
+      "note": "Ollama library page"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

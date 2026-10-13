@@ -1,0 +1,78 @@
+{
+  "id": "laya-ollama",
+  "title": "Laya via Ollama (846 MB)",
+  "slug_note": "The smallest local decision model in one command; runs on CPU.",
+  "model": "laya",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:laya",
+    "publisher": "ollama",
+    "quant": "other",
+    "quant_detail": "Ollama's laya:latest tag, 846 MB (English checkpoint)",
+    "format": "gguf",
+    "size_gb": 0.85,
+    "url": "https://ollama.com/library/laya"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama /v1/systemone (needs Ollama 0.40.0 or later)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 2,
+    "disk_gb": 1,
+    "min_vram_gb": null,
+    "notes": "Estimate: 846 MB model plus runtime; CPU is enough."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 512,
+    "max_context": 512
+  },
+  "run": {
+    "repo": "https://ollama.com/library/laya",
+    "command": "ollama pull laya",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama pull laya"
+      },
+      {
+        "kind": "do",
+        "text": "Send decision requests to http://localhost:11434/v1/systemone with model \"laya\" (see the Ollama page for the request shape)."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "Laya requires Ollama 0.40.0 or later (Ollama page)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/laya",
+      "kind": "docs",
+      "note": "Ollama library page: tag, size, version requirement"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

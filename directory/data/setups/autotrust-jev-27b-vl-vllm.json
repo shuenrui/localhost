@@ -1,0 +1,79 @@
+{
+  "id": "autotrust-jev-27b-vl-vllm",
+  "title": "AutoTrust JEV-27B-VL on vLLM (one 80 GB+ GPU)",
+  "slug_note": "The card's serve.sh: vLLM with a decision endpoint on port 8000.",
+  "model": "autotrust-jev-27b-vl",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "autotrust/JEV-27B-VL",
+    "publisher": "autotrust",
+    "quant": "bf16",
+    "quant_detail": "BF16 weights, 56 GB",
+    "format": "safetensors",
+    "size_gb": 56.02,
+    "url": "https://huggingface.co/autotrust/JEV-27B-VL"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "vLLM via the repo's serve.sh / serve_decide.py; POST /v1/decide",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 70,
+    "disk_gb": 56,
+    "min_vram_gb": null,
+    "notes": "Card: about 52 GB of weights plus about 65 KB of KV per token; on an 80 GB GPU start with --max-model-len 131072."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": null,
+    "max_context": null
+  },
+  "run": {
+    "repo": "https://huggingface.co/autotrust/JEV-27B-VL",
+    "command": "bash JEV-27B-VL/serve.sh",
+    "steps": [
+      {
+        "kind": "cmd",
+        "text": "hf download autotrust/JEV-27B-VL --local-dir JEV-27B-VL"
+      },
+      {
+        "kind": "cmd",
+        "text": "bash JEV-27B-VL/serve.sh"
+      },
+      {
+        "kind": "do",
+        "text": "Send requests to http://localhost:8000/v1/decide (AutoTrust's own request shape; see the card)."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "Not from TypeSafe (Jev's maker) despite the name.",
+    "Uses POST /v1/decide, not the Jev /v1/systemone shape.",
+    "#1 of 20 on the community Decision Index 0.3 vision board (69.82, 2026-10-07), per the card."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/autotrust/JEV-27B-VL",
+      "kind": "model",
+      "note": "card: serve.sh, memory notes, Decision Index board"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

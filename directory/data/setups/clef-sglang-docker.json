@@ -1,0 +1,78 @@
+{
+  "id": "clef-sglang-docker",
+  "title": "Cloudflare Clef 27B on SGLang (Docker, full BF16)",
+  "slug_note": "The card's own serving path: SGLang's clef image on a big GPU.",
+  "model": "clef",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "Cloudflare/clef",
+    "publisher": "cloudflare",
+    "quant": "bf16",
+    "quant_detail": "BF16 weights, 54.97 GB",
+    "format": "safetensors",
+    "size_gb": 54.97,
+    "url": "https://huggingface.co/Cloudflare/clef"
+  },
+  "engine": {
+    "id": "sglang",
+    "config": "lmsysorg/sglang:dev-clef image, sglang serve on port 30000",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "rtx-pro-6000",
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 62,
+    "disk_gb": 55,
+    "min_vram_gb": null,
+    "notes": "Estimate: 55 GB BF16 weights plus KV; needs an 80 GB-class GPU or 128 GB unified memory."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/Cloudflare/clef",
+    "command": "docker run --gpus all --shm-size 32g -p 30000:30000 -v ~/.cache/huggingface:/root/.cache/huggingface --ipc=host lmsysorg/sglang:dev-clef sglang serve --model-path Cloudflare/clef --host 0.0.0.0 --port 30000",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Docker with NVIDIA GPU support."
+      },
+      {
+        "kind": "cmd",
+        "text": "docker run --gpus all --shm-size 32g -p 30000:30000 -v ~/.cache/huggingface:/root/.cache/huggingface --ipc=host lmsysorg/sglang:dev-clef sglang serve --model-path Cloudflare/clef --host 0.0.0.0 --port 30000"
+      },
+      {
+        "kind": "do",
+        "text": "Send decision requests to http://localhost:30000/v1/systemone with model \"Cloudflare/clef\"."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "The image tag is a dev build (dev-clef); pin a digest for anything you depend on."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/Cloudflare/clef",
+      "kind": "model",
+      "note": "card: docker + sglang serve commands"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

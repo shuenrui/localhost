@@ -1,0 +1,33 @@
+{
+  "id": "together-tev1",
+  "name": "Together Tev1",
+  "family": "Tev1",
+  "generation": "decision",
+  "publisher": "togetherai",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-5-4b",
+    "note": "Fine-tuned from Qwen3.5 (4B and 0.8B), per the Ollama page."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 4,
+    "params_active_b": 4
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://ollama.com/library/tev1",
+  "summary": "Experimental decision models from Together AI in 4B and 0.8B sizes, aimed at Jev-style routing and policy checks. Decision model: it answers typed questions (yes/no, choice, score) with probabilities through a Jev-compatible /v1/systemone endpoint. It does not chat or write text.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Decision models are not ranked by the chat-model baseline policy; pick by hardware and API.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

@@ -246,6 +246,42 @@
       "kind": "lab",
       "role": "MiniCPM-V vision models; MiniCPM-V 4.7 35B-A3B uses Qwen3.6 as its language backbone.",
       "url": "https://huggingface.co/openbmb"
+    },
+    "convai": {
+      "name": "Convai Innovations",
+      "kind": "lab",
+      "role": "Laya: open, encoder-based (ModernBERT) decision models with a Jev-compatible server.",
+      "url": "https://huggingface.co/convaiinnovations"
+    },
+    "bespokelabs": {
+      "name": "Bespoke Labs",
+      "kind": "lab",
+      "role": "Nimble: a 9B decision model fine-tuned from Qwen3.5-9B.",
+      "url": "https://huggingface.co/bespokelabs"
+    },
+    "cloudflare": {
+      "name": "Cloudflare",
+      "kind": "lab",
+      "role": "Clef and Clef-Flash: open decision models fine-tuned from Qwen3.8-27B and Qwen3.5-9B.",
+      "url": "https://huggingface.co/Cloudflare"
+    },
+    "liquidai": {
+      "name": "Liquid AI",
+      "kind": "lab",
+      "role": "d1: open decision models on the LFM2.5 backbone.",
+      "url": "https://huggingface.co/LiquidAI"
+    },
+    "togetherai": {
+      "name": "Together AI",
+      "kind": "lab",
+      "role": "Tev1: experimental decision models fine-tuned from Qwen3.5 (4B and 0.8B).",
+      "url": "https://ollama.com/library/tev1"
+    },
+    "autotrust": {
+      "name": "AutoTrust",
+      "kind": "lab",
+      "role": "JEV-27B-VL and siblings: decision models on Qwen backbones, served with vLLM.",
+      "url": "https://huggingface.co/autotrust"
     }
   }
 }

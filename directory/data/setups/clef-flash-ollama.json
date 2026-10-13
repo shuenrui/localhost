@@ -1,0 +1,78 @@
+{
+  "id": "clef-flash-ollama",
+  "title": "Cloudflare Clef-Flash 9B via Ollama (11 GB)",
+  "slug_note": "The fast Clef in one command; fits a 12 GB card.",
+  "model": "clef-flash",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:clef-flash",
+    "publisher": "ollama",
+    "quant": "gguf-q8",
+    "quant_detail": "Ollama's clef-flash:latest = clef-flash:9b-q8_0, 11 GB",
+    "format": "gguf",
+    "size_gb": 11,
+    "url": "https://ollama.com/library/clef-flash"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama /v1/systemone (needs Ollama 0.35.1 or later)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 12,
+    "disk_gb": 11,
+    "min_vram_gb": null,
+    "notes": "Estimate: 11 GB tag plus runtime; tight on a 12 GB card."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://ollama.com/library/clef-flash",
+    "command": "ollama pull clef-flash",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama pull clef-flash"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/clef-flash",
+      "kind": "docs",
+      "note": "Ollama library page"
+    },
+    {
+      "url": "https://huggingface.co/Cloudflare/clef-flash",
+      "kind": "model",
+      "note": "model card"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

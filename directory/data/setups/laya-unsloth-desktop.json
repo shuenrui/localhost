@@ -1,0 +1,90 @@
+{
+  "id": "laya-unsloth-desktop",
+  "title": "Laya via Unsloth Desktop's Decision API (678 MB, 4 GB RAM)",
+  "slug_note": "Unsloth serves Laya on a Jev-compatible API; existing Jev code works by changing two environment variables.",
+  "model": "laya",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "convaiinnovations/laya-multilingual",
+    "publisher": "convai",
+    "quant": "other",
+    "quant_detail": "Unsloth's default: Laya multilingual, 678 MB, 4 GB RAM minimum, 1024-token context (Unsloth guide)",
+    "format": "safetensors",
+    "size_gb": 0.68,
+    "url": "https://huggingface.co/convaiinnovations/laya-multilingual"
+  },
+  "engine": {
+    "id": "unsloth-studio",
+    "config": "Unsloth Desktop: Settings -> API -> Decision API -> Serve requests",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 4,
+    "disk_gb": 1,
+    "min_vram_gb": null,
+    "notes": "Unsloth's guide: 4 GB RAM minimum for the 678 MB multilingual default; 5 GB for the 846 MB English or typed-decisions checkpoints."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 1024,
+    "max_context": 1024
+  },
+  "run": {
+    "repo": "https://unsloth.ai/docs/models/decision-laya",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Unsloth (see Step 0 in Quick start) and open Unsloth Desktop."
+      },
+      {
+        "kind": "do",
+        "text": "Go to Settings -> API -> Decision API, turn on Serve requests, and confirm the Laya download (678 MB). Your API key is on the same page under Access tokens."
+      },
+      {
+        "kind": "do",
+        "text": "Send requests to http://localhost:8888/v1/systemone with model \"laya\". To move existing Jev code over, set TYPESAFE_BASE_URL=http://localhost:8888 and TYPESAFE_API_KEY to your Unsloth key (Unsloth guide)."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "The first request loads the model (10-20 s); later requests take well under a second on most CPUs (Unsloth guide).",
+    "Threshold on probabilities, not confidence: Laya computes confidence differently from Jev (Unsloth guide).",
+    "Unsloth can also train your own decision model from Qwen3.5/3.8 or Gemma 4 and serve it here; Unsloth has not published its own trained decision checkpoint (none on its Hugging Face page as of 2026-10-13)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://unsloth.ai/docs/models/decision-laya",
+      "kind": "docs",
+      "note": "Unsloth guide: Decision API setup, RAM table, migrating from Jev"
+    },
+    {
+      "url": "https://github.com/unslothai/unsloth/releases/tag/v0.1.900-beta",
+      "kind": "repo",
+      "note": "release adding Laya decision models (2026-09-28)"
+    },
+    {
+      "url": "https://unsloth.ai/docs/basics/train-your-own-decision-model-with-unsloth",
+      "kind": "docs",
+      "note": "train your own decision model"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

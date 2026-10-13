@@ -1,0 +1,79 @@
+{
+  "id": "laya-pip-serve",
+  "title": "Laya with its own Jev-compatible server (pip)",
+  "slug_note": "Convai's laya-serve: the same /v1/systemone shape as TypeSafe Jev on port 8000.",
+  "model": "laya",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "convaiinnovations/laya",
+    "publisher": "convai",
+    "quant": "bf16",
+    "quant_detail": "Full checkpoints (English 421M, multilingual 322M, typed-decisions 421M), loaded by the laya package",
+    "format": "safetensors",
+    "size_gb": 2.32,
+    "url": "https://huggingface.co/convaiinnovations/laya"
+  },
+  "engine": {
+    "id": "custom-fork",
+    "config": "laya-serve from the laya Python package (not a general LLM engine)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 4,
+    "disk_gb": 2.4,
+    "min_vram_gb": null,
+    "notes": "Estimate: the three checkpoints total 2.32 GB on disk; LAYA_PRELOAD=1 loads them all."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 512,
+    "max_context": 512
+  },
+  "run": {
+    "repo": "https://huggingface.co/convaiinnovations/laya",
+    "command": "LAYA_DEVICE=cuda LAYA_PRELOAD=1 laya-serve",
+    "steps": [
+      {
+        "kind": "cmd",
+        "text": "pip install \"laya[serve]\""
+      },
+      {
+        "kind": "cmd",
+        "text": "LAYA_DEVICE=cuda LAYA_PRELOAD=1 laya-serve"
+      },
+      {
+        "kind": "do",
+        "text": "It binds 0.0.0.0:8000 with no authentication unless LAYA_API_KEY is set (card). Drop LAYA_DEVICE=cuda to run on CPU."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "Laya's own card: the base checkpoints are near chance on typed decisions zero-shot (0.362); the fine-tuned typed-decisions checkpoint reaches 0.766. Fine-tune on your own decisions.",
+    "The card says the checkpoints ship over-confident; refit temperature on your own data before trusting the probabilities."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/convaiinnovations/laya",
+      "kind": "model",
+      "note": "card: install, laya-serve, honest limits"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

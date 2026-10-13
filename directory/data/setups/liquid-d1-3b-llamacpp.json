@@ -1,0 +1,89 @@
+{
+  "id": "liquid-d1-3b-llamacpp",
+  "title": "Liquid d1-3B GGUF on llama.cpp (2.9 GB)",
+  "slug_note": "llama-server serves d1 on /v1/systemone; 8 ms per decision on an RTX 4090 (card).",
+  "model": "liquid-d1-3b",
+  "status": "untested",
+  "variation": {
+    "license": "LFM Open License (see card)",
+    "downloads": null,
+    "checkpoint": "LiquidAI/d1-3B-GGUF",
+    "publisher": "liquidai",
+    "quant": "gguf-q8",
+    "quant_detail": "Q8_0, 2.87 GB (+ vision projector 0.58-0.86 GB); Q4_K_M 1.67 GB",
+    "format": "gguf",
+    "size_gb": 2.87,
+    "url": "https://huggingface.co/LiquidAI/d1-3B-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server, /v1/systemone (decision support merged in llama.cpp PR #30110, 2026-10-07)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 5,
+    "disk_gb": 3.7,
+    "min_vram_gb": null,
+    "notes": "Estimate: 2.87 GB weights + projector + runtime."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": null,
+    "max_context": null
+  },
+  "run": {
+    "repo": "https://huggingface.co/LiquidAI/d1-3B-GGUF",
+    "command": "llama-server -hf LiquidAI/d1-3B-GGUF:Q8_0",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start); use a build from 2026-10-07 or later for d1 support."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf LiquidAI/d1-3B-GGUF:Q8_0"
+      },
+      {
+        "kind": "do",
+        "text": "Send decision requests to http://127.0.0.1:8080/v1/systemone."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
+    "Speed figures are Liquid's own table (RTX 4090 8 ms, M5 Pro 30 ms per decision).",
+    "License is Liquid's LFM Open License, not Apache-2.0; check it for commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-3B-GGUF",
+      "kind": "model",
+      "note": "GGUF card with the llama-server command"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-3B",
+      "kind": "model",
+      "note": "model card: speed table, Decision Index"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/pull/30110",
+      "kind": "repo",
+      "note": "llama.cpp PR adding d1-3B (merged 2026-10-07)"
+    }
+  ],
+  "updated": "2026-10-13",
+  "schema_version": 2
+}

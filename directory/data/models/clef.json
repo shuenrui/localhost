@@ -1,0 +1,35 @@
+{
+  "id": "clef",
+  "name": "Clef",
+  "family": "Clef",
+  "generation": "decision",
+  "publisher": "cloudflare",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-27b",
+    "note": "Post-trained from Qwen3.8-27B (card)."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 27.36,
+    "params_active_b": 27.36
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/Cloudflare/clef",
+  "summary": "Cloudflare's 27B decision model; reads text, JSON and images. Tops Jev on most of the card's Decision Index rows (vendor table). Decision model: it answers typed questions (yes/no, choice, score) with probabilities through a Jev-compatible /v1/systemone endpoint. It does not chat or write text.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Decision models are not ranked by the chat-model baseline policy; pick by hardware and API.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13",
+  "released": "2026-09-30"
+}

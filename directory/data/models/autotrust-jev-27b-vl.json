@@ -1,0 +1,35 @@
+{
+  "id": "autotrust-jev-27b-vl",
+  "name": "AutoTrust JEV-27B-VL",
+  "family": "JEV (AutoTrust)",
+  "generation": "decision",
+  "publisher": "autotrust",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-27b",
+    "note": "Fine-tuned from Qwen3.8-27B (card base_model). Not made by TypeSafe, despite the name."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 27.78,
+    "params_active_b": 27.78
+  },
+  "context": {
+    "native": null,
+    "max": null
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/autotrust/JEV-27B-VL",
+  "summary": "AutoTrust's 27B vision decision model; ranked first of 20 on the community Decision Index 0.3 vision board (69.82). Needs one 80 GB+ GPU. Decision model: it answers typed questions (yes/no, choice, score) with probabilities through a Jev-compatible /v1/systemone endpoint. It does not chat or write text.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Decision models are not ranked by the chat-model baseline policy; pick by hardware and API.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13",
+  "released": "2026-09-30"
+}

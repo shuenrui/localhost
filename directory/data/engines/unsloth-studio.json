@@ -1,0 +1,60 @@
+{
+  "id": "unsloth-studio",
+  "name": "Unsloth Desktop (Studio)",
+  "kind": "app",
+  "url": "https://github.com/unslothai/unsloth",
+  "api": [
+    "openai",
+    "systemone"
+  ],
+  "qwen_support": "Runs and trains most current open models; serves decision models (Laya, Clef) on a Jev-compatible /v1/systemone endpoint.",
+  "spec_decode": [
+    "none"
+  ],
+  "features": [
+    "one-command-install",
+    "gui",
+    "decision-api",
+    "training"
+  ],
+  "notable_flags": [
+    "Settings -> API -> Decision API",
+    "unsloth studio -H 0.0.0.0 -p 8888"
+  ],
+  "gotchas": [
+    "Laya's confidence is computed differently from Jev's: threshold on probabilities, not on confidence (per Unsloth's guide)."
+  ],
+  "arm64": true,
+  "updated": "2026-10-13",
+  "install": {
+    "source": "https://unsloth.ai/docs/get-started/install",
+    "retrieved": "2026-10-13",
+    "methods": [
+      {
+        "platforms": [
+          "macos",
+          "linux"
+        ],
+        "label": "Install script",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "curl -fsSL https://unsloth.ai/install.sh | sh"
+          }
+        ]
+      },
+      {
+        "platforms": [
+          "windows"
+        ],
+        "label": "PowerShell",
+        "steps": [
+          {
+            "kind": "cmd",
+            "text": "irm https://unsloth.ai/install.ps1 | iex"
+          }
+        ]
+      }
+    ]
+  }
+}

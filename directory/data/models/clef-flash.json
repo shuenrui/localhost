@@ -1,0 +1,35 @@
+{
+  "id": "clef-flash",
+  "name": "Clef-Flash",
+  "family": "Clef",
+  "generation": "decision",
+  "publisher": "cloudflare",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-5-9b",
+    "note": "Fine-tuned from Qwen3.5-9B (card base_model)."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 9.41,
+    "params_active_b": 9.41
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/Cloudflare/clef-flash",
+  "summary": "The smaller, faster Clef (9B) for latency-critical decisions; also reads images. Decision model: it answers typed questions (yes/no, choice, score) with probabilities through a Jev-compatible /v1/systemone endpoint. It does not chat or write text.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Decision models are not ranked by the chat-model baseline policy; pick by hardware and API.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13",
+  "released": "2026-09-30"
+}

@@ -281,7 +281,7 @@ var state = {
   f: {}, sort: "updated", adv: false, flat: false,
   expanded: {}, compare: [], profile: null,
   modelQ: "", modelGen: "", modelArch: "", modelBaseline: "", selectedModel: null, modelOpen: null,
-  mopen: {}, mcompare: [],
+  mopen: {}, mcompare: [], sopen: {},
   assume: { context: 8192, concurrency: 1, reserve: null },
   mobile: false,
   /* Information mode -- Lite/Pro, see docs/builder-concerns-2026-09-16/
@@ -317,9 +317,18 @@ function featureNovelty(s, chosen) {
    models built on another model (Bonsai, Saluki, MiniCPM-V) are "derived". */
 function genLabel(g) {
   g = String(g || "");
-  return g === "4" ? "Gemma 4" : g === "derived" ? "Built on other models" : "Qwen" + g;
+  return g === "4" ? "Gemma 4" : g === "derived" ? "Built on other models" :
+    g === "decision" ? "Decision models (Jev-style)" : "Qwen" + g;
 }
-function genRank(g) { g = String(g || ""); return g === "derived" ? 2 : g === "4" ? 1 : 0; }
+function genRank(g) { g = String(g || ""); return g === "decision" ? 3 : g === "derived" ? 2 : g === "4" ? 1 : 0; }
+/* Maker badge for the Models index: who made the model (Qwen, Google, or another company). */
+function makerOf(m) {
+  var p = PUB[m.publisher] || {}, name = String(p.name || m.publisher || "").split(" (")[0];
+  if (m.publisher === "qwen") name = "Qwen";
+  if (m.publisher === "google") name = "Google";
+  var cls = m.publisher === "qwen" ? "mk-qwen" : m.publisher === "google" ? "mk-google" : "mk-other";
+  return { name: name, cls: cls };
+}
 function genCompare(a, b) { return (genRank(a) - genRank(b)) || ((parseFloat(b) || 0) - (parseFloat(a) || 0)); }
 function pubOf(s) { return (s.variation || {}).publisher || ""; }
 /* Featured recipes give every provider a turn: a provider already in the strip
@@ -1347,6 +1356,14 @@ function seriesOf(list) {
     row.models.push(m);
   });
   gens.sort(function (a, b) { return genCompare(a.g, b.g); });
+  /* newest release first inside a series; families without a date go last */
+  gens.forEach(function (row) {
+    row.models.sort(function (a, b) {
+      var ra = a.released || "", rb = b.released || "";
+      if (ra !== rb) return ra ? (rb ? rb.localeCompare(ra) : -1) : 1;
+      return String(a.name).localeCompare(String(b.name));
+    });
+  });
   return gens;
 }
 function seriesRange(models) {
@@ -1395,14 +1412,23 @@ function miGroups(list, sel) {
     var recipes = sec.models.reduce(function (acc, m) { return acc + modelRecipes(m.id).length; }, 0);
     var range = seriesRange(sec.models);
     return '<li class="toc-sec" data-toc-series="' + esc(sec.g) + '">' +
-      '<div class="mi-rail"><div class="mi-rail-t">' + esc(sec.g === "derived" ? genLabel(sec.g) : genLabel(sec.g) + " series") + "</div>" +
+      '<div class="mi-rail"><div class="mi-rail-t">' + esc(sec.g === "derived" || sec.g === "decision" ? genLabel(sec.g) : genLabel(sec.g) + " series") + "</div>" +
       '<div class="mi-rail-m">' + esc(sec.models.length + (sec.models.length === 1 ? " family" : " families") +
         " \u00b7 " + recipes + (recipes === 1 ? " recipe" : " recipes")) + "</div>" +
       (range ? '<div class="mi-rail-d">' + esc(range) + "</div>" : "") + "</div>" +
-      '<ol class="mi-fams">' + sec.models.map(function (m) {
-        n += 1;
-        return miFam(m, pad2(n), m.id === sel);
-      }).join("") + "</ol></li>";
+      '<ol class="mi-fams">' + (function () {
+        var LIMIT = 3, all = sec.models, extra = all.length - LIMIT;
+        var showAll = extra <= 0 || !!state.sopen[sec.g] ||
+          all.slice(LIMIT).some(function (m) { return m.id === sel; });
+        var shown = showAll ? all : all.slice(0, LIMIT);
+        var h = shown.map(function (m) { n += 1; return miFam(m, pad2(n), m.id === sel); }).join("");
+        if (extra > 0) {
+          n += showAll ? 0 : extra;
+          h += '<li class="mi-more"><button type="button" class="mi-more-btn" data-smore="' + esc(sec.g) + '" aria-expanded="' + showAll + '">' +
+            esc(showAll ? "Show fewer" : "Show " + extra + " more in " + genLabel(sec.g)) + "</button></li>";
+        }
+        return h;
+      })() + "</ol></li>";
   }).join("") + "</ol>";
 }
 function miFam(m, num, on) {
@@ -1430,7 +1456,7 @@ function miFam(m, num, on) {
     '<a class="toc-item' + (on ? " is-sel" : "") + '" href="#/models/' + esc(m.id) +
       '" data-model-select="' + esc(m.id) + '" aria-expanded="' + previewOpen + '" aria-controls="featured-' + esc(m.id) + '"' +
       (on ? ' data-toc-selected="true" aria-current="true"' : "") + '>' +
-      '<span class="mi-cell mi-name"><span class="mi-nm">' + esc(m.name) +
+      '<span class="mi-cell mi-name"><span class="mi-maker ' + makerOf(m).cls + '">' + esc(makerOf(m).name) + '</span><span class="mi-nm">' + esc(m.name) +
         '</span><span class="mi-leader" aria-hidden="true"></span></span>' +
       '<span class="mi-cell mi-type">' + esc(typeWord(m)) + "</span>" +
       '<span class="mi-cell mi-rel">' + (m.released ? esc(m.released) : na()) + "</span>" +
@@ -2877,7 +2903,7 @@ document.addEventListener("change", function (e) {
   }
 });
 document.addEventListener("click", function (e) {
-  var t = e.target.closest ? e.target.closest("[data-hero-gen],[data-exp],[data-copy],[data-clear],[data-rail-f],[data-rail-clear],[data-jump],[data-cmp],[data-ev],[data-grp],[data-goal],[data-load],[data-model-select],[data-mode-jump],[data-mopen],[data-hwchip],[data-hwmemory],#model-clear,#clear-all,#adv-toggle,#cmp-clear,#theme,#mode-lite,#mode-pro,#hw-detect,#hw-save,#hw-clear,#hw-export,#hw-import,#mi-compare-clear,#mi-compare-go") : null;
+  var t = e.target.closest ? e.target.closest("[data-hero-gen],[data-exp],[data-copy],[data-clear],[data-rail-f],[data-rail-clear],[data-jump],[data-cmp],[data-ev],[data-grp],[data-goal],[data-load],[data-model-select],[data-mode-jump],[data-mopen],[data-smore],[data-hwchip],[data-hwmemory],#model-clear,#clear-all,#adv-toggle,#cmp-clear,#theme,#mode-lite,#mode-pro,#hw-detect,#hw-save,#hw-clear,#hw-export,#hw-import,#mi-compare-clear,#mi-compare-go") : null;
   if (!t) {
     hidePop();
     /* Clicking the non-interactive part of a recipe row opens its full page.
@@ -2916,6 +2942,12 @@ document.addEventListener("click", function (e) {
   if (t.id === "model-clear") {
     state.modelQ = ""; state.modelGen = ""; state.modelArch = ""; state.modelBaseline = "";
     viewModelsHome(); return;
+  }
+  var smore = t.getAttribute("data-smore");
+  if (smore) {
+    state.sopen[smore] = !state.sopen[smore];
+    viewModelsHome();
+    return;
   }
   var mopen = t.getAttribute("data-mopen");
   if (mopen) {

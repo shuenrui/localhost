@@ -1,0 +1,34 @@
+{
+  "id": "laya",
+  "name": "Laya",
+  "family": "Laya",
+  "generation": "decision",
+  "publisher": "convai",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "ModernBERT-large",
+    "note": "Not Qwen: an encoder (ModernBERT-large, 395M) plus a trained decision head."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 0.421,
+    "params_active_b": 0.421
+  },
+  "context": {
+    "native": 512,
+    "max": 512
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/convaiinnovations/laya",
+  "summary": "421M open decision model (ModernBERT-large encoder) from Convai; about 33 ms per decision. Multilingual (322M, 100+ languages) and typed-decisions checkpoints too. Its own card says the base checkpoints are near chance on typed decisions until fine-tuned. Decision model: it answers typed questions (yes/no, choice, score) with probabilities through a Jev-compatible /v1/systemone endpoint. It does not chat or write text.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Decision models are not ranked by the chat-model baseline policy; pick by hardware and API.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13",
+  "released": "2026-09-18"
+}
