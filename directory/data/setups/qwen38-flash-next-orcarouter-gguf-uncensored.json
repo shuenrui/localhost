@@ -2,7 +2,7 @@
   "id": "qwen38-flash-next-orcarouter-gguf-uncensored",
   "title": "Qwen3.8-Flash-Next 180B — OrcaRouter uncensored GGUF (SSD sidecar)",
   "slug_note": "The uncensored lane, and the fastest reading throughput anywhere in the directory: 489 tok/s prefill, 28.7 tok/s decode, vision on, 256K context. It needs a custom Rust engine fork.",
-  "model": "qwen3-8-flash-next",
+  "model": "qwen3-8-flash-next-uncensored-orcarouter",
   "status": "reported",
   "variation": {
     "checkpoint": "Baekpica/Qwen3.8-Flash-Next-Uncensored-Mixed-Quant-SSD-PLE-GGUF",
@@ -46,9 +46,18 @@
     "repo": "https://huggingface.co/Baekpica",
     "profile": null,
     "steps": [
-      {"kind": "do", "text": "Request access — the download is gated."},
-      {"kind": "do", "text": "Install the builder's ds4-dfm-rs Rust engine fork."},
-      {"kind": "do", "text": "A stock engine will not load these weights."}
+      {
+        "kind": "do",
+        "text": "Request access — the download is gated."
+      },
+      {
+        "kind": "do",
+        "text": "Install the builder's ds4-dfm-rs Rust engine fork."
+      },
+      {
+        "kind": "do",
+        "text": "A stock engine will not load these weights."
+      }
     ],
     "auto_bootable": false
   },

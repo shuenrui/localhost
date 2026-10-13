@@ -1,8 +1,8 @@
 {
   "id": "qwen36-35b-a3b-huihui-gguf-llamacpp-mac64",
-  "title": "Huihui-Qwen3.6-35B-A3B abliterated Q5_K_M on a 64GB Mac \u2014 planned dev-agent lane",
-  "slug_note": "A buying-advice thread distilled into a starting recipe: Q5_K_M (24.7GB) via llama-server --hf-repo with --jinja at 65k context, wired into OpenCode as an OpenAI-compatible provider. No numbers yet \u2014 nobody in the thread owns the machine.",
-  "model": "qwen3-6-35b-a3b",
+  "title": "Huihui-Qwen3.6-35B-A3B abliterated Q5_K_M on a 64GB Mac — planned dev-agent lane",
+  "slug_note": "A buying-advice thread distilled into a starting recipe: Q5_K_M (24.7GB) via llama-server --hf-repo with --jinja at 65k context, wired into OpenCode as an OpenAI-compatible provider. No numbers yet — nobody in the thread owns the machine.",
+  "model": "qwen3-6-35b-a3b-huihui-opus-abliterated",
   "status": "untested",
   "variation": {
     "license": "Apache-2.0",
@@ -38,7 +38,7 @@
     "memory_gb": 32,
     "disk_gb": 25,
     "min_vram_gb": null,
-    "notes": "24.7GB Q5_K_M + KV on unified memory; 32GB is the working floor, 64GB leaves ~40GB for KV + OS. Advice lane \u2014 target box (Mac mini 64GB) not yet purchased by the thread OP."
+    "notes": "24.7GB Q5_K_M + KV on unified memory; 32GB is the working floor, 64GB leaves ~40GB for KV + OS. Advice lane — target box (Mac mini 64GB) not yet purchased by the thread OP."
   },
   "capabilities": {
     "vision": false,
@@ -64,10 +64,10 @@
   },
   "measurements": [],
   "caveats": [
-    "No numbers recorded (law 1): the OP hasn't bought the machine and the replier owns no Apple hardware \u2014 'expect tens of tokens/sec' was an explicit guess and is not captured.",
-    "The only actual in-thread run used MLX on Apple Silicon (different engine) \u2014 noted as the alternative lane.",
+    "No numbers recorded (law 1): the OP hasn't bought the machine and the replier owns no Apple hardware — 'expect tens of tokens/sec' was an explicit guess and is not captured.",
+    "The only actual in-thread run used MLX on Apple Silicon (different engine) — noted as the alternative lane.",
     "abliterated checkpoint: refusal behavior removed; verify tool-call reliability before agent use.",
-    "shennguyen is not on the law-11 quant whitelist \u2014 lane kept as untested advice, not a matrix entry."
+    "shennguyen is not on the law-11 quant whitelist — lane kept as untested advice, not a matrix entry."
   ],
   "provenance_tier": null,
   "sources": [

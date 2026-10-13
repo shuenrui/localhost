@@ -2,7 +2,7 @@
   "id": "qwen38-27b-jonathancoletti-uncensored-q6k-lmstudio-mtp-rtx-5090",
   "title": "Qwen3.8-27B Uncensored Q6_K on one RTX 5090: LM Studio (llama.cpp) with MTP",
   "slug_note": "Forum-reported 72 tok/s decode and 2,430 tok/s prefill on a 5090 with a community uncensored Q6_K GGUF; the same thread shows a faster ninfer NVFP4 path.",
-  "model": "qwen3-8-27b",
+  "model": "qwen3-8-27b-uncensored-jonathancoletti",
   "status": "reported",
   "variation": {
     "checkpoint": "JonathanColetti/Qwen3.8-27B-Uncensored-GGUF",

@@ -1,0 +1,37 @@
+{
+  "id": "qwen3-6-35b-a3b-huihui-opus-abliterated",
+  "name": "Huihui Qwen3.6-35B-A3B Claude-4.7-Opus abliterated",
+  "family": "Huihui Qwen3.6-35B-A3B abliterated",
+  "generation": "derived",
+  "publisher": "shennguyen",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-6-35b-a3b",
+    "note": "Abliterated (refusals removed) and distilled toward Claude-4.7-Opus-style answers, on the Qwen3.6-35B-A3B architecture."
+  },
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "hybrid": true,
+    "mtp_head": true,
+    "sglang_arch": "qwen3_5_moe"
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144,
+    "extension": null
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/shennguyen/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-GGUF",
+  "summary": "A Huihui build of Qwen3.6-35B-A3B: refusals removed and tuned toward Claude-Opus-style answers. It behaves differently from the official model, so it has its own page.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "One recipe on record; not reviewed as a practical baseline yet.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "qwen3-8-27b-uncensored-jonathancoletti",
+  "name": "Qwen3.8-27B Uncensored (JonathanColetti)",
+  "family": "Qwen3.8-27B Uncensored",
+  "generation": "derived",
+  "publisher": "jonathancoletti",
+  "released": "2026-08-14",
+  "license": "apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-27b",
+    "note": "An uncensored (refusals removed) version of Qwen3.8-27B published by JonathanColetti. Same architecture as the base."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 27.8,
+    "params_active_b": 27.8,
+    "layers": 64,
+    "layer_mix": "48 linear (Gated DeltaNet) + 16 full attention, every 4th layer full",
+    "hybrid": true,
+    "mtp_head": true,
+    "thinking_depths": [
+      "low",
+      "medium",
+      "xhigh"
+    ],
+    "default_thinking": "xhigh"
+  },
+  "context": {
+    "native": 262144,
+    "max": 1000000,
+    "extension": "YaRN, factor = round(len/262144); 2.0 and 4.0 are the card's validated points"
+  },
+  "modalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "url": "https://huggingface.co/JonathanColetti/Qwen3.8-27B-Uncensored-GGUF",
+  "summary": "Qwen3.8-27B with its refusals removed, published by JonathanColetti as GGUF files. It behaves differently from the official model, so it has its own page.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "One recipe on record; not reviewed as a practical baseline yet.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13",
+  "kv_bytes_per_token": 32768
+}

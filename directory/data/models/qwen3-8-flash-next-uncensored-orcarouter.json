@@ -1,0 +1,38 @@
+{
+  "id": "qwen3-8-flash-next-uncensored-orcarouter",
+  "name": "Qwen3.8-Flash-Next Uncensored (OrcaRouter)",
+  "family": "Qwen3.8-Flash-Next Uncensored",
+  "generation": "derived",
+  "publisher": "orcarouter",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-flash-next",
+    "note": "An uncensored (refusals removed) version of Qwen3.8-Flash-Next. Same architecture as the base."
+  },
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 180,
+    "params_active_b": 6,
+    "anatomy": "125B experts + 51B embedding lookup table + 4B MTP head",
+    "mtp_head": true
+  },
+  "context": {
+    "native": 262144,
+    "max": 1000000,
+    "extension": "YaRN, build-dependent; 512K-1M reported"
+  },
+  "modalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "url": "https://huggingface.co/Baekpica",
+  "summary": "Qwen3.8-Flash-Next with its refusals removed, shipped as a mixed-quant GGUF. It behaves differently from the official model, so it has its own page.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "One recipe on record; not reviewed as a practical baseline yet.",
+    "reviewed": "2026-10-13"
+  },
+  "updated": "2026-10-13"
+}
