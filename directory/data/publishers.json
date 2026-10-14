@@ -282,6 +282,12 @@
       "kind": "lab",
       "role": "JEV-27B-VL and siblings: decision models on Qwen backbones, served with vLLM.",
       "url": "https://huggingface.co/autotrust"
+    },
+    "lightonai": {
+      "name": "LightOn",
+      "kind": "lab",
+      "role": "ColGrep code search and ColGrep-Agent-2B, a local code-search agent built on MiniCPM5-2B.",
+      "url": "https://huggingface.co/lightonai"
     }
   }
 }

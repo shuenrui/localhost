@@ -548,7 +548,8 @@ function needsLine(s) {
   var need = ["memory " + (gb(req.memory_gb) || "not recorded")];
   if (req.min_vram_gb != null) need.push("graphics memory at least " + gb(req.min_vram_gb));
   need.push("free disk " + (gb(req.disk_gb) || "not recorded"));
-  need.push(e.requires_fork ? "a special build of the engine" : "the standard engine");
+  need.push(e.bundled ? "no separate engine (the tool bundles " + ((ENG[e.id] || {}).name || "it") + ")" :
+    e.requires_fork ? "a special build of the engine" : "the standard engine");
   need.push("difficulty: " + complexityWord(s));
   var h = '<p class="qs-new">' + esc("New here? Paste these into a terminal, one at a time, from the top.") + "</p>" +
     '<p class="qs-needs"><b>You will need</b> ' + esc(need.join(" · ")) + "</p>" +
@@ -563,6 +564,7 @@ function needsLine(s) {
 var OS_WORD = { macos: "macOS", linux: "Linux", windows: "Windows" };
 function installHtml(s) {
   var e = ENG[(s.engine || {}).id] || {}, ins = e.install;
+  if ((s.engine || {}).bundled) return "";  /* the tool ships its own engine copy */
   if (!ins || !(ins.methods || []).length) return "";
   var h = '<details class="qs-install"><summary>' + esc("Step 0: install " + (e.name || "the engine") + " (if you have not already)") + "</summary>";
   ins.methods.forEach(function (m) {
