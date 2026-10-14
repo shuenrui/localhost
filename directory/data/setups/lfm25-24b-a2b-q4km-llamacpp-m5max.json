@@ -1,0 +1,134 @@
+{
+  "id": "lfm25-24b-a2b-q4km-llamacpp-m5max",
+  "title": "LFM2.5-24B-A2B Q4_K_M on llama.cpp, Apple M5 Max (Liquid's figure)",
+  "slug_note": "184 tok/s decode on an Apple M5 Max with a 4K-token input (Liquid AI's Pipette benchmark).",
+  "model": "lfm2-5-24b-a2b",
+  "status": "reported",
+  "variation": {
+    "license": "LFM Open License v1.0 (free for commercial use under $10M annual revenue)",
+    "downloads": null,
+    "checkpoint": "LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "publisher": "liquidai",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 14.53 GB",
+    "format": "gguf",
+    "size_gb": 14.53,
+    "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-cli with the card's sampling settings",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "--temp 0.1",
+      "--top-k 50",
+      "--repeat-penalty 1.05"
+    ]
+  },
+  "hardware": [
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 17,
+    "disk_gb": 14.6,
+    "min_vram_gb": null,
+    "notes": "Estimate: the 14.53 GB Q4_K_M file plus KV cache at a few thousand tokens. Not measured."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "command": "llama-cli -hf LiquidAI/LFM2.5-24B-A2B-GGUF --temp 0.1 --top-k 50 --repeat-penalty 1.05",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-cli -hf LiquidAI/LFM2.5-24B-A2B-GGUF --temp 0.1 --top-k 50 --repeat-penalty 1.05"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "m001",
+      "metric": "decode_per_stream",
+      "value": 184,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "vendor",
+      "date": "2026-10-13",
+      "source": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+      "context": "184 tokens/s decode on Apple M5 Max; llama.cpp, Q4_K_M, 4K-token input context (Pipette)",
+      "conditions": {
+        "context_label": "4K input",
+        "hardware_count": 1,
+        "thinking": true
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "vendor_published_table",
+        "lineage_id": "liquid-card",
+        "quality_status": "unchecked"
+      }
+    }
+  ],
+  "caveats": [
+    "Liquid's own benchmark rig (Pipette); no independent run on this hardware yet.",
+    "The card names the chip (Apple M5 Max) but not its memory size or the llama.cpp build.",
+    "The card's command gives no quant tag; llama.cpp's -hf picks Q4_K_M by default when the repo has one, which matches the benchmarked quant.",
+    "License is Liquid's LFM Open License v1.0, not Apache-2.0: commercial use is licensed only for organisations under $10M annual revenue.",
+    "Not recommended on its own for knowledge-heavy tasks (Liquid's card): pair it with retrieval or web search."
+  ],
+  "provenance_tier": "vendor",
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "liquid-card",
+        "actor": "Liquid AI",
+        "publisher": "liquidai",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+          "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+          "https://www.liquid.ai/blog/lfm2-5-24b-a2b"
+        ],
+        "locator": "model card, Edge Inference section and its evaluation settings",
+        "note": "Vendor-run speed table (Pipette, llama.cpp, Q4_K_M, 4K input)."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+      "kind": "model",
+      "note": "Edge Inference: M5 Max 184 tok/s, Ryzen AI Max+ 395 114 tok/s; Pipette settings",
+      "lineage_id": "liquid-card"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+      "kind": "model",
+      "note": "GGUF card: llama-cli command and files",
+      "lineage_id": "liquid-card"
+    },
+    {
+      "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "kind": "blog",
+      "note": "launch blog, 2026-10-13",
+      "lineage_id": "liquid-card"
+    }
+  ],
+  "updated": "2026-10-14",
+  "schema_version": 2
+}

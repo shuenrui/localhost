@@ -1,0 +1,36 @@
+{
+  "id": "lfm2-5-24b-a2b",
+  "name": "LFM2.5-24B-A2B",
+  "family": "LFM2.5",
+  "generation": "lfm2.5",
+  "line": "LFM",
+  "publisher": "liquidai",
+  "released": "2026-10-13",
+  "released_note": "Liquid AI launch post, 2026-10-13 UTC; the HF repo was created 2026-10-12.",
+  "license": "LFM Open License v1.0 (free for commercial use under $10M annual revenue)",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 24.0,
+    "params_active_b": 2.45,
+    "layers": 40,
+    "layer_mix": "30 double-gated short convolution blocks + 10 GQA attention layers",
+    "hybrid": true,
+    "experts": 64
+  },
+  "context": {
+    "native": 131072,
+    "max": 131072
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+  "summary": "Liquid AI's agent model: 24B total, 2.45B active per token, 131K context, always reasons before answering. Liquid trained it with RL inside OpenClaw, Hermes Agent, Pi and OpenCode. On Liquid's chart it beats Qwen3.6-35B-A3B on agent and tool-use tests (LiveClaw 48.09 vs 38.19) but trails it on coding (SWE-Bench Verified 51.0 vs 66.2). About 14-15 GB at 4-bit.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Released 2026-10-13: one builder report and Liquid's own speed table so far, no measured run.",
+    "reviewed": "2026-10-14"
+  },
+  "updated": "2026-10-14"
+}

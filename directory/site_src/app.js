@@ -313,14 +313,14 @@ function featureNovelty(s, chosen) {
   });
   return (newHardware ? 2 : 0) + (newEngine ? 1 : 0);
 }
-/* Series = model line + generation. Qwen generations are numbers; Gemma 4 is "4";
+/* Series = model line + generation. Qwen generations are numbers; Gemma 4 is "4"; Liquid LFM2.5 is "lfm2.5";
    models built on another model (Bonsai, Saluki, MiniCPM-V) are "derived". */
 function genLabel(g) {
   g = String(g || "");
-  return g === "4" ? "Gemma 4" : g === "derived" ? "Built on other models" :
+  return g === "4" ? "Gemma 4" : g === "lfm2.5" ? "Liquid LFM2.5" : g === "derived" ? "Built on other models" :
     g === "decision" ? "Decision models (Jev-style)" : "Qwen" + g;
 }
-function genRank(g) { g = String(g || ""); return g === "decision" ? 3 : g === "derived" ? 2 : g === "4" ? 1 : 0; }
+function genRank(g) { g = String(g || ""); return g === "decision" ? 3 : g === "derived" ? 2 : (g === "4" || g === "lfm2.5") ? 1 : 0; }
 /* Maker badge for the Models index: who made the model (Qwen, Google, or another company). */
 function makerOf(m) {
   var p = PUB[m.publisher] || {}, name = String(p.name || m.publisher || "").split(" (")[0];
@@ -2600,7 +2600,7 @@ function viewMethodology() {
     "</ul></div>";
 
   h += '<div class="psec"><h2>Scope</h2><p>' +
-    esc("The directory now covers two model lines: Qwen (the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches) and Gemma 4 (Google DeepMind, E2B/E4B/12B/26B-A4B/31B). Deliberately excluded: cluster-scale models with no single-box lane, sub-2B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
+    esc("The directory now covers three model lines: Qwen (the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches), Gemma 4 (Google DeepMind, E2B/E4B/12B/26B-A4B/31B) and Liquid LFM2.5 (24B-A2B). Deliberately excluded: cluster-scale models with no single-box lane, sub-2B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
     "</p></div></div>";
   el("main").innerHTML = h;
 }

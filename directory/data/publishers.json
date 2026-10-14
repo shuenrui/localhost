@@ -268,7 +268,7 @@
     "liquidai": {
       "name": "Liquid AI",
       "kind": "lab",
-      "role": "d1: open decision models on the LFM2.5 backbone.",
+      "role": "LFM2.5 models (24B-A2B agent model, QAD Q4_0 GGUF) and d1 decision models on the LFM2.5 backbone.",
       "url": "https://huggingface.co/LiquidAI"
     },
     "togetherai": {
@@ -288,6 +288,12 @@
       "kind": "lab",
       "role": "ColGrep code search and ColGrep-Agent-2B, a local code-search agent built on MiniCPM5-2B.",
       "url": "https://huggingface.co/lightonai"
+    },
+    "dogukanurker": {
+      "name": "Doğukan Urker",
+      "kind": "builder",
+      "role": "Builder: LFM2.5-24B-A2B on an RTX 3060 12 GB at full 131K context.",
+      "url": "https://x.com/DogukanUrker"
     }
   }
 }
