@@ -1,0 +1,211 @@
+{
+  "id": "lfm25-24b-a2b-qad-q4-0-llamacpp-rtx3060",
+  "title": "LFM2.5-24B-A2B QAD Q4_0 on llama.cpp, RTX 3060 12 GB, full 131K context",
+  "slug_note": "~87 tok/s decode, ~1064 tok/s prefill on a 12 GB card with 16 GB RAM; MoE layers partly on the CPU.",
+  "model": "lfm2-5-24b-a2b",
+  "status": "reported",
+  "builder": "dogukanurker",
+  "variation": {
+    "license": "LFM Open License v1.0 (free for commercial use under $10M annual revenue)",
+    "downloads": null,
+    "checkpoint": "LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "publisher": "liquidai",
+    "quant": "gguf-q4",
+    "quant_detail": "QAD Q4_0, 13.58 GB: Liquid's quantization-aware distilled build, trained to recover Q4_0 loss",
+    "format": "gguf",
+    "size_gb": 13.58,
+    "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server, 12 MoE layers on the CPU (--n-cpu-moe 12), 131K context, q8_0 KV cache, flash attention, reasoning on",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "-ngl 99",
+      "--n-cpu-moe 12",
+      "-c 131072",
+      "-fa on",
+      "--jinja",
+      "-np 1",
+      "--cache-type-k q8_0",
+      "--cache-type-v q8_0",
+      "--reasoning on"
+    ]
+  },
+  "hardware": [
+    "gpu-12gb"
+  ],
+  "requirements": {
+    "memory_gb": 15,
+    "disk_gb": 13.6,
+    "min_vram_gb": 11.6,
+    "notes": "Builder: 11.6 of 12.3 GB VRAM used (94%), the rest in system RAM; 16 GB RAM on the box. memory_gb is an estimate: the 13.58 GB file plus KV cache.",
+    "offload": {
+      "strategy": "layer_offload",
+      "components": [
+        "weights"
+      ],
+      "intentional": true,
+      "source": "https://x.com/DogukanUrker/status/2110062837963903485",
+      "locator": "post text: '94% VRAM (11.6/12.3 GB), the rest sits in system RAM' and config flag --n-cpu-moe 12",
+      "provenance": "forum",
+      "date": "2026-10-13",
+      "note": "Builder-stated: the expert weights of 12 MoE layers run from system RAM on the CPU; everything else is on the GPU (-ngl 99)."
+    }
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "command": "llama-server -m LFM2.5-24B-A2B-QAD-Q4_0.gguf -ngl 99 --n-cpu-moe 12 -c 131072 -fa on --jinja -np 1 --cache-type-k q8_0 --cache-type-v q8_0 --temp 0.1 --top-k 50 --top-p 1.0 --min-p 0.0 --repeat-penalty 1.05 --reasoning on",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "Download LFM2.5-24B-A2B-QAD-Q4_0.gguf from the LiquidAI/LFM2.5-24B-A2B-GGUF repository into the folder you run from."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -m LFM2.5-24B-A2B-QAD-Q4_0.gguf -ngl 99 --n-cpu-moe 12 -c 131072 -fa on --jinja -np 1 --cache-type-k q8_0 --cache-type-v q8_0 --temp 0.1 --top-k 50 --top-p 1.0 --min-p 0.0 --repeat-penalty 1.05 --reasoning on"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "m001",
+      "metric": "decode_per_stream",
+      "value": 87,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-10-13",
+      "source": "https://x.com/DogukanUrker/status/2110062837963903485",
+      "context": "~87 tok/s decode at full 131K context window, RTX 3060 12 GB",
+      "conditions": {
+        "context_label": "131K window",
+        "hardware_count": 1,
+        "kv_dtype": "q8",
+        "thinking": true
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "dogukan-lfm25-3060",
+        "quality_status": "unchecked"
+      }
+    },
+    {
+      "id": "m002",
+      "metric": "prefill_tok_s",
+      "value": 1064,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-10-13",
+      "source": "https://x.com/DogukanUrker/status/2110062837963903485",
+      "context": "~1064 tok/s prefill",
+      "conditions": {
+        "context_label": "131K window",
+        "hardware_count": 1,
+        "kv_dtype": "q8"
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "dogukan-lfm25-3060",
+        "quality_status": "unchecked"
+      }
+    },
+    {
+      "id": "m003",
+      "metric": "memory_gb",
+      "value": 11.6,
+      "unit": "GB",
+      "stat": "peak",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-10-13",
+      "source": "https://x.com/DogukanUrker/status/2110062837963903485",
+      "context": "VRAM in use: 94% (11.6/12.3 GB); the rest sits in system RAM",
+      "conditions": {
+        "context_label": "131K window",
+        "hardware_count": 1,
+        "kv_dtype": "q8"
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "dogukan-lfm25-3060",
+        "quality_status": "unchecked"
+      }
+    }
+  ],
+  "caveats": [
+    "Single builder post on launch day; the prompt length behind the speed figures is not stated.",
+    "Needs about 16 GB of system RAM next to the card, because 12 MoE layers run on the CPU.",
+    "License is Liquid's LFM Open License v1.0, not Apache-2.0: commercial use is licensed only for organisations under $10M annual revenue.",
+    "Not recommended on its own for knowledge-heavy tasks (Liquid's card): pair it with retrieval or web search."
+  ],
+  "provenance_tier": "forum",
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "dogukan-lfm25-3060",
+        "actor": "@DogukanUrker",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/DogukanUrker/status/2110062837963903485"
+        ],
+        "locator": "post 2110062837963903485, 2026-10-13T17:39:18Z",
+        "note": "Single-post builder report with the full llama-server config: RTX 3060 12 GB, 16 GB RAM, QAD Q4_0."
+      },
+      {
+        "id": "liquid-card",
+        "actor": "Liquid AI",
+        "publisher": "liquidai",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+          "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF"
+        ],
+        "locator": "model card and GGUF card (QAD Q4_0 section)",
+        "note": "Vendor card: architecture, license, QAD Q4_0 description."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://x.com/DogukanUrker/status/2110062837963903485",
+      "kind": "post",
+      "note": "RTX 3060 run: config, decode/prefill speed, VRAM use",
+      "lineage_id": "dogukan-lfm25-3060"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+      "kind": "model",
+      "note": "GGUF files incl. QAD Q4_0 (13.58 GB)",
+      "lineage_id": "liquid-card"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+      "kind": "model",
+      "note": "model card: architecture, sampling settings, license",
+      "lineage_id": "liquid-card"
+    }
+  ],
+  "updated": "2026-10-14",
+  "schema_version": 2
+}

@@ -107,6 +107,8 @@ Required: `id`, `title`, `model`, `variation`, `engine`, `hardware`,
     "config": "DFlash2 block-diffusion draft, EAGLE knobs N/A",
     "image": "lmsysorg/sglang:qwen38-27b-dflash2",
     "requires_fork": true,           // stock engine cannot do this
+    "bundled": false,                // optional: true when the tool ships its own copy of
+                                     // the engine (no separate install, no server to check)
     "draft_model": "z-lab/Qwen3.8-27B-DFlash2@50307d4",
     "spec_decode": "dflash2",        // none | mtp | eagle | dspark | dflash2
     "flags": ["--mem-fraction-static 0.90", "--kv-cache-dtype fp8_e4m3"]

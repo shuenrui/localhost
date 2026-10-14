@@ -1,0 +1,35 @@
+{
+  "id": "colgrep-agent-2b",
+  "name": "ColGrep-Agent-2B",
+  "family": "ColGrep-Agent",
+  "generation": "derived",
+  "publisher": "lightonai",
+  "released": "2026-10-12",
+  "released_note": "Date of LightOn's launch blog; the HF repo was created 2026-10-03.",
+  "license": "Apache-2.0",
+  "based_on": {
+    "model": "MiniCPM5-2B",
+    "note": "Not Qwen: LightOn trained OpenBMB's MiniCPM5-2B into a code-search agent, with Qwen3.5-27B as the teacher model."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 2,
+    "params_active_b": 2
+  },
+  "context": {
+    "native": null,
+    "max": null
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/lightonai/colgrep-agent-2B",
+  "summary": "A 2B code-search agent from LightOn. It runs locally inside the colgrep tool, searches your repo and hands back file paths, line ranges and code, so Claude Code, Codex or OpenCode spend fewer turns searching. LightOn's test (52 questions, Claude Code with Sonnet 5.5): 34.3% fewer API tokens than grep, accuracy 80.8% vs 83.3%, and 21.6 s vs 13.0 s per question. It is not a chat model.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Single-job tool model: it only runs inside colgrep, so the chat-model baseline policy does not apply.",
+    "reviewed": "2026-10-14"
+  },
+  "updated": "2026-10-14"
+}

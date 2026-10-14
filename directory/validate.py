@@ -183,7 +183,7 @@ V2_ENGINE_KEYS = {
 }
 ALLOWED_ENGINE_KEYS = {
     "id", "config", "image", "requires_fork", "draft_model", "spec_decode",
-    "flags",
+    "flags", "bundled",
 } | V2_ENGINE_KEYS
 
 V2_RUN_KEYS = {"repo_revision"}
@@ -1055,6 +1055,8 @@ def check_setup_v2(rep: Report, sid: str, s: dict, techniques: dict,
     if isinstance(e, dict):
         ew = f"{w}.engine"
         check_keys(rep, ew, e, ALLOWED_ENGINE_KEYS, label="engine")
+        if "bundled" in e and not isinstance(e.get("bundled"), bool):
+            rep.err(ew, "engine.bundled must be true or false")
         check_nonempty_str(rep, ew, "version", e.get("version"))
         check_nonempty_str(rep, ew, "image_digest", e.get("image_digest"))
         check_enum(rep, ew, "backend", e.get("backend"), BACKENDS)

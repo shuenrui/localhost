@@ -1,0 +1,142 @@
+{
+  "id": "colgrep-agent-2b-q8-colgrep-mac",
+  "title": "ColGrep-Agent-2B Q8_0 inside colgrep (2.5 GB)",
+  "slug_note": "One install command; about 20 s per question on an M3 Pro with Metal, 3-4 GB peak memory (LightOn).",
+  "model": "colgrep-agent-2b",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "lightonai/colgrep-agent-2B-GGUF",
+    "publisher": "lightonai",
+    "quant": "gguf-q8",
+    "quant_detail": "Q8_0, 2.68 GB (colgrep's default); Q4_K_M 1.56 GB and BF16 5.04 GB also published",
+    "format": "gguf",
+    "size_gb": 2.68,
+    "url": "https://huggingface.co/lightonai/colgrep-agent-2B-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama.cpp bundled inside colgrep; no separate llama-server or Python",
+    "image": null,
+    "requires_fork": false,
+    "bundled": true,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 4,
+    "disk_gb": 2.7,
+    "min_vram_gb": null,
+    "notes": "LightOn: 3-4 GB peak memory on an M3 Pro. Uses Metal or Vulkan when present, otherwise the CPU."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": false,
+    "long_context": null,
+    "max_context": null
+  },
+  "run": {
+    "repo": "https://github.com/lightonai/next-plaid",
+    "command": "colgrep --agent \"where are retries configured\"",
+    "steps": [
+      {
+        "kind": "cmd",
+        "text": "brew install lightonai/tap/colgrep && colgrep --install-agent"
+      },
+      {
+        "kind": "do",
+        "text": "Open a terminal in your project folder for the next steps."
+      },
+      {
+        "kind": "cmd",
+        "text": "colgrep init"
+      },
+      {
+        "kind": "cmd",
+        "text": "colgrep --agent \"where are retries configured\""
+      },
+      {
+        "kind": "cmd",
+        "text": "colgrep --install-claude-code"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "m001",
+      "metric": "memory_gb",
+      "value": 4,
+      "unit": "GB",
+      "stat": "peak",
+      "concurrency": 1,
+      "provenance": "vendor",
+      "date": "2026-10-12",
+      "source": "https://huggingface.co/blog/lightonai/colgrep-agent",
+      "context": "M3 Pro, Metal: 3-4 GB peak memory, around 20 s per question",
+      "conditions": {
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "lighton-blog",
+        "quality_status": "unchecked"
+      }
+    }
+  ],
+  "caveats": [
+    "Not a chat model: it only runs inside colgrep as a code-search helper, so chat UIs cannot use it.",
+    "Every number here is LightOn's own. Their 52-question test covered code search only, not full coding tasks.",
+    "Accuracy: 80.8% vs 83.3% for plain grep. LightOn says the gap is not significant, but the 95% interval runs from -10.9 to +5.1 points.",
+    "It is slower: 21.6 s per question vs 13.0 s with grep. The Balanced mode saved 21% of tokens at grep's accuracy (17.7 s).",
+    "Savings grow with repo size: 19% under 50k lines, 40% at 150k-600k lines.",
+    "The last step hooks it into Claude Code. For Codex or OpenCode, LightOn's blog gives colgrep --install-codex and colgrep --install-opencode."
+  ],
+  "provenance_tier": "vendor",
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "lighton-blog",
+        "actor": "LightOn",
+        "publisher": "lightonai",
+        "kind": "vendor_card",
+        "sources": [
+          "https://huggingface.co/blog/lightonai/colgrep-agent",
+          "https://huggingface.co/lightonai/colgrep-agent-2B-GGUF"
+        ],
+        "locator": "blog sections 2.1 (install, M3 Pro memory) and 3.2 (token table)",
+        "note": "Vendor-run test; no independent reproduction yet."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/blog/lightonai/colgrep-agent",
+      "kind": "blog",
+      "note": "launch blog: install, M3 Pro memory, 52-question Claude Code test",
+      "lineage_id": "lighton-blog"
+    },
+    {
+      "url": "https://huggingface.co/lightonai/colgrep-agent-2B-GGUF",
+      "kind": "model",
+      "note": "GGUF files and sizes; Apache-2.0",
+      "lineage_id": "lighton-blog"
+    },
+    {
+      "url": "https://github.com/lightonai/next-plaid",
+      "kind": "repo",
+      "note": "colgrep source and installers",
+      "lineage_id": "lighton-blog"
+    }
+  ],
+  "updated": "2026-10-14",
+  "schema_version": 2
+}

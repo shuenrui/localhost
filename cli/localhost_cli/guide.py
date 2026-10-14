@@ -19,7 +19,10 @@ def build(d, s, os_name=None):
     steps = []
     ins = eng.get("install") or {}
     methods = [m for m in ins.get("methods") or [] if os_name in (m.get("platforms") or [])]
-    if methods:
+    if e_in.get("bundled"):
+        steps.append({"phase": "install", "copyable": False, "kind": "note",
+                      "text": "No separate engine install: this tool bundles its own copy of %s." % eng.get("name", eid)})
+    elif methods:
         m = methods[0]
         for st in m.get("steps") or []:
             steps.append({"phase": "install", "copyable": st.get("kind") == "cmd", "kind": st.get("kind"),
@@ -51,13 +54,15 @@ def build(d, s, os_name=None):
     if not run.get("command") and not any(x["phase"] == "setup" and x["copyable"] for x in steps):
         steps.append({"phase": "start", "copyable": False, "kind": "note",
                       "text": "No launch command is recorded for this recipe. Follow the repository: %s" % run.get("repo")})
-    steps.append({"phase": "check", "copyable": True, "kind": "cmd", "text": "localhost check"})
-    steps.append({"phase": "connect", "copyable": True, "kind": "cmd", "text": "localhost connect opencode --engine %s" % eid})
+    if not e_in.get("bundled"):  # bundled tools expose no OpenAI-compatible server to check or connect
+        steps.append({"phase": "check", "copyable": True, "kind": "cmd", "text": "localhost check"})
+        steps.append({"phase": "connect", "copyable": True, "kind": "cmd", "text": "localhost connect opencode --engine %s" % eid})
     for i, st in enumerate(steps, 1):
         st["n"] = i
-    warn = [g if isinstance(g, str) else json.dumps(g) for g in eng.get("gotchas") or []]
+    # A bundled engine is the tool's own copy: the standalone engine's gotchas and install page do not apply.
+    warn = [] if e_in.get("bundled") else [g if isinstance(g, str) else json.dumps(g) for g in eng.get("gotchas") or []]
     warn += [c if isinstance(c, str) else (c.get("text") or json.dumps(c)) for c in s.get("caveats") or []]
     return {"recipe": s["id"], "title": s.get("title"), "model": s.get("model"), "engine": eid, "os": os_name,
             "repo": run.get("repo"), "requirements": s.get("requirements"), "steps": steps, "warnings": warn,
-            "install_source": ins.get("source"),
+            "install_source": None if e_in.get("bundled") else ins.get("source"),
             "rule": "Run only copyable=true steps, verbatim. Other steps are instructions or notes, not commands."}
