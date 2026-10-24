@@ -10,7 +10,7 @@
     "checkpoint": "ollama:nemotron-3.5-bolt:e4b",
     "publisher": "ollama",
     "quant": "gguf-q4",
-    "quant_detail": "Ollama's `nemotron-3.5-bolt:e4b` tag, 7.2GB - 7.9GB; a separate `e4b-q4_K_M` tag also exists",
+    "quant_detail": "Q4_K_M, Ollama's `nemotron-3.5-bolt:e4b` tag, 7.2GB - 7.9GB (with the vision projector); quant and 65,536 context read with `ollama show` on our DGX Spark",
     "format": "gguf",
     "size_gb": 7.9,
     "url": "https://ollama.com/library/nemotron-3.5-bolt"
@@ -39,8 +39,8 @@
     "video": false,
     "tools": true,
     "thinking": true,
-    "long_context": 131072,
-    "max_context": 131072
+    "long_context": 65536,
+    "max_context": 65536
   },
   "run": {
     "repo": "https://ollama.com/library/nemotron-3.5-bolt",
@@ -60,7 +60,7 @@
   "caveats": [
     "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
     "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
-    "Context: NVIDIA's BF16 card gives 64K input / 64K output; Ollama lists 128K."
+    "Context: `ollama show` reports 65,536 tokens, matching NVIDIA's card (64K input); the Ollama library page says 128K."
   ],
   "provenance_tier": null,
   "sources": [
@@ -75,6 +75,6 @@
       "note": "NVIDIA card: 8B (4B effective), built on Gemma-4-E4B"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }

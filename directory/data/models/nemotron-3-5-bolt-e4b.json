@@ -19,18 +19,18 @@
   },
   "context": {
     "native": 65536,
-    "max": 131072
+    "max": 65536
   },
   "modalities": [
     "text"
   ],
   "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
-  "summary": "NVIDIA's small local assistant model, post-trained from Gemma 4 E4B: 8B parameters (4B effective), text in and out. NVIDIA's card gives 64K input / 64K output; Ollama lists a 128K window. About 5 GB at 4-bit; Ollama's tag is 7.2-7.9 GB.",
+  "summary": "NVIDIA's small local assistant model, post-trained from Gemma 4 E4B: 8B parameters (4B effective), text in and out. Context is 64K (NVIDIA's card; `ollama show` agrees, though Ollama's page says 128K). About 5 GB at 4-bit; Ollama's tag is 7.2-7.9 GB.",
   "practical_baseline": {
     "status": "not_verified",
     "setup": null,
     "reason": "No reported or measured run recorded yet.",
     "reviewed": "2026-10-24"
   },
-  "updated": "2026-10-24"
+  "updated": "2026-10-25"
 }

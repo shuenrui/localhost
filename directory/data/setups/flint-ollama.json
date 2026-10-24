@@ -9,8 +9,8 @@
     "downloads": null,
     "checkpoint": "ollama:flint",
     "publisher": "ollama",
-    "quant": "gguf-q4",
-    "quant_detail": "Ollama's default `flint:latest` (= `flint:40b`) tag, 23GB; the page does not name the exact quant",
+    "quant": "nvfp4",
+    "quant_detail": "NVFP4, Ollama's default `flint:latest` (= `flint:40b`) tag, 23GB; quant read with `ollama show flint` on our DGX Spark (Ollama 0.40.10)",
     "format": "gguf",
     "size_gb": 23,
     "url": "https://ollama.com/library/flint"
@@ -58,10 +58,10 @@
   },
   "measurements": [],
   "caveats": [
-    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
     "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
     "Recursive's own serving path is SGLang on one B300/H200; this consumer route uses Ollama's quantised tag instead.",
-    "Unsloth's guide claims 125+ tok/s on an M4 Pro MacBook Pro and 150+ on a 64 GB RTX Spark; machine memory and quant per claim are not stated, so those numbers are not recorded here."
+    "Unsloth's guide claims 125+ tok/s on an M4 Pro MacBook Pro and 150+ on a 64 GB RTX Spark; machine memory and quant per claim are not stated, so those numbers are not recorded here.",
+    "The default tag is NVFP4 (an NVIDIA Blackwell 4-bit format); Ollama also ships a `40b-a2b-q4_1` tag for other GPUs."
   ],
   "provenance_tier": null,
   "sources": [
@@ -81,6 +81,6 @@
       "note": "Unsloth run guide: GGUF sizes and memory table"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }
