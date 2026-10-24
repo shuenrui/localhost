@@ -1,0 +1,97 @@
+{
+  "id": "nemotron-3-5-bolt-74b-a9b-24gb-vllm",
+  "title": "Nemotron 3.5 Bolt 74B-A9B 24GB pack on vLLM (NVIDIA's recipe)",
+  "slug_note": "NVIDIA's own vLLM command for the 2-bit-expert 24 GB pack, with DFlash speculative decoding.",
+  "model": "nemotron-3-5-bolt-74b-a9b",
+  "status": "untested",
+  "variation": {
+    "license": "OpenMDW-1.1",
+    "downloads": null,
+    "checkpoint": "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+    "publisher": "nvidia",
+    "quant": "mixed",
+    "quant_detail": "IQ2 experts (quantisation-aware distillation) with higher-precision other layers, 24.1 GB packed",
+    "format": "safetensors",
+    "size_gb": 24.1,
+    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "NVIDIA card Quick Start: vLLM nightly, b12x kernels, FP8 KV, 256K, 1 sequence, DFlash drafter (7 tokens)",
+    "image": "vllm/vllm-openai:nightly-77154ca6116ae34cbfe314beef1016bde9b63989",
+    "requires_fork": false,
+    "draft_model": "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-LiLiCorr",
+    "spec_decode": "other",
+    "flags": [
+      "--kv-cache-dtype fp8",
+      "--max-model-len 262144",
+      "--max-num-seqs 1",
+      "--moe-backend b12x"
+    ]
+  },
+  "hardware": [
+    "rtx-5090",
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 30,
+    "disk_gb": 24.1,
+    "min_vram_gb": null,
+    "notes": "Estimate: the 24.1 GB pack plus the drafter and FP8 KV cache; NVIDIA lists RTX 5090, DGX Spark and RTX Spark as supported hardware. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": true,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+    "command": "vllm serve nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB --trust-remote-code --load-format auto --tensor-parallel-size 1 --max-model-len 262144 --max-num-seqs 1 --enable-chunked-prefill --kv-cache-dtype fp8 --linear-backend b12x --moe-backend b12x --attention-backend FLASHINFER --mamba-backend flashinfer --mamba-ssm-cache-dtype bfloat16 --mamba-cache-dtype bfloat16 --mamba-cache-mode align --seed 42 --allowed-local-media-path / --limit-mm-per-prompt '{\"video\":1,\"image\":1}' --video-pruning-rate 0.5 --media-io-kwargs '{\"video\":{\"fps\":2,\"num_frames\":256}}' --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser-plugin ultra_v3_reasoning_parser.py --reasoning-parser ultra_v3 --speculative-config '{\"method\":\"dflash\",\"model\":\"nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-LiLiCorr\",\"num_speculative_tokens\":7,\"rejection_sample_method\":\"standard\",\"attention_backend\":\"FLASHINFER\",\"draft_load_config\":{\"load_format\":\"auto\"}}'",
+    "steps": [
+      {
+        "kind": "cmd",
+        "text": "docker run -it --name vllm --gpus all --ipc=host -p 8000:8000 --entrypoint /bin/bash vllm/vllm-openai:nightly-77154ca6116ae34cbfe314beef1016bde9b63989"
+      },
+      {
+        "kind": "cmd",
+        "text": "pip install b12x"
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm download-kernels"
+      },
+      {
+        "kind": "cmd",
+        "text": "wget https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB/resolve/main/ultra_v3_reasoning_parser.py"
+      },
+      {
+        "kind": "cmd",
+        "text": "export VLLM_USE_V2_MODEL_RUNNER=1"
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB --trust-remote-code --load-format auto --tensor-parallel-size 1 --max-model-len 262144 --max-num-seqs 1 --enable-chunked-prefill --kv-cache-dtype fp8 --linear-backend b12x --moe-backend b12x --attention-backend FLASHINFER --mamba-backend flashinfer --mamba-ssm-cache-dtype bfloat16 --mamba-cache-dtype bfloat16 --mamba-cache-mode align --seed 42 --allowed-local-media-path / --limit-mm-per-prompt '{\"video\":1,\"image\":1}' --video-pruning-rate 0.5 --media-io-kwargs '{\"video\":{\"fps\":2,\"num_frames\":256}}' --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser-plugin ultra_v3_reasoning_parser.py --reasoning-parser ultra_v3 --speculative-config '{\"method\":\"dflash\",\"model\":\"nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-LiLiCorr\",\"num_speculative_tokens\":7,\"rejection_sample_method\":\"standard\",\"attention_backend\":\"FLASHINFER\",\"draft_load_config\":{\"load_format\":\"auto\"}}'"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet.",
+    "Steps 2-6 run inside the container that step 1 opens.",
+    "spec_decode is 'other': NVIDIA's DFlash method with the LiLiCorr drafter, which this directory's enum does not name.",
+    "The experts are 2-bit; NVIDIA recovers accuracy with quantisation-aware distillation, but quality at this size has not been checked here."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+      "kind": "model",
+      "note": "NVIDIA card: Quick Start vLLM command, 24GB packed model, supported hardware list"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

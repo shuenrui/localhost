@@ -1,0 +1,36 @@
+{
+  "id": "kolibri-1",
+  "name": "Kolibri 1",
+  "family": "Kolibri",
+  "generation": "kolibri",
+  "line": "Kolibri",
+  "publisher": "aleph-alpha",
+  "released": "2026-10-03",
+  "released_note": "Card: 'Release Date 3rd of October 2026'; HF repo created 2026-10-02.",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 78.1,
+    "params_active_b": 3.46,
+    "layers": 50,
+    "experts": 384,
+    "hybrid": false,
+    "layer_mix": "4:1 sliding-window : GQA attention; 1 shared + 6 routed experts of 384 per layer"
+  },
+  "context": {
+    "native": 262144,
+    "max": 1048576
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1",
+  "summary": "Aleph Alpha's German/English reasoning MoE: 78B total, 3.46B active, 262K native context (1M by extrapolation), Apache-2.0. Official weights are FP8 (~78 GB); bartowski's Q4_K_M GGUF is 49.8 GB, so it fits 64 GB+ machines. Few active parameters make it fast for its size.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run recorded yet.",
+    "reviewed": "2026-10-24"
+  },
+  "updated": "2026-10-24"
+}

@@ -1,0 +1,79 @@
+{
+  "id": "gpt-oss-20b-mxfp4-llamacpp",
+  "title": "gpt-oss-20b MXFP4 GGUF on llama.cpp (ggml-org)",
+  "slug_note": "The official MXFP4 weights as one 12.1 GB GGUF, served by llama.cpp.",
+  "model": "gpt-oss-20b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ggml-org/gpt-oss-20b-GGUF",
+    "publisher": "ggml-org",
+    "quant": "mxfp4",
+    "quant_detail": "MXFP4, 12.11 GB (gpt-oss-20b-MXFP4.gguf); the repo also holds an EAGLE3 draft model",
+    "format": "gguf",
+    "size_gb": 12.1,
+    "url": "https://huggingface.co/ggml-org/gpt-oss-20b-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama serve with the repo default",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-24gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 16,
+    "disk_gb": 12.1,
+    "min_vram_gb": null,
+    "notes": "Estimate: the 12.1 GB file plus KV cache. Not measured."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://huggingface.co/ggml-org/gpt-oss-20b-GGUF",
+    "command": "llama serve -hf ggml-org/gpt-oss-20b-GGUF",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama serve -hf ggml-org/gpt-oss-20b-GGUF"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet.",
+    "`llama serve` is the newer unified llama.cpp command used on the ggml-org card; on older builds the equivalent server binary is `llama-server -hf ...`."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ggml-org/gpt-oss-20b-GGUF",
+      "kind": "model",
+      "note": "ggml-org GGUF card: llama serve command and files"
+    },
+    {
+      "url": "https://huggingface.co/openai/gpt-oss-20b",
+      "kind": "model",
+      "note": "official model card"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

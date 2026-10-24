@@ -1,0 +1,79 @@
+{
+  "id": "nemotron-3-5-super-vl-ollama",
+  "title": "Nemotron 3.5 Super VL via Ollama",
+  "slug_note": "NVIDIA's 120B vision MoE in one command; the tag is 80-90 GB, so 128 GB machines.",
+  "model": "nemotron-3-5-super-vl-120b-a12b",
+  "status": "untested",
+  "variation": {
+    "license": "OpenMDW-1.1",
+    "downloads": null,
+    "checkpoint": "ollama:nemotron-3.5-super",
+    "publisher": "ollama",
+    "quant": "other",
+    "quant_detail": "Ollama's default `nemotron-3.5-super:latest` (120b) tag, 80GB - 90GB; quant not named on the page",
+    "format": "gguf",
+    "size_gb": 90,
+    "url": "https://ollama.com/library/nemotron-3.5-super"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "mac-128gb"
+  ],
+  "requirements": {
+    "memory_gb": 100,
+    "disk_gb": 90,
+    "min_vram_gb": null,
+    "notes": "Estimate from the 80-90 GB tag plus KV headroom. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 1048576,
+    "max_context": 1048576
+  },
+  "run": {
+    "repo": "https://ollama.com/library/nemotron-3.5-super",
+    "command": "ollama run nemotron-3.5-super",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run nemotron-3.5-super"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag range.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/nemotron-3.5-super",
+      "kind": "docs",
+      "note": "Ollama library page: tags, 80-90GB, 1M context, run command"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "kind": "model",
+      "note": "NVIDIA model card"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

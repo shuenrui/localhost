@@ -1,0 +1,80 @@
+{
+  "id": "nemotron-3-5-bolt-e4b-ollama",
+  "title": "Nemotron 3.5 Bolt E4B via Ollama",
+  "slug_note": "A small NVIDIA assistant model built on Gemma 4 E4B; 7-8 GB tag.",
+  "model": "nemotron-3-5-bolt-e4b",
+  "status": "untested",
+  "variation": {
+    "license": "OpenMDW-1.1",
+    "downloads": null,
+    "checkpoint": "ollama:nemotron-3.5-bolt:e4b",
+    "publisher": "ollama",
+    "quant": "gguf-q4",
+    "quant_detail": "Ollama's `nemotron-3.5-bolt:e4b` tag, 7.2GB - 7.9GB; a separate `e4b-q4_K_M` tag also exists",
+    "format": "gguf",
+    "size_gb": 7.9,
+    "url": "https://ollama.com/library/nemotron-3.5-bolt"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 10,
+    "disk_gb": 7.9,
+    "min_vram_gb": null,
+    "notes": "Estimate from the tag size plus KV headroom. Not measured."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://ollama.com/library/nemotron-3.5-bolt",
+    "command": "ollama run nemotron-3.5-bolt:e4b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run nemotron-3.5-bolt:e4b"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
+    "Context: NVIDIA's BF16 card gives 64K input / 64K output; Ollama lists 128K."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/nemotron-3.5-bolt",
+      "kind": "docs",
+      "note": "Ollama library page: e4b tag, 7.2-7.9GB, 128K"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+      "kind": "model",
+      "note": "NVIDIA card: 8B (4B effective), built on Gemma-4-E4B"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

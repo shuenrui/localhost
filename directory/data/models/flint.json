@@ -1,0 +1,36 @@
+{
+  "id": "flint",
+  "name": "Flint",
+  "family": "Flint",
+  "generation": "flint",
+  "line": "Flint",
+  "publisher": "recursive",
+  "released": "2026-10-21",
+  "released_note": "HF repo RecursiveSI/flint created 2026-10-21; Unsloth GGUFs and the Ollama tag the same week.",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 39.8,
+    "params_active_b": 2.5,
+    "layers": 49,
+    "layer_mix": "2 dense + 47 MoE layers; 35 sliding-window (513 tokens) and 14 full-attention layers",
+    "hybrid": false,
+    "experts": 256
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/RecursiveSI/flint",
+  "summary": "Recursive's coding-agent MoE: 39.8B total, about 2.5B active per token, 262K context, trained from scratch. Recursive reports 74.2% on SWE-bench Verified (its own evaluation). About 25 GB at 4-bit (Unsloth UD-Q4_K_XL), 23 GB as Ollama's default tag.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Released 2026-10-21; no reported or measured run recorded yet. The Ollama default tag is the simplest recorded path.",
+    "reviewed": "2026-10-24"
+  },
+  "updated": "2026-10-24"
+}

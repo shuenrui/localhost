@@ -1,0 +1,84 @@
+{
+  "id": "nemotron-3-5-super-vl-nvfp4-vllm-dgx-spark",
+  "title": "Nemotron 3.5 Super VL NVFP4 on vLLM, one DGX Spark (NVIDIA's recipe)",
+  "slug_note": "NVIDIA's DGX Spark-only vLLM command: NVFP4 weights, LiLiCorr drafter, one sequence.",
+  "model": "nemotron-3-5-super-vl-120b-a12b",
+  "status": "untested",
+  "variation": {
+    "license": "OpenMDW-1.1",
+    "downloads": null,
+    "checkpoint": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+    "publisher": "nvidia",
+    "quant": "nvfp4",
+    "quant_detail": "NVFP4 mixed-precision weights, 75.0 GB",
+    "format": "safetensors",
+    "size_gb": 75.0,
+    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "NVIDIA card Quick Start for DGX Spark (GB10) only: 1 sequence, gpu-memory-utilization 0.75, DFlash with the LiLiCorr drafter (7 tokens)",
+    "image": "vllm/vllm-openai:v0.32.0",
+    "requires_fork": false,
+    "draft_model": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4-LiLiCorr",
+    "spec_decode": "other",
+    "flags": [
+      "--max-num-seqs 1",
+      "--gpu-memory-utilization 0.75",
+      "--speculative_config.method dflash",
+      "--speculative_config.num_speculative_tokens 7"
+    ]
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 96,
+    "disk_gb": 75.0,
+    "min_vram_gb": null,
+    "notes": "The card caps vLLM at 75% of GPU memory (about 96 GB of 128 GB) for weights, drafter and KV. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": true,
+    "tools": true,
+    "thinking": true,
+    "long_context": 1048576,
+    "max_context": 1048576
+  },
+  "run": {
+    "repo": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+    "command": "vllm serve nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 --served-model-name nemotron-3.5-super-vl --max-num-seqs 1 --trust-remote-code --gpu-memory-utilization 0.75 --max-num-batched-tokens 8192 --speculative_config.model nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4-LiLiCorr --speculative_config.num_speculative_tokens 7 --speculative_config.method dflash --mamba-backend flashinfer --mamba-ssm-cache-dtype float16 --enable-mamba-cache-stochastic-rounding --mamba-cache-philox-rounds 5 --enable-mamba-shared-prefix-checkpoint --video-pruning-rate 0.5 --media-io-kwargs '{\"video\": {\"fps\": 2, \"num_frames\": 256}}' --block-size 64 --prefix-match-unit 64 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Start a container from vllm/vllm-openai:v0.32.0 (or the card's pinned nightly) with GPU access; set HF_TOKEN if needed."
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 --served-model-name nemotron-3.5-super-vl --max-num-seqs 1 --trust-remote-code --gpu-memory-utilization 0.75 --max-num-batched-tokens 8192 --speculative_config.model nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4-LiLiCorr --speculative_config.num_speculative_tokens 7 --speculative_config.method dflash --mamba-backend flashinfer --mamba-ssm-cache-dtype float16 --enable-mamba-cache-stochastic-rounding --mamba-cache-philox-rounds 5 --enable-mamba-shared-prefix-checkpoint --video-pruning-rate 0.5 --media-io-kwargs '{\"video\": {\"fps\": 2, \"num_frames\": 256}}' --block-size 64 --prefix-match-unit 64 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3"
+      },
+      {
+        "kind": "cmd",
+        "text": "curl --fail http://localhost:8000/v1/models"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet. The owner's DGX Spark can measure this one directly.",
+    "NVIDIA says this configuration is for DGX Spark (GB10) only.",
+    "spec_decode is 'other': NVIDIA's DFlash method with the LiLiCorr drafter.",
+    "The card's command uses $MODEL / $DRAFT_MODEL shell variables; they are expanded to the repo ids here."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "kind": "model",
+      "note": "NVIDIA card: Quick Start (DGX Spark only), deployment table, LiLiCorr drafter"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

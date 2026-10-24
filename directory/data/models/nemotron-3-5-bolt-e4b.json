@@ -1,0 +1,36 @@
+{
+  "id": "nemotron-3-5-bolt-e4b",
+  "name": "Nemotron 3.5 Bolt E4B",
+  "family": "Nemotron 3.5 Bolt",
+  "generation": "derived",
+  "publisher": "nvidia",
+  "released": "2026-10-05",
+  "released_note": "BF16 repo created 2026-10-05; Unsloth GGUF and Ollama tag 2026-10-23.",
+  "license": "OpenMDW-1.1",
+  "based_on": {
+    "model": "gemma-4-e4b",
+    "note": "NVIDIA post-trained it from Google's Gemma 4 E4B (the card's architecture row reads 'Gemma-4-E4B') and ships it under its own name."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 8.0,
+    "params_active_b": 4,
+    "anatomy": "8B parameters, 4B effective (Gemma 4 E-series per-layer embeddings), per the NVIDIA card"
+  },
+  "context": {
+    "native": 65536,
+    "max": 131072
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+  "summary": "NVIDIA's small local assistant model, post-trained from Gemma 4 E4B: 8B parameters (4B effective), text in and out. NVIDIA's card gives 64K input / 64K output; Ollama lists a 128K window. About 5 GB at 4-bit; Ollama's tag is 7.2-7.9 GB.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run recorded yet.",
+    "reviewed": "2026-10-24"
+  },
+  "updated": "2026-10-24"
+}

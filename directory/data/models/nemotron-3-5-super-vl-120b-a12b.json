@@ -1,0 +1,36 @@
+{
+  "id": "nemotron-3-5-super-vl-120b-a12b",
+  "name": "Nemotron 3.5 Super VL 120B-A12B",
+  "family": "Nemotron 3.5",
+  "generation": "nemotron3.5",
+  "line": "Nemotron",
+  "publisher": "nvidia",
+  "released": "2026-10-12",
+  "released_note": "BF16 and NVFP4 repos created 2026-10-12; Unsloth GGUFs 2026-10-14.",
+  "license": "OpenMDW-1.1",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 120,
+    "params_active_b": 12,
+    "hybrid": true,
+    "layer_mix": "Mamba-2 + Transformer hybrid MoE with a C-RADIO vision encoder; native multi-token prediction (MTP)"
+  },
+  "context": {
+    "native": 1048576,
+    "max": 1048576
+  },
+  "modalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+  "summary": "NVIDIA's larger vision-language agent model: 120B total, 12B active, up to 1M context. NVIDIA publishes an NVFP4 checkpoint (75 GB) with a vLLM recipe written for one DGX Spark, plus a LiLiCorr speculative drafter. Ollama's tag is 80-90 GB.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run recorded yet.",
+    "reviewed": "2026-10-24"
+  },
+  "updated": "2026-10-24"
+}

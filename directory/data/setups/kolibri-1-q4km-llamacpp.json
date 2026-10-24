@@ -1,0 +1,82 @@
+{
+  "id": "kolibri-1-q4km-llamacpp",
+  "title": "Kolibri 1 Q4_K_M GGUF on llama.cpp (bartowski)",
+  "slug_note": "Aleph Alpha's 78B MoE (3.46B active) as a 49.8 GB GGUF; one llama-server command.",
+  "model": "kolibri-1",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "bartowski/Kolibri-1-GGUF",
+    "publisher": "bartowski",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 49.76 GB (per-tensor layout; needs llama.cpp b11716 or newer)",
+    "format": "gguf",
+    "size_gb": 49.8,
+    "url": "https://huggingface.co/bartowski/Kolibri-1-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server with the Q4_K_M tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "mac-128gb",
+    "strix-halo",
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 56,
+    "disk_gb": 49.8,
+    "min_vram_gb": null,
+    "notes": "Estimate: the 49.8 GB file plus KV cache at a modest context. Not measured."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/bartowski/Kolibri-1-GGUF",
+    "command": "llama-server -hf bartowski/Kolibri-1-GGUF:Q4_K_M",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp b11716 or newer (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf bartowski/Kolibri-1-GGUF:Q4_K_M"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet.",
+    "Aleph Alpha's official weights are FP8 (~78 GB) for data-centre GPUs; this is bartowski's community GGUF.",
+    "The card recommends 262K context or less for serving; 1M is by extrapolation."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/bartowski/Kolibri-1-GGUF",
+      "kind": "model",
+      "note": "bartowski GGUF card: llama-server command, Q4_K_M 49.76GB, llama.cpp b11716"
+    },
+    {
+      "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1",
+      "kind": "model",
+      "note": "official model card: parameters, context, license"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

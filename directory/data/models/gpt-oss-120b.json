@@ -1,0 +1,33 @@
+{
+  "id": "gpt-oss-120b",
+  "name": "gpt-oss-120b",
+  "family": "gpt-oss",
+  "generation": "gpt-oss",
+  "line": "gpt-oss",
+  "publisher": "openai",
+  "released": "2025-08",
+  "released_note": "HF repo created 2025-08-04 (OpenAI launch, 2025-08-05).",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 116.8,
+    "params_active_b": 5.1,
+    "anatomy": "116.8B total / 5.1B active per the model card; MoE weights post-trained in MXFP4"
+  },
+  "context": {
+    "native": 131072,
+    "max": 131072
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/openai/gpt-oss-120b",
+  "summary": "OpenAI's open-weight reasoning MoE: 116.8B total, 5.1B active, 128K context, Apache-2.0. Shipped already quantised (MXFP4 experts), so the official file is the one people run: about 63 GB; OpenAI says one 80 GB GPU. Reasoning effort is set low/medium/high in the prompt.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run recorded in this directory yet.",
+    "reviewed": "2026-10-24"
+  },
+  "updated": "2026-10-24"
+}

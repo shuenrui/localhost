@@ -1,0 +1,37 @@
+{
+  "id": "nemotron-3-5-bolt-74b-a9b",
+  "name": "Nemotron 3.5 Bolt 74B-A9B",
+  "family": "Nemotron 3.5",
+  "generation": "nemotron3.5",
+  "line": "Nemotron",
+  "publisher": "nvidia",
+  "released": "2026-10-07",
+  "released_note": "HF repo for the 24GB pack created 2026-10-07; the BF16 repo 2026-10-09; Unsloth and Ollama 2026-10-14/15.",
+  "license": "OpenMDW-1.1",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 74,
+    "params_active_b": 9,
+    "hybrid": true,
+    "layer_mix": "Mamba-2 + Transformer hybrid LatentMoE with a C-RADIO v4-H vision encoder",
+    "anatomy": "Compressed from Nemotron 3.5 Super and further trained (NVIDIA). The 24GB pack stores experts at 2 bits (QAD), 24.1 GB on disk."
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+  "summary": "NVIDIA's local agent model: 74B total, 9B active, vision, 256K context. NVIDIA ships a 24 GB pack with 2-bit experts recovered by quantisation-aware distillation, and names RTX 5090, DGX Spark and RTX Spark as targets. Ollama's tag is 25 GB; not supported on Apple Silicon yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured run recorded yet.",
+    "reviewed": "2026-10-24"
+  },
+  "updated": "2026-10-24"
+}

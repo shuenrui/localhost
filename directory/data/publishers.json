@@ -9,7 +9,7 @@
     "nvidia": {
       "name": "NVIDIA",
       "kind": "lab",
-      "role": "ModelOpt NVFP4 quantizations, tuned for Blackwell and DGX Spark.",
+      "role": "ModelOpt NVFP4 quantizations, tuned for Blackwell and DGX Spark. Nemotron 3.5 models (Bolt 74B-A9B, Bolt E4B, Super VL 120B-A12B).",
       "url": "https://huggingface.co/nvidia"
     },
     "intel": {
@@ -294,6 +294,24 @@
       "kind": "builder",
       "role": "Builder: LFM2.5-24B-A2B on an RTX 3060 12 GB at full 131K context.",
       "url": "https://x.com/DogukanUrker"
+    },
+    "recursive": {
+      "name": "Recursive",
+      "kind": "lab",
+      "role": "Flint (39.8B-A2.5B coding-agent MoE, Apache-2.0).",
+      "url": "https://huggingface.co/RecursiveSI"
+    },
+    "openai": {
+      "name": "OpenAI",
+      "kind": "lab",
+      "role": "gpt-oss-20b and gpt-oss-120b open-weight MoE models (Apache-2.0, MXFP4).",
+      "url": "https://huggingface.co/openai"
+    },
+    "aleph-alpha": {
+      "name": "Aleph Alpha",
+      "kind": "lab",
+      "role": "Kolibri 1 (78B-A3.46B German/English reasoning MoE, Apache-2.0).",
+      "url": "https://huggingface.co/Aleph-Alpha"
     }
   }
 }

@@ -1,0 +1,80 @@
+{
+  "id": "gpt-oss-20b-ollama",
+  "title": "gpt-oss-20b via Ollama",
+  "slug_note": "OpenAI's open MoE in one command; Ollama's tag is 14 GB.",
+  "model": "gpt-oss-20b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:gpt-oss:20b",
+    "publisher": "ollama",
+    "quant": "mxfp4",
+    "quant_detail": "Ollama's `gpt-oss:20b` tag, 14GB; MXFP4 experts as OpenAI shipped them",
+    "format": "gguf",
+    "size_gb": 14,
+    "url": "https://ollama.com/library/gpt-oss"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-24gb",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 16,
+    "disk_gb": 14,
+    "min_vram_gb": null,
+    "notes": "OpenAI: the 20B runs within 16 GB of memory. KV headroom not measured."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://ollama.com/library/gpt-oss",
+    "command": "ollama run gpt-oss:20b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run gpt-oss:20b"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
+    "Reasoning effort (low/medium/high) is set in the system prompt and changes speed and accuracy a lot; record it with any number."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/gpt-oss",
+      "kind": "docs",
+      "note": "Ollama library page: gpt-oss:20b tag, 14GB, 128K context"
+    },
+    {
+      "url": "https://huggingface.co/openai/gpt-oss-20b",
+      "kind": "model",
+      "note": "official model card: parameters, MXFP4, memory guidance, ollama run command"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

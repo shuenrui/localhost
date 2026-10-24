@@ -1,0 +1,86 @@
+{
+  "id": "flint-ollama",
+  "title": "Flint via Ollama (default tag)",
+  "slug_note": "A 40B coding-agent MoE with 2.5B active, in one command; 23 GB tag.",
+  "model": "flint",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": null,
+    "checkpoint": "ollama:flint",
+    "publisher": "ollama",
+    "quant": "gguf-q4",
+    "quant_detail": "Ollama's default `flint:latest` (= `flint:40b`) tag, 23GB; the page does not name the exact quant",
+    "format": "gguf",
+    "size_gb": 23,
+    "url": "https://ollama.com/library/flint"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "rtx-5090",
+    "mac-64gb"
+  ],
+  "requirements": {
+    "memory_gb": 27,
+    "disk_gb": 23,
+    "min_vram_gb": null,
+    "notes": "Estimate: the 23 GB tag plus KV headroom at a modest context. Not measured. Unsloth lists 26 GB of memory for 4-bit."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://ollama.com/library/flint",
+    "command": "ollama run flint",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run flint"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
+    "Recursive's own serving path is SGLang on one B300/H200; this consumer route uses Ollama's quantised tag instead.",
+    "Unsloth's guide claims 125+ tok/s on an M4 Pro MacBook Pro and 150+ on a 64 GB RTX Spark; machine memory and quant per claim are not stated, so those numbers are not recorded here."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/flint",
+      "kind": "docs",
+      "note": "Ollama library page: tags, 23GB size, 256K context, run command"
+    },
+    {
+      "url": "https://huggingface.co/RecursiveSI/flint",
+      "kind": "model",
+      "note": "official model card: architecture, context, sampling settings"
+    },
+    {
+      "url": "https://unsloth.ai/docs/models/flint",
+      "kind": "docs",
+      "note": "Unsloth run guide: GGUF sizes and memory table"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}

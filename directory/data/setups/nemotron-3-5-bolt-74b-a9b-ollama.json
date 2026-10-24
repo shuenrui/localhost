@@ -1,0 +1,80 @@
+{
+  "id": "nemotron-3-5-bolt-74b-a9b-ollama",
+  "title": "Nemotron 3.5 Bolt 74B-A9B via Ollama",
+  "slug_note": "NVIDIA's 74B local agent model in one command; 25 GB tag, NVIDIA GPUs only for now.",
+  "model": "nemotron-3-5-bolt-74b-a9b",
+  "status": "untested",
+  "variation": {
+    "license": "OpenMDW-1.1",
+    "downloads": null,
+    "checkpoint": "ollama:nemotron-3.5-bolt",
+    "publisher": "ollama",
+    "quant": "mixed",
+    "quant_detail": "Ollama's default `nemotron-3.5-bolt:latest` (74B-A9B) tag, 25GB; NVIDIA's QAD IQ2_XXS experts with NVFP4 and Q8_0 elsewhere",
+    "format": "gguf",
+    "size_gb": 25,
+    "url": "https://ollama.com/library/nemotron-3.5-bolt"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default tag",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "rtx-5090",
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 30,
+    "disk_gb": 25,
+    "min_vram_gb": null,
+    "notes": "Estimate: the 25 GB tag plus KV headroom. Not measured."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://ollama.com/library/nemotron-3.5-bolt",
+    "command": "ollama run nemotron-3.5-bolt",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run nemotron-3.5-bolt"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
+    "Ollama: Apple Silicon / Metal is not currently supported for 74B-A9B."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/nemotron-3.5-bolt",
+      "kind": "docs",
+      "note": "Ollama library page: tags, sizes, compatibility note, run command"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+      "kind": "model",
+      "note": "NVIDIA model card"
+    }
+  ],
+  "updated": "2026-10-24",
+  "schema_version": 2
+}
