@@ -178,8 +178,9 @@
     "Fails exactly as NVIDIA wrote it (tested 2026-10-25): the pinned vllm-openai nightly image has no wget, so the parser download step stops the container. Fix: use curl -fLO (shown above). Nothing else was changed.",
     "Works with one fix on a DGX Spark: server ready 8 min 21 s after start.",
     "Same box, same test script (2026-10-25): SLOWER than the Ollama nemotron-3.5-bolt tag (62.9 vs 71.2 tok/s short prompt; 66.1 vs 90.1 code), while reserving about 3x the memory. Faster only on long-prompt first token (2.6 s vs 4.2 s at 4.7K tokens). The recipe pins --max-num-seqs 1, so it is tuned for one user; this is its intended case.",
-    "DFlash drafter: vLLM logged a mean acceptance length of about 3.4-3.6 tokens per step (7 drafted), yet no net speed-up over Ollama at one stream. Cause not yet known.",
-    "The unpinned `pip install b12x` pulled b12x 1.5.1, which logs that its FP6 plugin cannot register with this vLLM build. This checkpoint has no FP6 layers (Q8_0, IQ2_XXS, unquantised), so it did not matter here."
+    "The unpinned `pip install b12x` pulled b12x 1.5.1, which logs that its FP6 plugin cannot register with this vLLM build. This checkpoint has no FP6 layers (Q8_0, IQ2_XXS, unquantised), so it did not matter here.",
+    "Why slower (tested 2026-10-25, same script, one change at a time): the Ollama nemotron-3.5-bolt tag ships the same kind of setup (IQ2_XXS weights plus a 1 GB drafter, 7 draft tokens). With drafting switched off, vLLM decodes the same weights at 31.1 tok/s vs Ollama 40.2 (23% slower). Drafting helps vLLM more (2.0x, to 62.9) than Ollama (1.8x, to 71.2), so the drafter is not the problem: vLLM's base kernels for this 2-bit GGUF-packed checkpoint are slower on GB10 than llama.cpp's (which Ollama uses). Swapping FLASHINFER for FLASH_ATTN is not possible here: vLLM refuses FP8 KV cache with FlashAttention on SM121.",
+    "vLLM logged a mean draft acceptance length of about 3.4-3.7 tokens per step (7 drafted)."
   ],
   "provenance_tier": "box",
   "sources": [
