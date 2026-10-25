@@ -3,7 +3,7 @@
   "title": "Nemotron 3.5 Super VL via Ollama",
   "slug_note": "NVIDIA's 120B vision MoE in one command; the tag is 80-90 GB, so 128 GB machines.",
   "model": "nemotron-3-5-super-vl-120b-a12b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "OpenMDW-1.1",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Ollama's default `nemotron-3.5-super:latest` (120b) tag, 80GB - 90GB; quant not named on the page",
     "format": "gguf",
     "size_gb": 90,
-    "url": "https://ollama.com/library/nemotron-3.5-super"
+    "url": "https://ollama.com/library/nemotron-3.5-super",
+    "revision": "ollama manifest 8a58f3e60082",
+    "revision_note": "Ollama model ID shown by `ollama list` on the Spark when measured (2026-10-24)"
   },
   "engine": {
     "id": "ollama",
@@ -22,7 +24,8 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "0.40.10"
   },
   "hardware": [
     "dgx-spark",
@@ -32,7 +35,7 @@
     "memory_gb": 100,
     "disk_gb": 90,
     "min_vram_gb": null,
-    "notes": "Estimate from the 80-90 GB tag plus KV headroom. Not measured."
+    "notes": "Measured on a DGX Spark: 97.1 GB resident at Ollama's default 256K context (weights + KV). Smaller boxes get a smaller default context and less KV. Earlier estimate: Estimate from the 80-90 GB tag plus KV headroom. Not measured."
   },
   "capabilities": {
     "vision": true,
@@ -56,12 +59,73 @@
       }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No speed or memory numbers recorded yet; the size is Ollama's listed tag range.",
-    "Ollama's default context is small; raise num_ctx for long documents or coding agents."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 28.24,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 638-token prompt",
+      "range": [
+        27.24,
+        30.51
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 28.77,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4669-token prompt",
+      "range": [
+        27.83,
+        29.96
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "prefill_tok_s",
+      "value": 708,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4669-token prompt, Ollama prompt_eval timing",
+      "range": [
+        684,
+        708
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 97.1,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 1,
+      "method": "drop in MemAvailable from cold (OS file cache dropped) to loaded after `ollama run nemotron-3.5-super`, at the default context Ollama chose (262144 tokens)",
+      "id": "box-2026-10-25-04"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "Ollama 0.40.10 on a 128 GB DGX Spark picked a 256K default context by itself, so memory use is well above the file size. Set num_ctx lower to save memory, or keep it for long documents.",
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag range.",
+    "Works as written on a DGX Spark (2026-10-24): `ollama run nemotron-3.5-super` answered after 18.6 s from a cold start (model files read from disk)."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://ollama.com/library/nemotron-3.5-super",
@@ -74,6 +138,6 @@
       "note": "NVIDIA model card"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }

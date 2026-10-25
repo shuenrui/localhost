@@ -3,7 +3,7 @@
   "title": "Flint via Ollama (default tag)",
   "slug_note": "A 40B coding-agent MoE with 2.5B active, in one command; 23 GB tag.",
   "model": "flint",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "NVFP4, Ollama's default `flint:latest` (= `flint:40b`) tag, 23GB; quant read with `ollama show flint` on our DGX Spark (Ollama 0.40.10)",
     "format": "gguf",
     "size_gb": 23,
-    "url": "https://ollama.com/library/flint"
+    "url": "https://ollama.com/library/flint",
+    "revision": "ollama manifest 9543f736310d",
+    "revision_note": "Ollama model ID shown by `ollama list` on the Spark when measured (2026-10-24)"
   },
   "engine": {
     "id": "ollama",
@@ -22,17 +24,19 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "0.40.10"
   },
   "hardware": [
     "rtx-5090",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 27,
     "disk_gb": 23,
     "min_vram_gb": null,
-    "notes": "Estimate: the 23 GB tag plus KV headroom at a modest context. Not measured. Unsloth lists 26 GB of memory for 4-bit."
+    "notes": "Measured on a DGX Spark: 34.4 GB resident at Ollama's default 256K context (weights + KV). Smaller boxes get a smaller default context and less KV. Earlier estimate: Estimate: the 23 GB tag plus KV headroom at a modest context. Not measured. Unsloth lists 26 GB of memory for 4-bit."
   },
   "capabilities": {
     "vision": false,
@@ -56,14 +60,75 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 93.71,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 616-token prompt",
+      "range": [
+        91.26,
+        94.95
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 86.48,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4643-token prompt",
+      "range": [
+        82.38,
+        87.43
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "prefill_tok_s",
+      "value": 2720,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4643-token prompt, Ollama prompt_eval timing",
+      "range": [
+        2635,
+        2861
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 34.4,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-24",
+      "n": 1,
+      "method": "drop in MemAvailable from cold (OS file cache dropped) to loaded after `ollama run flint`, at the default context Ollama chose (262144 tokens)",
+      "id": "box-2026-10-25-04"
+    }
+  ],
   "caveats": [
-    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
+    "Ollama 0.40.10 on a 128 GB DGX Spark picked a 256K default context by itself, so memory use is well above the file size. Set num_ctx lower to save memory, or keep it for long documents.",
     "Recursive's own serving path is SGLang on one B300/H200; this consumer route uses Ollama's quantised tag instead.",
     "Unsloth's guide claims 125+ tok/s on an M4 Pro MacBook Pro and 150+ on a 64 GB RTX Spark; machine memory and quant per claim are not stated, so those numbers are not recorded here.",
-    "The default tag is NVFP4 (an NVIDIA Blackwell 4-bit format); Ollama also ships a `40b-a2b-q4_1` tag for other GPUs."
+    "The default tag is NVFP4 (an NVIDIA Blackwell 4-bit format); Ollama also ships a `40b-a2b-q4_1` tag for other GPUs.",
+    "Works as written on a DGX Spark (2026-10-24): `ollama run flint` answered after 8.2 s from a cold start (model files read from disk)."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://ollama.com/library/flint",
@@ -81,6 +146,6 @@
       "note": "Unsloth run guide: GGUF sizes and memory table"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }

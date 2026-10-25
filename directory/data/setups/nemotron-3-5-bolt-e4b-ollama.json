@@ -3,7 +3,7 @@
   "title": "Nemotron 3.5 Bolt E4B via Ollama",
   "slug_note": "A small NVIDIA assistant model built on Gemma 4 E4B; 7-8 GB tag.",
   "model": "nemotron-3-5-bolt-e4b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "OpenMDW-1.1",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Q4_K_M, Ollama's `nemotron-3.5-bolt:e4b` tag, 7.2GB - 7.9GB (with the vision projector); quant and 65,536 context read with `ollama show` on our DGX Spark",
     "format": "gguf",
     "size_gb": 7.9,
-    "url": "https://ollama.com/library/nemotron-3.5-bolt"
+    "url": "https://ollama.com/library/nemotron-3.5-bolt",
+    "revision": "ollama manifest 69f2be39b309",
+    "revision_note": "Ollama model ID shown by `ollama list` on the Spark when measured (2026-10-24)"
   },
   "engine": {
     "id": "ollama",
@@ -22,17 +24,19 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "0.40.10"
   },
   "hardware": [
     "gpu-12gb",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 10,
     "disk_gb": 7.9,
     "min_vram_gb": null,
-    "notes": "Estimate from the tag size plus KV headroom. Not measured."
+    "notes": "Measured on a DGX Spark: 17.7 GB resident at Ollama's default 64K context (weights + KV). Smaller boxes get a smaller default context and less KV. Earlier estimate: Estimate from the tag size plus KV headroom. Not measured."
   },
   "capabilities": {
     "vision": false,
@@ -56,13 +60,74 @@
       }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
-    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
-    "Context: `ollama show` reports 65,536 tokens, matching NVIDIA's card (64K input); the Ollama library page says 128K."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 110.39,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 638-token prompt",
+      "range": [
+        107.87,
+        111.07
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 95.1,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4670-token prompt",
+      "range": [
+        94.25,
+        98.4
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "prefill_tok_s",
+      "value": 3836,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4670-token prompt, Ollama prompt_eval timing",
+      "range": [
+        2912,
+        3865
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 17.7,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-24",
+      "n": 1,
+      "method": "drop in MemAvailable from cold (OS file cache dropped) to loaded after `ollama run nemotron-3.5-bolt:e4b`, at the default context Ollama chose (65536 tokens)",
+      "id": "box-2026-10-25-04"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "Ollama 0.40.10 on a 128 GB DGX Spark picked a 64K default context by itself, so memory use is well above the file size. Set num_ctx lower to save memory, or keep it for long documents.",
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Context: `ollama show` reports 65,536 tokens, matching NVIDIA's card (64K input); the Ollama library page says 128K.",
+    "Works as written on a DGX Spark (2026-10-24): `ollama run nemotron-3.5-bolt:e4b` answered after 10.7 s from a cold start (model files read from disk)."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://ollama.com/library/nemotron-3.5-bolt",
@@ -75,6 +140,6 @@
       "note": "NVIDIA card: 8B (4B effective), built on Gemma-4-E4B"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }

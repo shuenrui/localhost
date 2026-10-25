@@ -3,7 +3,7 @@
   "title": "gpt-oss-20b via Ollama",
   "slug_note": "OpenAI's open MoE in one command; Ollama's tag is 14 GB.",
   "model": "gpt-oss-20b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Ollama's `gpt-oss:20b` tag, 14GB; MXFP4 experts as OpenAI shipped them",
     "format": "gguf",
     "size_gb": 14,
-    "url": "https://ollama.com/library/gpt-oss"
+    "url": "https://ollama.com/library/gpt-oss",
+    "revision": "ollama manifest f38aa0c53da5",
+    "revision_note": "Ollama model ID shown by `ollama list` on the Spark when measured (2026-10-24)"
   },
   "engine": {
     "id": "ollama",
@@ -22,17 +24,19 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "0.40.10"
   },
   "hardware": [
     "gpu-24gb",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 16,
     "disk_gb": 14,
     "min_vram_gb": null,
-    "notes": "OpenAI: the 20B runs within 16 GB of memory. KV headroom not measured."
+    "notes": "Measured on a DGX Spark: 19.6 GB resident at Ollama's default 128K context (weights + KV). Smaller boxes get a smaller default context and less KV. Earlier estimate: OpenAI: the 20B runs within 16 GB of memory. KV headroom not measured."
   },
   "capabilities": {
     "vision": false,
@@ -56,13 +60,74 @@
       }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
-    "Ollama's default context is small; raise num_ctx for long documents or coding agents.",
-    "Reasoning effort (low/medium/high) is set in the system prompt and changes speed and accuracy a lot; record it with any number."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 59.73,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 679-token prompt",
+      "range": [
+        59.72,
+        59.75
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 57.67,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4705-token prompt",
+      "range": [
+        57.56,
+        57.71
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "prefill_tok_s",
+      "value": 5427,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "spark_bench.py via the Ollama API, Ollama 0.40.10, single stream, fresh nonce per run so every prefill is cold, one warm-up run discarded, 256 output tokens, median of 3; 4705-token prompt, Ollama prompt_eval timing",
+      "range": [
+        4055,
+        5453
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 19.6,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-24",
+      "n": 1,
+      "method": "drop in MemAvailable from cold (OS file cache dropped) to loaded after `ollama run gpt-oss:20b`, at the default context Ollama chose (131072 tokens)",
+      "id": "box-2026-10-25-04"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "Ollama 0.40.10 on a 128 GB DGX Spark picked a 128K default context by itself, so memory use is well above the file size. Set num_ctx lower to save memory, or keep it for long documents.",
+    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
+    "Reasoning effort (low/medium/high) is set in the system prompt and changes speed and accuracy a lot; record it with any number.",
+    "Works as written on a DGX Spark (2026-10-24): `ollama run gpt-oss:20b` answered after 8.3 s from a cold start (model files read from disk)."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://ollama.com/library/gpt-oss",
@@ -75,6 +140,6 @@
       "note": "official model card: parameters, MXFP4, memory guidance, ollama run command"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }
