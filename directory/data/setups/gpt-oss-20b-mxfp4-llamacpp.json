@@ -3,7 +3,7 @@
   "title": "gpt-oss-20b MXFP4 GGUF on llama.cpp (ggml-org)",
   "slug_note": "The official MXFP4 weights as one 12.1 GB GGUF, served by llama.cpp.",
   "model": "gpt-oss-20b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "MXFP4, 12.11 GB (gpt-oss-20b-MXFP4.gguf); the repo also holds an EAGLE3 draft model",
     "format": "gguf",
     "size_gb": 12.1,
-    "url": "https://huggingface.co/ggml-org/gpt-oss-20b-GGUF"
+    "url": "https://huggingface.co/ggml-org/gpt-oss-20b-GGUF",
+    "revision": "15dcfc7e7c608c6161507211ed43c5b590801b4b",
+    "revision_note": "HF snapshot `llama serve -hf` resolved on 2026-10-25; it picked the MXFP4 GGUF, not the eagle3 drafter files in the same repo"
   },
   "engine": {
     "id": "llama-cpp",
@@ -22,11 +24,13 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "gpu-24gb",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 16,
@@ -48,6 +52,10 @@
     "steps": [
       {
         "kind": "do",
+        "text": "On Ubuntu / DGX OS, install OpenSSL headers before building llama.cpp: `sudo apt install libssl-dev`. Without them `-hf` cannot download."
+      },
+      {
+        "kind": "do",
         "text": "Install llama.cpp (see Step 0 in Quick start)."
       },
       {
@@ -56,12 +64,103 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 78.47,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (678-token prompt, 256-512 output tokens)",
+      "range": [
+        78.19,
+        78.77
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 76.39,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4707-token prompt, 256-512 output tokens)",
+      "range": [
+        75.97,
+        77.45
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 78.74,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (94-token prompt, 256-512 output tokens)",
+      "range": [
+        78.41,
+        78.82
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 79.02,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (86-token prompt, 256-512 output tokens)",
+      "range": [
+        78.96,
+        79.08
+      ],
+      "id": "box-2026-10-25-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1054,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4707-token prompt",
+      "id": "box-2026-10-25-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 16.8,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama serve defaults on this box: 4 slots x 131072 context, unified KV",
+      "id": "box-2026-10-25-06"
+    }
+  ],
   "caveats": [
     "No speed or memory numbers recorded yet.",
-    "`llama serve` is the newer unified llama.cpp command used on the ggml-org card; on older builds the equivalent server binary is `llama-server -hf ...`."
+    "`llama serve` is the newer unified llama.cpp command used on the ggml-org card; on older builds the equivalent server binary is `llama-server -hf ...`.",
+    "On DGX OS 7.4 (Ubuntu 24.04) a source build of llama.cpp has no HTTPS unless OpenSSL headers are present, and `-hf` then fails with \"HTTPS is not supported ... model download failed\". Run `sudo apt install libssl-dev` before building (found 2026-10-25).",
+    "Works as written on a DGX Spark once llama.cpp is built with OpenSSL (2026-10-25). The command shown downloads the model on first run.",
+    "Same box, same test script: 78.5 vs 59.3 tok/s for the Ollama gpt-oss:20b tag (short prompt), even though Ollama runs llama.cpp underneath. Cause not yet isolated."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/ggml-org/gpt-oss-20b-GGUF",
@@ -74,6 +173,6 @@
       "note": "official model card"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }

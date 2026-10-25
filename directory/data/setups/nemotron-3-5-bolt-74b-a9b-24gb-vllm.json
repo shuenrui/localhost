@@ -3,7 +3,7 @@
   "title": "Nemotron 3.5 Bolt 74B-A9B 24GB pack on vLLM (NVIDIA's recipe)",
   "slug_note": "NVIDIA's own vLLM command for the 2-bit-expert 24 GB pack, with DFlash speculative decoding.",
   "model": "nemotron-3-5-bolt-74b-a9b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "OpenMDW-1.1",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "IQ2 experts (quantisation-aware distillation) with higher-precision other layers, 24.1 GB packed",
     "format": "safetensors",
     "size_gb": 24.1,
-    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB"
+    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+    "revision": "cf2effc5c4b794ee9fb8d34eab3d1d65ce64142f",
+    "revision_note": "HF snapshot downloaded and served on 2026-10-25"
   },
   "engine": {
     "id": "vllm",
@@ -27,7 +29,9 @@
       "--max-model-len 262144",
       "--max-num-seqs 1",
       "--moe-backend b12x"
-    ]
+    ],
+    "version": "nightly-77154ca6116ae34cbfe314beef1016bde9b63989",
+    "image_digest": "sha256:a7deff2c216def98c193352aca50fb03a2ee29231355b3033dc3789009f6d23e"
   },
   "hardware": [
     "rtx-5090",
@@ -65,7 +69,7 @@
       },
       {
         "kind": "cmd",
-        "text": "wget https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB/resolve/main/ultra_v3_reasoning_parser.py"
+        "text": "curl -fLO https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB/resolve/main/ultra_v3_reasoning_parser.py"
       },
       {
         "kind": "cmd",
@@ -77,14 +81,107 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 62.91,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (637-token prompt, 256-512 output tokens)",
+      "range": [
+        59.04,
+        64.56
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 57.09,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4666-token prompt, 256-512 output tokens)",
+      "range": [
+        53.18,
+        60.36
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 66.14,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (43-token prompt, 256-512 output tokens)",
+      "range": [
+        66.07,
+        66.31
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 62.62,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (37-token prompt, 256-512 output tokens)",
+      "range": [
+        62.53,
+        62.68
+      ],
+      "id": "box-2026-10-25-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 2582,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4666-token prompt",
+      "id": "box-2026-10-25-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 120.9,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the minimum the model needs",
+      "id": "box-2026-10-25-06"
+    }
+  ],
   "caveats": [
     "No speed or memory numbers recorded yet.",
     "Steps 2-6 run inside the container that step 1 opens.",
     "spec_decode is 'other': NVIDIA's DFlash method with the LiLiCorr drafter, which this directory's enum does not name.",
-    "The experts are 2-bit; NVIDIA recovers accuracy with quantisation-aware distillation, but quality at this size has not been checked here."
+    "The experts are 2-bit; NVIDIA recovers accuracy with quantisation-aware distillation, but quality at this size has not been checked here.",
+    "Fails exactly as NVIDIA wrote it (tested 2026-10-25): the pinned vllm-openai nightly image has no wget, so the parser download step stops the container. Fix: use curl -fLO (shown above). Nothing else was changed.",
+    "Works with one fix on a DGX Spark: server ready 8 min 21 s after start.",
+    "Same box, same test script (2026-10-25): SLOWER than the Ollama nemotron-3.5-bolt tag (62.9 vs 71.2 tok/s short prompt; 66.1 vs 90.1 code), while reserving about 3x the memory. Faster only on long-prompt first token (2.6 s vs 4.2 s at 4.7K tokens). The recipe pins --max-num-seqs 1, so it is tuned for one user; this is its intended case.",
+    "DFlash drafter: vLLM logged a mean acceptance length of about 3.4-3.6 tokens per step (7 drafted), yet no net speed-up over Ollama at one stream. Cause not yet known.",
+    "The unpinned `pip install b12x` pulled b12x 1.5.1, which logs that its FP6 plugin cannot register with this vLLM build. This checkpoint has no FP6 layers (Q8_0, IQ2_XXS, unquantised), so it did not matter here."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
@@ -92,6 +189,6 @@
       "note": "NVIDIA card: Quick Start vLLM command, 24GB packed model, supported hardware list"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }

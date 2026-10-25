@@ -3,7 +3,7 @@
   "title": "Nemotron 3.5 Super VL NVFP4 on vLLM, one DGX Spark (NVIDIA's recipe)",
   "slug_note": "NVIDIA's DGX Spark-only vLLM command: NVFP4 weights, LiLiCorr drafter, one sequence.",
   "model": "nemotron-3-5-super-vl-120b-a12b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "OpenMDW-1.1",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "NVFP4 mixed-precision weights, 75.0 GB",
     "format": "safetensors",
     "size_gb": 75.0,
-    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4"
+    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+    "revision": "da5b2650a835292c678994a1fa3fb653250fb508",
+    "revision_note": "HF snapshot downloaded and served on 2026-10-25"
   },
   "engine": {
     "id": "vllm",
@@ -27,7 +29,9 @@
       "--gpu-memory-utilization 0.75",
       "--speculative_config.method dflash",
       "--speculative_config.num_speculative_tokens 7"
-    ]
+    ],
+    "version": "v0.32.0",
+    "image_digest": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34"
   },
   "hardware": [
     "dgx-spark"
@@ -64,14 +68,105 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 35.94,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (636-token prompt, 256-512 output tokens)",
+      "range": [
+        33.86,
+        42.44
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 36.64,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4670-token prompt, 256-512 output tokens)",
+      "range": [
+        35.75,
+        38.02
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 41.38,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (43-token prompt, 256-512 output tokens)",
+      "range": [
+        40.62,
+        47.04
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 33.36,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (37-token prompt, 256-512 output tokens)",
+      "range": [
+        32.69,
+        34.21
+      ],
+      "id": "box-2026-10-25-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1611,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4670-token prompt",
+      "id": "box-2026-10-25-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 109.4,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; vLLM reserves memory up front (--gpu-memory-utilization 0.75), so this is the reservation, not the minimum the model needs",
+      "id": "box-2026-10-25-06"
+    }
+  ],
   "caveats": [
     "No speed or memory numbers recorded yet. The owner's DGX Spark can measure this one directly.",
     "NVIDIA says this configuration is for DGX Spark (GB10) only.",
     "spec_decode is 'other': NVIDIA's DFlash method with the LiLiCorr drafter.",
-    "The card's command uses $MODEL / $DRAFT_MODEL shell variables; they are expanded to the repo ids here."
+    "The card's command uses $MODEL / $DRAFT_MODEL shell variables; they are expanded to the repo ids here.",
+    "Works as written on a DGX Spark (2026-10-25), in vllm/vllm-openai:v0.32.0 with the HF cache mounted. Server ready 11 min 21 s after start (weights from local disk, kernel autotune included).",
+    "Same box, same test script (2026-10-25): about 22% faster per token than the Ollama nemotron-3.5-super tag (35.9 vs 29.5 tok/s short prompt; 41.4 vs 30.4 code) and about 4.7x faster to first token on a 4.7K-token prompt (1.6 s vs 7.6 s). The cost: 11 minutes to start instead of under 20 seconds, and the recipe pins --max-num-seqs 1 (one user at a time).",
+    "DFlash drafter: vLLM logged a mean acceptance length of about 3.4 tokens per step (7 drafted)."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
@@ -79,6 +174,6 @@
       "note": "NVIDIA card: Quick Start (DGX Spark only), deployment table, LiLiCorr drafter"
     }
   ],
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "schema_version": 2
 }
