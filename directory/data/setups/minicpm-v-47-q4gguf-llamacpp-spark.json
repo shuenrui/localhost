@@ -1,0 +1,169 @@
+{
+  "id": "minicpm-v-47-q4gguf-llamacpp-spark",
+  "title": "MiniCPM-V 4.7 35B-A3B Q4_K_M GGUF on llama.cpp, DGX Spark",
+  "slug_note": "OpenBMB's vision MoE, served text-only by llama.cpp on the Spark: 75 tok/s.",
+  "model": "minicpm-v-4-7-35b-a3b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+    "publisher": "openbmb",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 21.17 GB; llama.cpp auto-pulls the repo's mmproj (mmproj-model-f16-4x.gguf, 0.91 GB loaded here)",
+    "format": "gguf",
+    "size_gb": 21.17,
+    "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+    "license": "Apache-2.0",
+    "revision": "cf943fbe32f840b20ca05ccc146e7dc72baf9a9b",
+    "revision_note": "HF snapshot resolved and served on the Spark during the 2026-10-27 test"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server with -ngl 99 and --ctx-size 8192 (the -hf default picks up the repo mmproj automatically)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [],
+    "version": "build 11866 (commit 3f03b1772)"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 22.3,
+    "disk_gb": 22.3,
+    "min_vram_gb": null,
+    "notes": "Measured on a DGX Spark (2026-10-27): 22.1 GiB dropped from MemAvailable with the recipe as written (--ctx-size 8192)."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+    "command": "llama-server -hf openbmb/MiniCPM-V-4.7-35B-A3B-gguf:Q4_K_M --ctx-size 8192 -ngl 99",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start). On Ubuntu / DGX OS install libssl-dev first, or -hf cannot download."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf openbmb/MiniCPM-V-4.7-35B-A3B-gguf:Q4_K_M --ctx-size 8192 -ngl 99"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 75.45,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (632-token prompt, 256-512 output tokens)",
+      "range": [
+        75.43,
+        75.48
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 73.45,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4662-token prompt, 256-512 output tokens)",
+      "range": [
+        73.09,
+        73.87
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 75.11,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (39-token prompt, 256-512 output tokens)",
+      "range": [
+        74.93,
+        75.2
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 75.17,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (33-token prompt, 256-512 output tokens)",
+      "range": [
+        74.96,
+        75.35
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1547,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4662-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 22.1,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) with --ctx-size 8192",
+      "id": "box-2026-10-27-06"
+    }
+  ],
+  "caveats": [
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf openbmb/MiniCPM-V-4.7-35B-A3B-gguf:Q4_K_M --ctx-size 8192 -ngl 99` — llama.cpp build 11866 (commit 3f03b1772); server ready 20 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 22.1 GiB (weights + KV at --ctx-size 8192).",
+    "The existing MiniCPM-V 4.7 recipe is an untested lead with no literal command; this Spark recipe is the first runnable command for the model in this directory.",
+    "Vision was not exercised in the text bench; the functional check only answers a text question. llama.cpp loaded the repo mmproj automatically."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf",
+      "kind": "model",
+      "note": "GGUF repo: Q4_K_M 21.17 GB + mmproj"
+    },
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B",
+      "kind": "model",
+      "note": "model card: license, Qwen3.6 language backbone"
+    }
+  ],
+  "updated": "2026-11-02"
+}

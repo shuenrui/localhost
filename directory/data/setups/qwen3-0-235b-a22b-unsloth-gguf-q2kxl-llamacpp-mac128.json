@@ -3,7 +3,7 @@
   "title": "Qwen3-235B-A22B UD-Q2_K_XL GGUF on llama.cpp: 128GB unified memory",
   "slug_note": "The only single-machine resident lane: unsloth's ~2-bit dynamic GGUF at 88GB on a 128GB Mac or Spark.",
   "model": "qwen3-0-235b-a22b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "checkpoint": "unsloth/Qwen3-235B-A22B-GGUF",
     "publisher": "unsloth",
@@ -13,7 +13,9 @@
     "size_gb": 88.0,
     "url": "https://huggingface.co/unsloth/Qwen3-235B-A22B-GGUF",
     "license": "Apache-2.0",
-    "downloads": null
+    "downloads": null,
+    "revision": "09e11417ffdc30c1c63d0296a40fd8fde0abb180",
+    "revision_note": "HF snapshot of unsloth/Qwen3-235B-A22B-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "id": "llama-cpp",
@@ -26,16 +28,18 @@
       "--ctx-size 8192",
       "-ngl 99",
       "--flash-attn on"
-    ]
+    ],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
-    "mac-128gb"
+    "mac-128gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 96,
     "disk_gb": 88,
     "min_vram_gb": null,
-    "notes": "88GB weights + KV at 8-16K context; growing the context pushes a 128GB box into swap."
+    "notes": "Measured on a DGX Spark (2026-10-27): 85.0 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772), --ctx-size 8192). Earlier estimate: 88GB weights + KV at 8-16K context; growing the context pushes a 128GB box into swap."
   },
   "capabilities": {
     "vision": false,
@@ -50,17 +54,112 @@
     "repo": "https://github.com/ggml-org/llama.cpp",
     "profile": null,
     "steps": [
-      {"kind": "do", "text": "brew install llama.cpp (or build with Metal/CUDA)"},
-      {"kind": "cmd", "text": "llama-server -hf unsloth/Qwen3-235B-A22B-GGUF:UD-Q2_K_XL --ctx-size 8192 -ngl 99"}
+      {
+        "kind": "do",
+        "text": "brew install llama.cpp (or build with Metal/CUDA)"
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf unsloth/Qwen3-235B-A22B-GGUF:UD-Q2_K_XL --ctx-size 8192 -ngl 99"
+      }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 17.9,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (628-token prompt, 256-512 output tokens)",
+      "range": [
+        17.88,
+        17.9
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 16.16,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4658-token prompt, 256-512 output tokens)",
+      "range": [
+        16.15,
+        16.17
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 18.27,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (35-token prompt, 256-512 output tokens)",
+      "range": [
+        18.27,
+        18.33
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 18.36,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (29-token prompt, 256-512 output tokens)",
+      "range": [
+        18.36,
+        18.37
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 9479,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4658-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 85.0,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772), --ctx-size 8192",
+      "id": "box-2026-10-27-06"
+    }
+  ],
   "caveats": [
     "The model exceeds the RAM of every machine in this directory at BF16 (470GB) and at any quant above ~2 bits; it only runs locally via heavy quantization, SSD expert streaming, or a multi-GPU split.",
     "No sourced speed number exists for this lane, so the row stays untested.",
-    "Quality loss at ~2 bits per weight on a 235B MoE is not characterized in our sources."
+    "Quality loss at ~2 bits per weight on a 235B MoE is not characterized in our sources.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf unsloth/Qwen3-235B-A22B-GGUF:UD-Q2_K_XL --ctx-size 8192 -ngl 99` — llama.cpp build 11866 (commit 3f03b1772); server ready 80 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 85.0 GiB (weights + KV at --ctx-size 8192)."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/unsloth/Qwen3-235B-A22B-GGUF",
@@ -73,5 +172,6 @@
       "note": "model card"
     }
   ],
-  "updated": "2026-09-06"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

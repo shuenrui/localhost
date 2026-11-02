@@ -3,7 +3,7 @@
   "title": "Qwen3-4B BF16 on vLLM: single 24GB card",
   "slug_note": "The 8GB BF16 reference fits a 24GB card with most of the pool left for KV.",
   "model": "qwen3-0-4b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "checkpoint": "Qwen/Qwen3-4B",
     "publisher": "qwen",
@@ -13,18 +13,22 @@
     "size_gb": 8.0,
     "url": "https://huggingface.co/Qwen/Qwen3-4B",
     "license": "Apache-2.0",
-    "downloads": null
+    "downloads": null,
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "revision_note": "HF snapshot of Qwen/Qwen3-4B resolved and served on the Spark during the 2026-10-25 test"
   },
   "engine": {
     "id": "vllm",
     "config": "Stock vLLM serve at 32K; YaRN factor 4.0 for 128K",
-    "image": null,
+    "image": "vllm/vllm-openai:v0.32.0",
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
     "flags": [
       "--max-model-len 32768"
-    ]
+    ],
+    "version": "v0.32.0",
+    "image_digest": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34"
   },
   "hardware": [
     "gpu-24gb",
@@ -34,7 +38,7 @@
     "memory_gb": 12,
     "disk_gb": 8,
     "min_vram_gb": 10,
-    "notes": "8GB weights + KV; 128K YaRN context is the only thing that pressures a 24GB card here."
+    "notes": "Measured on a DGX Spark (2026-10-25): 115.0 GiB dropped from MemAvailable with the recipe as written (vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need). That is vLLM's 0.9 reservation of the shared pool, not the model's minimum need. Earlier estimate: 8GB weights + KV; 128K YaRN context is the only thing that pressures a 24GB card here."
   },
   "capabilities": {
     "vision": false,
@@ -49,15 +53,110 @@
     "repo": "https://github.com/vllm-project/vllm",
     "profile": null,
     "steps": [
-      {"kind": "cmd", "text": "pip install vllm"},
-      {"kind": "cmd", "text": "vllm serve Qwen/Qwen3-4B --max-model-len 32768"}
+      {
+        "kind": "cmd",
+        "text": "pip install vllm"
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve Qwen/Qwen3-4B --max-model-len 32768"
+      }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No local measurement attached; size computed from the HF API."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 22.07,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (630-token prompt, 256-512 output tokens)",
+      "range": [
+        21.91,
+        22.19
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 20.61,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4657-token prompt, 256-512 output tokens)",
+      "range": [
+        20.45,
+        20.71
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 22.25,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (35-token prompt, 256-512 output tokens)",
+      "range": [
+        22.19,
+        22.27
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 22.31,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (29-token prompt, 256-512 output tokens)",
+      "range": [
+        22.25,
+        22.33
+      ],
+      "id": "box-2026-10-25-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 650,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4657-token prompt",
+      "id": "box-2026-10-25-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 115.0,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need",
+      "id": "box-2026-10-25-06"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "Size computed from the HF API.",
+    "Works as written on a DGX Spark (2026-10-25), in vllm/vllm-openai:v0.32.0 with the HF cache mounted: server ready 200 s after `docker run` (weights from local disk, kernel autotune included); the functional check passed. 115.0 GiB dropped from MemAvailable is vLLM's default 0.9 reservation of the 128 GB pool, not the model's minimum need."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/Qwen/Qwen3-4B",
@@ -65,5 +164,6 @@
       "note": "weights and card"
     }
   ],
-  "updated": "2026-09-06"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

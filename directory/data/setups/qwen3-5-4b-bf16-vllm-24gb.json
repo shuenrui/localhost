@@ -3,7 +3,7 @@
   "title": "Qwen3.5-4B BF16 on vLLM: single 24GB card, and the 4090 same-vocab draft",
   "slug_note": "9.3GB BF16 with a vision encoder on one 24GB card; also the same-vocab speculative draft in the outsourc-e RTX 4090 recipes.",
   "model": "qwen3-5-4b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "checkpoint": "Qwen/Qwen3.5-4B",
     "publisher": "qwen",
@@ -13,18 +13,22 @@
     "size_gb": 9.3,
     "url": "https://huggingface.co/Qwen/Qwen3.5-4B",
     "license": "Apache-2.0",
-    "downloads": null
+    "downloads": null,
+    "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "revision_note": "HF snapshot of Qwen/Qwen3.5-4B resolved and served on the Spark during the 2026-10-25 test"
   },
   "engine": {
     "id": "vllm",
     "config": "Stock vLLM serve at 32K; the draft-model role runs under mainline llama.cpp in the outsourc-e recipes instead",
-    "image": null,
+    "image": "vllm/vllm-openai:v0.32.0",
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
     "flags": [
       "--max-model-len 32768"
-    ]
+    ],
+    "version": "v0.32.0",
+    "image_digest": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34"
   },
   "hardware": [
     "gpu-24gb",
@@ -34,7 +38,7 @@
     "memory_gb": 14,
     "disk_gb": 10,
     "min_vram_gb": 11,
-    "notes": "9.3GB weights + KV; the 256K native context is out of reach on a 24GB card."
+    "notes": "Measured on a DGX Spark (2026-10-25): 113.9 GiB dropped from MemAvailable with the recipe as written (vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need). That is vLLM's 0.9 reservation of the shared pool, not the model's minimum need. Earlier estimate: 9.3GB weights + KV; the 256K native context is out of reach on a 24GB card."
   },
   "capabilities": {
     "vision": true,
@@ -49,17 +53,115 @@
     "repo": "https://github.com/outsourc-e/qwen36-4090-recipes",
     "profile": null,
     "steps": [
-      {"kind": "cmd", "text": "pip install vllm"},
-      {"kind": "cmd", "text": "vllm serve Qwen/Qwen3.5-4B --max-model-len 32768"},
-      {"kind": "do", "text": "For the draft role: load the Q4_K_M GGUF alongside Qwen3.6-27B in mainline llama.cpp per the recipe repo"}
+      {
+        "kind": "cmd",
+        "text": "pip install vllm"
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve Qwen/Qwen3.5-4B --max-model-len 32768"
+      },
+      {
+        "kind": "do",
+        "text": "For the draft role: load the Q4_K_M GGUF alongside Qwen3.6-27B in mainline llama.cpp per the recipe repo"
+      }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 21.03,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (635-token prompt, 256-512 output tokens)",
+      "range": [
+        21.01,
+        21.07
+      ],
+      "id": "box-2026-10-25-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 20.75,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4665-token prompt, 256-512 output tokens)",
+      "range": [
+        20.74,
+        20.76
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-25-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 21.01,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 256-512 output tokens)",
+      "range": [
+        20.99,
+        21.06
+      ],
+      "id": "box-2026-10-25-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 21.05,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 256-512 output tokens)",
+      "range": [
+        21.04,
+        21.06
+      ],
+      "id": "box-2026-10-25-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 655,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4665-token prompt",
+      "id": "box-2026-10-25-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 113.9,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-25",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need",
+      "id": "box-2026-10-25-06"
+    }
+  ],
   "caveats": [
     "Doubles as the same-vocab (248,320-token BPE) speculative draft for Qwen3.6-27B in the outsourc-e RTX 4090 recipes; cross-vocab drafts silently corrupted JSON and tool calls there.",
-    "No local measurement attached to this row; size computed from the HF API."
+    "Size computed from the HF API.",
+    "Works as written on a DGX Spark (2026-10-25), in vllm/vllm-openai:v0.32.0 with the HF cache mounted: server ready 250 s after `docker run` (weights from local disk, kernel autotune included); the functional check passed. 113.9 GiB dropped from MemAvailable is vLLM's default 0.9 reservation of the 128 GB pool, not the model's minimum need."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/Qwen/Qwen3.5-4B",
@@ -72,5 +174,6 @@
       "note": "same-vocab draft recipes"
     }
   ],
-  "updated": "2026-09-06"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

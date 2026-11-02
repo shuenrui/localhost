@@ -3,7 +3,7 @@
   "title": "Gemma 4 12B unsloth GGUF on llama.cpp (12 GB card or Mac)",
   "slug_note": "Unsloth's UD-Q4_K_XL build (7.37 GB) served by llama-server, straight from the model card.",
   "model": "gemma-4-12b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "UD-Q4_K_XL, 7.37 GB",
     "format": "gguf",
     "size_gb": 7.37,
-    "url": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF"
+    "url": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF",
+    "revision": "fc034cfff751157913579611efad8462ac1be606",
+    "revision_note": "HF snapshot of unsloth/gemma-4-12b-it-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "id": "llama-cpp",
@@ -25,17 +27,19 @@
     "flags": [
       "--jinja",
       "-c 8192"
-    ]
+    ],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "gpu-12gb",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 9,
     "disk_gb": 7.4,
     "min_vram_gb": null,
-    "notes": "Estimate: 7.37 GB file plus KV headroom at 8K context. Not measured."
+    "notes": "Measured on a DGX Spark (2026-10-27): 10.4 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772), --ctx-size 8192). Earlier estimate: Estimate: 7.37 GB file plus KV headroom at 8K context. Not measured."
   },
   "capabilities": {
     "vision": true,
@@ -63,12 +67,100 @@
       }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No speed or memory numbers recorded yet.",
-    "Image input needs the vision projector; this command serves text only unless llama.cpp fetches the projector with -hf."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 27.34,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (633-token prompt, 256-512 output tokens)",
+      "range": [
+        27.27,
+        27.47
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 23.34,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4667-token prompt, 256-512 output tokens)",
+      "range": [
+        23.3,
+        23.37
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 27.92,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (43-token prompt, 256-512 output tokens)",
+      "range": [
+        27.89,
+        27.94
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 27.92,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (38-token prompt, 256-512 output tokens)",
+      "range": [
+        27.88,
+        27.92
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 2999,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4667-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 10.4,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772), --ctx-size 8192",
+      "id": "box-2026-10-27-06"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "Image input needs the vision projector; this command serves text only unless llama.cpp fetches the projector with -hf.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf unsloth/gemma-4-12b-it-GGUF:UD-Q4_K_XL --jinja -c 8192` — llama.cpp build 11866 (commit 3f03b1772); server ready 10 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 10.4 GiB (weights + KV at --ctx-size 8192)."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF",
@@ -81,6 +173,6 @@
       "note": "official model card"
     }
   ],
-  "updated": "2026-10-13",
+  "updated": "2026-11-02",
   "schema_version": 2
 }

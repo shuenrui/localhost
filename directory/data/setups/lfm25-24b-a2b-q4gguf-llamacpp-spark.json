@@ -1,0 +1,168 @@
+{
+  "id": "lfm25-24b-a2b-q4gguf-llamacpp-spark",
+  "title": "LFM2.5-24B-A2B Q4_K_M GGUF on llama.cpp, DGX Spark",
+  "slug_note": "Liquid's 24B-A2B agent model served by llama.cpp on the Spark: 107 tok/s at 8K context.",
+  "model": "lfm2-5-24b-a2b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "publisher": "liquidai",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 14.53 GB",
+    "format": "gguf",
+    "size_gb": 14.53,
+    "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "license": "LFM Open License v1.0 (free for commercial use under $10M annual revenue)",
+    "revision": "0912d33141f77e10705345a6732bfd83f0252fdc",
+    "revision_note": "HF snapshot resolved and served on the Spark during the 2026-10-27 test"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server with -ngl 99 and --ctx-size 8192",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [],
+    "version": "build 11866 (commit 3f03b1772)"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 14.6,
+    "disk_gb": 14.6,
+    "min_vram_gb": null,
+    "notes": "Measured on a DGX Spark (2026-10-27): 14.7 GiB dropped from MemAvailable with the recipe as written (--ctx-size 8192)."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "command": "llama-server -hf LiquidAI/LFM2.5-24B-A2B-GGUF:Q4_K_M --ctx-size 8192 -ngl 99",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start). On Ubuntu / DGX OS install libssl-dev first, or -hf cannot download."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf LiquidAI/LFM2.5-24B-A2B-GGUF:Q4_K_M --ctx-size 8192 -ngl 99"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 107.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (623-token prompt, 256-512 output tokens)",
+      "range": [
+        106.65,
+        108.65
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 103.13,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4651-token prompt, 256-512 output tokens)",
+      "range": [
+        102.87,
+        103.19
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 107.59,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (38-token prompt, 256-512 output tokens)",
+      "range": [
+        107.46,
+        108.79
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 109.03,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (30-token prompt, 256-512 output tokens)",
+      "range": [
+        108.85,
+        109.12
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1062,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4651-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 14.7,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) with --ctx-size 8192",
+      "id": "box-2026-10-27-06"
+    }
+  ],
+  "caveats": [
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf LiquidAI/LFM2.5-24B-A2B-GGUF:Q4_K_M --ctx-size 8192 -ngl 99` — llama.cpp build 11866 (commit 3f03b1772); server ready 20 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 14.7 GiB (weights + KV at --ctx-size 8192).",
+    "The two other LFM2.5-24B-A2B recipes in this directory carry vendor (M5 Max) and builder (RTX 3060) numbers; this one is the first box-tier row for the model."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+      "kind": "model",
+      "note": "GGUF repo: Q4_K_M 14.53 GB"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+      "kind": "model",
+      "note": "model card: license, context, architecture"
+    }
+  ],
+  "updated": "2026-11-02"
+}

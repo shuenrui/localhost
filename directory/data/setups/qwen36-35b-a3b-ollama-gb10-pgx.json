@@ -3,7 +3,7 @@
   "title": "Qwen3.6-35B-A3B via Ollama on a ThinkStation PGX (GB10)",
   "slug_note": "The zero-effort lane on GB10 silicon: Ollama's default quant does 60.2 tok/s on the 35B MoE, and 11.5 on the dense 27B — the MoE gap in one row.",
   "model": "qwen3-6-35b-a3b",
-  "status": "reported",
+  "status": "measured",
   "variation": {
     "checkpoint": "ollama.com/library/qwen3.6:35b-a3b",
     "publisher": "ollama",
@@ -12,7 +12,9 @@
     "format": "gguf",
     "size_gb": 23,
     "url": "https://ollama.com/library/qwen3.6:35b-a3b",
-    "license": "Apache-2.0"
+    "license": "Apache-2.0",
+    "revision": "ollama manifest a7eb95c53bcf",
+    "revision_note": "Ollama model ID shown by `ollama ps` on the Spark when measured (2026-10-26)"
   },
   "engine": {
     "image": null,
@@ -21,16 +23,18 @@
     "spec_decode": "none",
     "flags": [],
     "id": "ollama",
-    "config": "Ollama 0.24.0 with Flash Attention on GB10"
+    "config": "Ollama 0.24.0 with Flash Attention on GB10",
+    "version": "0.40.10"
   },
   "hardware": [
-    "thinkstation-pgx"
+    "thinkstation-pgx",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 27,
     "disk_gb": 23,
     "min_vram_gb": null,
-    "notes": "ollama ps footprint at 32K context."
+    "notes": "Measured on a DGX Spark (2026-10-26): 33.4 GiB dropped from MemAvailable with the recipe as written (Ollama 0.40.10 with its own default context on the 128 GB Spark (262,144 tokens)). Earlier estimate: ollama ps footprint at 32K context."
   },
   "capabilities": {
     "vision": false,
@@ -44,8 +48,14 @@
     "repo": "https://github.com/OscarActual/gb10-llm-benchmark",
     "command": null,
     "steps": [
-      {"kind": "cmd", "text": "ollama pull qwen3.6:35b-a3b"},
-      {"kind": "cmd", "text": "ollama run qwen3.6:35b-a3b"}
+      {
+        "kind": "cmd",
+        "text": "ollama pull qwen3.6:35b-a3b"
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run qwen3.6:35b-a3b"
+      }
     ]
   },
   "measurements": [
@@ -93,14 +103,102 @@
       "date": "2026-06-30",
       "method": "Ollama benchmark script in the repo, 0.5K prompt",
       "note": "on-disk footprint of Qwen 3.6 35B-A3B at Ollama default quant (Qwen 27B is 17 GB)"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 90.48,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (627-token prompt, 256-512 output tokens)",
+      "range": [
+        87.08,
+        91.32
+      ],
+      "id": "box-2026-10-26-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 86.48,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4662-token prompt, 256-512 output tokens)",
+      "range": [
+        85.79,
+        87.61
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-26-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 92.36,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 256-512 output tokens)",
+      "range": [
+        91.79,
+        92.38
+      ],
+      "id": "box-2026-10-26-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 80.75,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 256-512 output tokens)",
+      "range": [
+        80.54,
+        82.23
+      ],
+      "id": "box-2026-10-26-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1649,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4662-token prompt",
+      "id": "box-2026-10-26-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 33.4,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; Ollama 0.40.10 with its own default context on the 128 GB Spark (262,144 tokens)",
+      "id": "box-2026-10-26-06"
     }
   ],
   "caveats": [
     "The dense 27B on the same box does 11.5 tok/s with TTFT 40 s at 32K (175 s at 128K) — kept as context here because this card is the 35B MoE lane.",
     "Ollama's default quant is a convenience choice, not a quality-optimised one; compare against the GGUF/MLX lanes before trusting it for quality work.",
-    "License is the upstream Qwen weights' Apache-2.0; Ollama's packaging adds no further restriction."
+    "License is the upstream Qwen weights' Apache-2.0; Ollama's packaging adds no further restriction.",
+    "Works as written on a DGX Spark (2026-10-26): `ollama run qwen3.6:35b-a3b` answered after 14.3 s from a cold start (model files read from disk); 33.4 GiB resident. Ollama 0.40.10 on the 128 GB Spark picked a 262,144-token default context by itself, so memory is weights plus that KV. Set num_ctx lower to save memory."
   ],
-  "provenance_tier": "forum",
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://github.com/OscarActual/gb10-llm-benchmark",
@@ -113,5 +211,6 @@
       "note": "model pull"
     }
   ],
-  "updated": "2026-09-05"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

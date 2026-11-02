@@ -1,9 +1,9 @@
 {
   "id": "qwen38-27b-ggmlorg-gguf-llamacpp-mtp-spark",
-  "title": "Qwen3.8-27B on DGX Spark \u2014 ggerganov's llama.cpp MTP recipe in the official container",
+  "title": "Qwen3.8-27B on DGX Spark — ggerganov's llama.cpp MTP recipe in the official container",
   "slug_note": "Q4_K_M main + Q4_0 MTP draft straight from ggml-org, run in ghcr.io/ggml-org/llama.cpp:full-cuda: 18.08 tok/s decode over a 22k-token generation, 488 tok/s prefill.",
   "model": "qwen3-8-27b",
-  "status": "reported",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Q4_K_M main (18.97GB) + mtp-Q4_0 draft (1.68GB) from the same ggml-org repo",
     "format": "gguf",
     "size_gb": 18.97,
-    "url": "https://huggingface.co/ggml-org/Qwen3.8-27B-GGUF"
+    "url": "https://huggingface.co/ggml-org/Qwen3.8-27B-GGUF",
+    "revision": "a316ea527fde32c12487be7574e2db5ac2ad2a7e",
+    "revision_note": "HF snapshot of ggml-org/Qwen3.8-27B-GGUF resolved and served on the Spark during the 2026-10-26 test"
   },
   "engine": {
     "id": "llama-cpp",
@@ -28,7 +30,8 @@
       "--spec-default",
       "--spec-type draft-mtp",
       "--reasoning-preserve"
-    ]
+    ],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "dgx-spark"
@@ -37,7 +40,7 @@
     "memory_gb": 32,
     "disk_gb": 21,
     "min_vram_gb": null,
-    "notes": "Spark 128GB unified; ~19GB Q4_K_M + 1.7GB MTP draft + KV \u2014 32GB is a generous floor. Runs inside the full-cuda container."
+    "notes": "Measured on a DGX Spark (2026-10-26): 42.3 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)). Earlier estimate: Spark 128GB unified; ~19GB Q4_K_M + 1.7GB MTP draft + KV — 32GB is a generous floor. Runs inside the full-cuda container."
   },
   "capabilities": {
     "vision": false,
@@ -87,15 +90,103 @@
       "method": "server print_timing over the full generation",
       "note": "6,231-token prompt eval, 2.05 ms/token",
       "source": "https://github.com/ggml-org/llama.cpp/discussions/27080"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 28.54,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (674-token prompt, 256-512 output tokens)",
+      "range": [
+        22.86,
+        121.18
+      ],
+      "id": "box-2026-10-26-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 24.17,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4700-token prompt, 256-512 output tokens)",
+      "range": [
+        21.8,
+        70.22
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-26-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 24.94,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (79-token prompt, 256-512 output tokens)",
+      "range": [
+        23.52,
+        26.01
+      ],
+      "id": "box-2026-10-26-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 21.73,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (73-token prompt, 256-512 output tokens)",
+      "range": [
+        20.83,
+        25.47
+      ],
+      "id": "box-2026-10-26-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 5894,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4700-token prompt",
+      "id": "box-2026-10-26-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 42.3,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)",
+      "id": "box-2026-10-26-06"
     }
   ],
   "caveats": [
     "18.08 tok/s is the mean over a 22,373-token generation; the 3-second window rate ranged 14.02-21.77 tok/s.",
     "A 'small increase' over the thread OP's unsloth UD-Q4_K_XL config on the same box (~15 -> 18.08 tok/s).",
-    "ggerganov posted the identical command line on X (https://x.com/ggerganov/status/2088340681701925253) \u2014 cited as corroboration; rot-prone.",
-    "Full command lines and raw server logs are in the discussion thread."
+    "ggerganov posted the identical command line on X (https://x.com/ggerganov/status/2088340681701925253) — cited as corroboration; rot-prone.",
+    "Full command lines and raw server logs are in the discussion thread.",
+    "Works as written on a DGX Spark (2026-10-26): `llama-server -hf ggml-org/Qwen3.8-27B-GGUF:Q4_K_M -hfd ggml-org/Qwen3.8-27B-GGUF:Q4_0 --spec-default --spec-type draft-mtp --reasoning-preserve` — llama.cpp build 11866 (commit 3f03b1772); server ready 3820 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 42.3 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build))."
   ],
-  "provenance_tier": "forum",
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://github.com/ggml-org/llama.cpp/discussions/27080",
@@ -113,5 +204,6 @@
       "note": "corroborating post of the same command line"
     }
   ],
-  "updated": "2026-09-12"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

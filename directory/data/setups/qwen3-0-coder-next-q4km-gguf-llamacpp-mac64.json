@@ -3,7 +3,7 @@
   "title": "Qwen3-Coder-Next Q4_K_M GGUF on a 64GB MacBook (llama.cpp)",
   "slug_note": "The petems 64GB recipe: official Q4_K_M GGUF (48.4GB) at a capped 64K context; speeds are planning ranges, so untested.",
   "model": "qwen3-0-coder-next",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "checkpoint": "Qwen/Qwen3-Coder-Next-GGUF",
     "publisher": "qwen",
@@ -13,7 +13,9 @@
     "size_gb": 48.4,
     "url": "https://huggingface.co/Qwen/Qwen3-Coder-Next-GGUF",
     "license": "Apache-2.0",
-    "downloads": null
+    "downloads": null,
+    "revision": "b82fb7382639d97b38fa7672e526c760c2fb358e",
+    "revision_note": "HF snapshot of Qwen/Qwen3-Coder-Next-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "id": "llama-cpp",
@@ -27,16 +29,18 @@
       "--n-gpu-layers 99",
       "--flash-attn on",
       "--jinja"
-    ]
+    ],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 52,
     "disk_gb": 49,
     "min_vram_gb": null,
-    "notes": "petems plans ~45GB RAM for Q4_K_M at 64K context; the official shards total 48.4GB, so keep mmap on and budget ~52GB."
+    "notes": "Measured on a DGX Spark (2026-10-27): 48.5 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772), --ctx-size 65536). Earlier estimate: petems plans ~45GB RAM for Q4_K_M at 64K context; the official shards total 48.4GB, so keep mmap on and budget ~52GB."
   },
   "capabilities": {
     "vision": false,
@@ -51,17 +55,112 @@
     "repo": "https://github.com/petems/qwen-local-silicon-32to64gb-macbook-guide",
     "profile": null,
     "steps": [
-      {"kind": "cmd", "text": "brew install llama.cpp"},
-      {"kind": "cmd", "text": "llama-server -hf Qwen/Qwen3-Coder-Next-GGUF:Q4_K_M --ctx-size 65536 --n-gpu-layers 99 --flash-attn on --jinja --port 8080"}
+      {
+        "kind": "cmd",
+        "text": "brew install llama.cpp"
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf Qwen/Qwen3-Coder-Next-GGUF:Q4_K_M --ctx-size 65536 --n-gpu-layers 99 --flash-attn on --jinja --port 8080"
+      }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 64.96,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (633-token prompt, 256-512 output tokens)",
+      "range": [
+        64.92,
+        65.36
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 63.22,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4662-token prompt, 256-512 output tokens)",
+      "range": [
+        63.17,
+        63.34
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 64.35,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (35-token prompt, 256-512 output tokens)",
+      "range": [
+        64.32,
+        64.62
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 64.62,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (29-token prompt, 256-512 output tokens)",
+      "range": [
+        62.85,
+        64.87
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 2474,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4662-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 48.5,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772), --ctx-size 65536",
+      "id": "box-2026-10-27-06"
+    }
+  ],
   "caveats": [
     "The guide expects 15-25 tok/s on a 64GB Mac at 64K context, but that is a planning range, not a measurement; the row stays untested.",
     "The guide's ~45GB RAM figure is below the official Q4_K_M shard total of 48.4GB; budget ~52GB with KV headroom.",
-    "If the box swaps, the guide's order is: reduce ctx to 16K, then GPU layers, then close apps."
+    "If the box swaps, the guide's order is: reduce ctx to 16K, then GPU layers, then close apps.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf Qwen/Qwen3-Coder-Next-GGUF:Q4_K_M --ctx-size 65536 --n-gpu-layers 99 --flash-attn on --jinja` — llama.cpp build 11866 (commit 3f03b1772); server ready 60 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 48.5 GiB (weights + KV at --ctx-size 65536)."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://github.com/petems/qwen-local-silicon-32to64gb-macbook-guide",
@@ -79,5 +178,6 @@
       "note": "model card"
     }
   ],
-  "updated": "2026-09-06"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

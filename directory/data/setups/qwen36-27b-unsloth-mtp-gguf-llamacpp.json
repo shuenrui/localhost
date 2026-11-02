@@ -3,7 +3,7 @@
   "title": "Qwen3.6-27B unsloth GGUF with the MTP head intact (llama.cpp)",
   "slug_note": "A GGUF that keeps the MTP draft head, so llama.cpp can spec-decode the dense 27B.",
   "model": "qwen3-6-27b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "GGUF retaining the MTP head for llama.cpp speculative decoding",
     "format": "gguf",
     "size_gb": 17.9,
-    "url": "https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF"
+    "url": "https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF",
+    "revision": "5cb35eb3dcbf52dbce5f87dbc64df6aaffadcace",
+    "revision_note": "HF snapshot of unsloth/Qwen3.6-27B-MTP-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "image": null,
@@ -22,17 +24,19 @@
     "spec_decode": "none",
     "flags": [],
     "id": "llama-cpp",
-    "config": "llama.cpp with --speculative-type or draft from the MTP head, per repo notes"
+    "config": "llama.cpp with --speculative-type or draft from the MTP head, per repo notes",
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "mac-128gb",
-    "gpu-24gb"
+    "gpu-24gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 18,
     "disk_gb": 18,
     "min_vram_gb": null,
-    "notes": "Resident estimate from the quant size plus KV headroom."
+    "notes": "Measured on a DGX Spark (2026-10-27): 20.1 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772), --ctx-size 8192). Earlier estimate: Resident estimate from the quant size plus KV headroom."
   },
   "capabilities": {
     "vision": false,
@@ -46,16 +50,114 @@
     "repo": "https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF",
     "command": "llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL -ngl 99 -c 8192 -fa on -np 1 --spec-type draft-mtp --spec-draft-n-max 2",
     "steps": [
-      {"kind": "do", "text": "Install a current llama.cpp build with CUDA for NVIDIA or Metal for Apple Silicon, following the model card's platform-specific instructions."},
-      {"kind": "cmd", "text": "llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL -ngl 99 -c 8192 -fa on -np 1 --spec-type draft-mtp --spec-draft-n-max 2"},
-      {"kind": "do", "text": "The source notes MTP does not yet support multiple parallel slots or --mmproj; remove -np 1 only after checking the current engine docs."}
+      {
+        "kind": "do",
+        "text": "Install a current llama.cpp build with CUDA for NVIDIA or Metal for Apple Silicon, following the model card's platform-specific instructions."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL -ngl 99 -c 8192 -fa on -np 1 --spec-type draft-mtp --spec-draft-n-max 2"
+      },
+      {
+        "kind": "do",
+        "text": "The source notes MTP does not yet support multiple parallel slots or --mmproj; remove -np 1 only after checking the current engine docs."
+      }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No numbers yet; the forum's vLLM MTP=3 rows for this model show ~2x, llama.cpp's gain is unmeasured here."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 24.5,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (630-token prompt, 256-512 output tokens)",
+      "range": [
+        23.7,
+        24.71
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 24.23,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4659-token prompt, 256-512 output tokens)",
+      "range": [
+        22.38,
+        24.72
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 23.57,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 256-512 output tokens)",
+      "range": [
+        23.56,
+        23.7
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 22.37,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 256-512 output tokens)",
+      "range": [
+        22.24,
+        22.41
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 5773,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4659-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 20.1,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772), --ctx-size 8192",
+      "id": "box-2026-10-27-06"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "No numbers yet; the forum's vLLM MTP=3 rows for this model show ~2x, llama.cpp's gain is unmeasured here.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL -ngl 99 -c 8192 -fa on -np 1 --spec-type draft-mtp --spec-draft-n-max 2` — llama.cpp build 11866 (commit 3f03b1772); server ready 20 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 20.1 GiB (weights + KV at --ctx-size 8192)."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF",
@@ -63,5 +165,6 @@
       "note": "weights / quant card"
     }
   ],
-  "updated": "2026-09-05"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

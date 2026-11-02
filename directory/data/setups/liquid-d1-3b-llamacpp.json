@@ -3,7 +3,7 @@
   "title": "Liquid d1-3B GGUF on llama.cpp (2.9 GB)",
   "slug_note": "llama-server serves d1 on /v1/systemone; 8 ms per decision on an RTX 4090 (card).",
   "model": "liquid-d1-3b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "LFM Open License (see card)",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Q8_0, 2.87 GB (+ vision projector 0.58-0.86 GB); Q4_K_M 1.67 GB",
     "format": "gguf",
     "size_gb": 2.87,
-    "url": "https://huggingface.co/LiquidAI/d1-3B-GGUF"
+    "url": "https://huggingface.co/LiquidAI/d1-3B-GGUF",
+    "revision": "bb1e436ea78eb96a3f1acb6da865f70c2fbeb563",
+    "revision_note": "HF snapshot of LiquidAI/d1-3B-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "id": "llama-cpp",
@@ -22,17 +24,19 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "gpu-12gb",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 5,
     "disk_gb": 3.7,
     "min_vram_gb": null,
-    "notes": "Estimate: 2.87 GB weights + projector + runtime."
+    "notes": "Measured on a DGX Spark (2026-10-27): 4.8 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)). Earlier estimate: Estimate: 2.87 GB weights + projector + runtime."
   },
   "capabilities": {
     "vision": true,
@@ -60,13 +64,102 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 74.8,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (622-token prompt, 256-512 output tokens)",
+      "range": [
+        74.01,
+        76.91
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 71.97,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4649-token prompt, 256-512 output tokens)",
+      "range": [
+        69.4,
+        74.77
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 70.38,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 256-512 output tokens)",
+      "range": [
+        69.13,
+        71.26
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 71.08,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (29-token prompt, 256-512 output tokens)",
+      "range": [
+        69.32,
+        71.37
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 670,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4649-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 4.8,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)",
+      "id": "box-2026-10-27-06"
+    }
+  ],
   "caveats": [
     "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
     "Speed figures are Liquid's own table (RTX 4090 8 ms, M5 Pro 30 ms per decision).",
-    "License is Liquid's LFM Open License, not Apache-2.0; check it for commercial use."
+    "License is Liquid's LFM Open License, not Apache-2.0; check it for commercial use.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf LiquidAI/d1-3B-GGUF:Q8_0` — llama.cpp build 11866 (commit 3f03b1772); server ready 10 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 4.8 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build))."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/LiquidAI/d1-3B-GGUF",
@@ -84,6 +177,6 @@
       "note": "llama.cpp PR adding d1-3B (merged 2026-10-07)"
     }
   ],
-  "updated": "2026-10-13",
+  "updated": "2026-11-02",
   "schema_version": 2
 }

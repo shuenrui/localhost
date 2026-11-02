@@ -3,7 +3,7 @@
   "title": "Qwen3.8-27B unsloth GGUF on llama.cpp (24 GB card or Mac)",
   "slug_note": "Dynamic UD quants from IQ1_S to BF16 put the 27B on a 24 GB card or a Mac.",
   "model": "qwen3-8-27b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Dynamic UD quants; size shown is the Q4-class representative",
     "format": "gguf",
     "size_gb": 17.6,
-    "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF"
+    "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
+    "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+    "revision_note": "HF snapshot of unsloth/Qwen3.8-27B-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "image": null,
@@ -22,17 +24,19 @@
     "spec_decode": "none",
     "flags": [],
     "id": "llama-cpp",
-    "config": "llama.cpp with CUDA or Metal, Q4_K_M or smaller to stay on-card"
+    "config": "llama.cpp with CUDA or Metal, Q4_K_M or smaller to stay on-card",
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "gpu-24gb",
-    "mac-128gb"
+    "mac-128gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 18,
     "disk_gb": 18,
     "min_vram_gb": null,
-    "notes": "Resident estimate from the quant size plus KV headroom."
+    "notes": "Measured on a DGX Spark (2026-10-27): 34.9 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)). Earlier estimate: Resident estimate from the quant size plus KV headroom."
   },
   "capabilities": {
     "vision": false,
@@ -60,13 +64,102 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 12.82,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (676-token prompt, 256-512 output tokens)",
+      "range": [
+        12.81,
+        12.87
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 12.68,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4705-token prompt, 256-512 output tokens)",
+      "range": [
+        12.64,
+        12.7
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 12.91,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (79-token prompt, 256-512 output tokens)",
+      "range": [
+        12.84,
+        12.91
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 12.84,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (73-token prompt, 256-512 output tokens)",
+      "range": [
+        12.84,
+        12.86
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 5401,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4705-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 34.9,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)",
+      "id": "box-2026-10-27-06"
+    }
+  ],
   "caveats": [
     "No numbers yet; pick the quant by your VRAM, not by the benchmark tables.",
     "At IQ1_S the 27B fits almost anywhere but quality cost is real.",
-    "CUDA build trap: llama.cpp @221f0f6 silently corrupts this model's output (loads fine, full speed, garbage completions); use ece963f41 (~b10450) or newer with Flash Attention on. Negative result documented in the tools/history pass-4 ledger ([9])."
+    "CUDA build trap: llama.cpp @221f0f6 silently corrupts this model's output (loads fine, full speed, garbage completions); use ece963f41 (~b10450) or newer with Flash Attention on. Negative result documented in the tools/history pass-4 ledger ([9]).",
+    "Works as written on a DGX Spark (2026-10-27): `llama serve -hf unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_M` — llama.cpp build 11866 (commit 3f03b1772); server ready 30 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 34.9 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build))."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
@@ -74,5 +167,6 @@
       "note": "weights / quant card"
     }
   ],
-  "updated": "2026-09-05"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

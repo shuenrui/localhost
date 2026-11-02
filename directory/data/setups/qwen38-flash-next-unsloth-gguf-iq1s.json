@@ -3,7 +3,7 @@
   "title": "Qwen3.8-Flash-Next 180B — unsloth GGUF UD-IQ1_S (smallest usable)",
   "slug_note": "The 24GB-card lane for a 180B model: ~67GB in IQ1_S, runnable through llama.cpp. Vision arrives via a separate projector file. Vendor-claimed ~34.5 tok/s.",
   "model": "qwen3-8-flash-next",
-  "status": "claimed",
+  "status": "measured",
   "variation": {
     "checkpoint": "unsloth/Qwen3.8-Flash-Next-GGUF (UD-IQ1_S)",
     "publisher": "unsloth",
@@ -13,7 +13,9 @@
     "size_gb": 67,
     "url": "https://huggingface.co/unsloth",
     "license": "Apache-2.0",
-    "downloads": null
+    "downloads": null,
+    "revision": "766911a6b7369840a91dbcd95f9f997acaab6cd6",
+    "revision_note": "HF snapshot of unsloth/Qwen3.8-Flash-Next-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "id": "llama-cpp",
@@ -25,7 +27,8 @@
     "flags": [
       "-ngl (layers on GPU)",
       "--mmproj (vision projector)"
-    ]
+    ],
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "dgx-spark",
@@ -36,7 +39,7 @@
     "memory_gb": 72,
     "disk_gb": 67,
     "min_vram_gb": 24,
-    "notes": "Runs with partial GPU offload on a 24GB card — the rest spills to system RAM, which is where the throughput goes. Comfortable on 128GB unified memory."
+    "notes": "Measured on a DGX Spark (2026-10-27): 79.5 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)). Earlier estimate: Runs with partial GPU offload on a 24GB card — the rest spills to system RAM, which is where the throughput goes. Comfortable on 128GB unified memory."
   },
   "capabilities": {
     "vision": true,
@@ -51,8 +54,14 @@
     "repo": "https://huggingface.co/unsloth",
     "profile": null,
     "steps": [
-      {"kind": "do", "text": "Download the GGUF plus its mmproj file"},
-      {"kind": "cmd", "text": "llama-server -hf unsloth/Qwen3.8-Flash-Next-GGUF:UD-IQ1_S -ngl 99"}
+      {
+        "kind": "do",
+        "text": "Download the GGUF plus its mmproj file"
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf unsloth/Qwen3.8-Flash-Next-GGUF:UD-IQ1_S -ngl 99"
+      }
     ],
     "auto_bootable": true
   },
@@ -68,14 +77,102 @@
       "method": null,
       "note": "Vendor-claimed. No hardware or configuration stated in our source, so it is not comparable to any other row.",
       "source": "https://huggingface.co/unsloth"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 35.9,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (670-token prompt, 256-512 output tokens)",
+      "range": [
+        35.86,
+        36.0
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 35.46,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4706-token prompt, 256-512 output tokens)",
+      "range": [
+        35.43,
+        35.55
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 36.13,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (79-token prompt, 256-512 output tokens)",
+      "range": [
+        35.74,
+        36.43
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 36.56,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (73-token prompt, 256-512 output tokens)",
+      "range": [
+        36.41,
+        36.64
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 4443,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4706-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 79.5,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)",
+      "id": "box-2026-10-27-06"
     }
   ],
   "caveats": [
     "At ~1 bit per weight, quality degradation on a 180B MoE is not characterized anywhere in our sources. The vendor number is a throughput claim, not a quality claim.",
     "The 34.5 tok/s figure has no stated hardware. Do not compare it to the Spark builds.",
-    "Exact repo id and quant filename should be re-verified against the publisher before download; our source records the org and quant name but not a confirmed repo path."
+    "Exact repo id and quant filename should be re-verified against the publisher before download; our source records the org and quant name but not a confirmed repo path.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf unsloth/Qwen3.8-Flash-Next-GGUF:UD-IQ1_S` — llama.cpp build 11866 (commit 3f03b1772); server ready 70 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 79.5 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build))."
   ],
-  "provenance_tier": "vendor",
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/unsloth",
@@ -88,5 +185,6 @@
       "note": "our quant shortlist"
     }
   ],
-  "updated": "2026-09-05"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

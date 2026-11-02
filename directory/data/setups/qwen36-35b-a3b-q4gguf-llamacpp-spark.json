@@ -1,0 +1,168 @@
+{
+  "id": "qwen36-35b-a3b-q4gguf-llamacpp-spark",
+  "title": "Qwen3.6-35B-A3B Unsloth GGUF on llama.cpp, DGX Spark",
+  "slug_note": "The plain Q4_K_M of the 35B-A3B MoE on the Spark: 66 tok/s, 23 GiB — the baseline lane against the MTP and Ollama rows.",
+  "model": "qwen3-6-35b-a3b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "unsloth/Qwen3.6-35B-A3B-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 22.13 GB (unsloth dynamic quant)",
+    "format": "gguf",
+    "size_gb": 22.13,
+    "url": "https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF",
+    "license": "Apache-2.0",
+    "revision": "a483e9e6cbd595906af30beda3187c2663a1118c",
+    "revision_note": "HF snapshot resolved and served on the Spark during the 2026-10-27 test"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server with -ngl 99 and --ctx-size 8192",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [],
+    "version": "build 11866 (commit 3f03b1772)"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 22.3,
+    "disk_gb": 22.3,
+    "min_vram_gb": null,
+    "notes": "Measured on a DGX Spark (2026-10-27): 23.2 GiB dropped from MemAvailable with the recipe as written (--ctx-size 8192)."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF",
+    "command": "llama-server -hf unsloth/Qwen3.6-35B-A3B-GGUF:Q4_K_M --ctx-size 8192 -ngl 99",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start). On Ubuntu / DGX OS install libssl-dev first, or -hf cannot download."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf unsloth/Qwen3.6-35B-A3B-GGUF:Q4_K_M --ctx-size 8192 -ngl 99"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 66.43,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (633-token prompt, 256-512 output tokens)",
+      "range": [
+        65.92,
+        66.99
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 64.96,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4662-token prompt, 256-512 output tokens)",
+      "range": [
+        64.9,
+        64.99
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 66.3,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 256-512 output tokens)",
+      "range": [
+        66.0,
+        66.93
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 65.54,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 256-512 output tokens)",
+      "range": [
+        65.35,
+        65.6
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1568,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4662-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 23.2,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) with --ctx-size 8192",
+      "id": "box-2026-10-27-06"
+    }
+  ],
+  "caveats": [
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf unsloth/Qwen3.6-35B-A3B-GGUF:Q4_K_M --ctx-size 8192 -ngl 99` — llama.cpp build 11866 (commit 3f03b1772); server ready 30 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 23.2 GiB (weights + KV at --ctx-size 8192).",
+    "Same checkpoint family as the Ollama qwen3.6:35b-a3b lane measured on the Spark on 2026-10-26 (90.5 tok/s short prompt at Ollama's 262,144-token default context): llama.cpp here ran at 8,192 context for comparability with the rest of the queue, so the two rows are not a fair engine A/B (different context, different resident KV)."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF",
+      "kind": "model",
+      "note": "GGUF repo: Q4_K_M 22.13 GB"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+      "kind": "model",
+      "note": "official model card: parameters, context, license"
+    }
+  ],
+  "updated": "2026-11-02"
+}

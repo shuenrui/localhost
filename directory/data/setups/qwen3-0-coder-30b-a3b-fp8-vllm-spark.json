@@ -3,7 +3,7 @@
   "title": "Qwen3-Coder-30B-A3B-Instruct FP8 on vLLM: 128GB unified or 72GB multi-GPU",
   "slug_note": "Official FP8 (31.2GB) fits one GB10 box or a 72GB multi-GPU lane with the full 256K context in reach.",
   "model": "qwen3-0-coder-30b-a3b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "checkpoint": "Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8",
     "publisher": "qwen",
@@ -13,18 +13,22 @@
     "size_gb": 31.2,
     "url": "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8",
     "license": "Apache-2.0",
-    "downloads": null
+    "downloads": null,
+    "revision": "dcaee4d4dfc5ee71ad501f01f530e5652438fde0",
+    "revision_note": "HF snapshot of Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8 resolved and served on the Spark during the 2026-10-26 test"
   },
   "engine": {
     "id": "vllm",
     "config": "Stock vLLM serve; 256K context on 128GB unified memory, reduce max-model-len on smaller pools",
-    "image": null,
+    "image": "vllm/vllm-openai:v0.32.0",
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
     "flags": [
       "--max-model-len 262144"
-    ]
+    ],
+    "version": "v0.32.0",
+    "image_digest": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34"
   },
   "hardware": [
     "dgx-spark",
@@ -35,7 +39,7 @@
     "memory_gb": 40,
     "disk_gb": 32,
     "min_vram_gb": 34,
-    "notes": "31.2GB weights; the full 256K KV pool needs the 128GB boxes, the 72GB multi-GPU lane wants a shorter cap."
+    "notes": "Measured on a DGX Spark (2026-10-26): 111.3 GiB dropped from MemAvailable with the recipe as written (vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need). That is vLLM's 0.9 reservation of the shared pool, not the model's minimum need. Earlier estimate: 31.2GB weights; the full 256K KV pool needs the 128GB boxes, the 72GB multi-GPU lane wants a shorter cap."
   },
   "capabilities": {
     "vision": false,
@@ -50,15 +54,110 @@
     "repo": "https://github.com/vllm-project/vllm",
     "profile": null,
     "steps": [
-      {"kind": "cmd", "text": "pip install vllm"},
-      {"kind": "cmd", "text": "vllm serve Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8 --max-model-len 262144"}
+      {
+        "kind": "cmd",
+        "text": "pip install vllm"
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8 --max-model-len 262144"
+      }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No local measurement attached; size computed from the HF API."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 48.86,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (630-token prompt, 256-512 output tokens)",
+      "range": [
+        48.84,
+        48.86
+      ],
+      "id": "box-2026-10-26-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 44.13,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4654-token prompt, 256-512 output tokens)",
+      "range": [
+        44.04,
+        44.19
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-26-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 48.39,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (35-token prompt, 256-512 output tokens)",
+      "range": [
+        48.33,
+        48.44
+      ],
+      "id": "box-2026-10-26-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 48.44,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (29-token prompt, 256-512 output tokens)",
+      "range": [
+        48.41,
+        48.47
+      ],
+      "id": "box-2026-10-26-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 811,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4654-token prompt",
+      "id": "box-2026-10-26-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 111.3,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need",
+      "id": "box-2026-10-26-06"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "Size computed from the HF API.",
+    "Works as written on a DGX Spark (2026-10-26), in vllm/vllm-openai:v0.32.0 with the HF cache mounted: server ready 411 s after `docker run` (weights from local disk, kernel autotune included); the functional check passed. 111.3 GiB dropped from MemAvailable is vLLM's default 0.9 reservation of the 128 GB pool, not the model's minimum need."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8",
@@ -71,5 +170,6 @@
       "note": "model card"
     }
   ],
-  "updated": "2026-09-06"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

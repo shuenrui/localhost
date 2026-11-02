@@ -3,7 +3,7 @@
   "title": "Qwen3-Omni-30B-A3B-Instruct BF16 on vLLM: one 128GB Spark",
   "slug_note": "Audio in and out (Thinker-Talker) at 70.5GB BF16 — the 128GB unified box is the smallest verified lane.",
   "model": "qwen3-0-omni-30b-a3b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "checkpoint": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
     "publisher": "qwen",
@@ -13,18 +13,22 @@
     "size_gb": 70.5,
     "url": "https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct",
     "license": "other (card license_name: Apache-2.0)",
-    "downloads": null
+    "downloads": null,
+    "revision": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "revision_note": "HF snapshot of Qwen/Qwen3-Omni-30B-A3B-Instruct resolved and served on the Spark during the 2026-10-26 test"
   },
   "engine": {
     "id": "vllm",
     "config": "Stock vLLM serve of the Thinker-Talker stack; streaming text and speech output, capped context",
-    "image": null,
+    "image": "vllm/vllm-openai:v0.32.0",
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
     "flags": [
       "--max-model-len 32768"
-    ]
+    ],
+    "version": "v0.32.0",
+    "image_digest": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34"
   },
   "hardware": [
     "dgx-spark",
@@ -34,7 +38,7 @@
     "memory_gb": 88,
     "disk_gb": 71,
     "min_vram_gb": null,
-    "notes": "70.5GB weights + audio/vision encoders + KV on 128GB unified; does not fit 24GB or 72GB GPU lanes."
+    "notes": "Measured on a DGX Spark (2026-10-26): 114.5 GiB dropped from MemAvailable with the recipe as written (vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need). That is vLLM's 0.9 reservation of the shared pool, not the model's minimum need. Earlier estimate: 70.5GB weights + audio/vision encoders + KV on 128GB unified; does not fit 24GB or 72GB GPU lanes."
   },
   "capabilities": {
     "vision": true,
@@ -49,17 +53,115 @@
     "repo": "https://github.com/QwenLM/Qwen3-Omni",
     "profile": null,
     "steps": [
-      {"kind": "cmd", "text": "pip install vllm"},
-      {"kind": "cmd", "text": "vllm serve Qwen/Qwen3-Omni-30B-A3B-Instruct --max-model-len 32768"},
-      {"kind": "do", "text": "Send audio/image/video inputs; responses stream as text and speech"}
+      {
+        "kind": "cmd",
+        "text": "pip install vllm"
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve Qwen/Qwen3-Omni-30B-A3B-Instruct --max-model-len 32768"
+      },
+      {
+        "kind": "do",
+        "text": "Send audio/image/video inputs; responses stream as text and speech"
+      }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 32.28,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (625-token prompt, 256-512 output tokens)",
+      "range": [
+        31.43,
+        32.6
+      ],
+      "id": "box-2026-10-26-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 30.44,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4660-token prompt, 256-512 output tokens)",
+      "range": [
+        30.12,
+        30.48
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-26-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 32.11,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (35-token prompt, 256-512 output tokens)",
+      "range": [
+        31.93,
+        32.22
+      ],
+      "id": "box-2026-10-26-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 32.21,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (29-token prompt, 256-512 output tokens)",
+      "range": [
+        32.15,
+        32.24
+      ],
+      "id": "box-2026-10-26-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1184,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4660-token prompt",
+      "id": "box-2026-10-26-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 114.5,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-26",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; vLLM default --gpu-memory-utilization (0.9), so this is the reservation, not the model's minimum need",
+      "id": "box-2026-10-26-06"
+    }
+  ],
   "caveats": [
     "The card does not state a context length, so long_context is left null and the serve command caps at 32K.",
-    "Card metadata lists license 'other' with license_name Apache-2.0; check the repo LICENSE before redistribution."
+    "Card metadata lists license 'other' with license_name Apache-2.0; check the repo LICENSE before redistribution.",
+    "Works as written on a DGX Spark (2026-10-26), in vllm/vllm-openai:v0.32.0 with the HF cache mounted: server ready 571 s after `docker run` (weights from local disk, kernel autotune included); the functional check passed. 114.5 GiB dropped from MemAvailable is vLLM's default 0.9 reservation of the 128 GB pool, not the model's minimum need."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct",
@@ -72,5 +174,6 @@
       "note": "serving cookbooks"
     }
   ],
-  "updated": "2026-09-06"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }

@@ -3,7 +3,7 @@
   "title": "Qwen3.5-35B-A3B bartowski GGUF on llama.cpp",
   "slug_note": "bartowski's per-quant cards for the 35B MoE, the classic llama.cpp lane.",
   "model": "qwen3-5-35b-a3b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Per-quant GGUF splits with llama.cpp test notes",
     "format": "gguf",
     "size_gb": 22.3,
-    "url": "https://huggingface.co/bartowski/Qwen_Qwen3.5-35B-A3B-GGUF"
+    "url": "https://huggingface.co/bartowski/Qwen_Qwen3.5-35B-A3B-GGUF",
+    "revision": "3d2a22d4eb631b9c8fd2be94599dc2fd84b4a595",
+    "revision_note": "HF snapshot of bartowski/Qwen_Qwen3.5-35B-A3B-GGUF resolved and served on the Spark during the 2026-10-27 test"
   },
   "engine": {
     "image": null,
@@ -22,17 +24,19 @@
     "spec_decode": "none",
     "flags": [],
     "id": "llama-cpp",
-    "config": "llama.cpp CUDA or Metal; Q4_K_M fits 24 GB with KV room"
+    "config": "llama.cpp CUDA or Metal; Q4_K_M fits 24 GB with KV room",
+    "version": "build 11866 (commit 3f03b1772)"
   },
   "hardware": [
     "gpu-24gb",
-    "mac-128gb"
+    "mac-128gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 21,
     "disk_gb": 21,
     "min_vram_gb": null,
-    "notes": "Resident estimate from the quant size plus KV headroom."
+    "notes": "Measured on a DGX Spark (2026-10-27): 27.9 GiB dropped from MemAvailable with the recipe as written (llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)). Earlier estimate: Resident estimate from the quant size plus KV headroom."
   },
   "capabilities": {
     "vision": false,
@@ -46,16 +50,114 @@
     "repo": "https://huggingface.co/bartowski/Qwen_Qwen3.5-35B-A3B-GGUF",
     "command": "llama-server -hf bartowski/Qwen_Qwen3.5-35B-A3B-GGUF:Q4_K_M",
     "steps": [
-      {"kind": "do", "text": "Install llama.cpp for your operating system using the model card's prebuilt-binary or source-build instructions."},
-      {"kind": "cmd", "text": "llama-server -hf bartowski/Qwen_Qwen3.5-35B-A3B-GGUF:Q4_K_M"},
-      {"kind": "do", "text": "The Q4_K_M checkpoint is the recorded 24 GB consumer-GPU lane; Apple Silicon can use the Metal build."}
+      {
+        "kind": "do",
+        "text": "Install llama.cpp for your operating system using the model card's prebuilt-binary or source-build instructions."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf bartowski/Qwen_Qwen3.5-35B-A3B-GGUF:Q4_K_M"
+      },
+      {
+        "kind": "do",
+        "text": "The Q4_K_M checkpoint is the recorded 24 GB consumer-GPU lane; Apple Silicon can use the Metal build."
+      }
     ]
   },
-  "measurements": [],
-  "caveats": [
-    "No numbers yet; bartowski cards list per-quant quality samples, use them."
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 72.19,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (634-token prompt, 256-512 output tokens)",
+      "range": [
+        70.77,
+        72.43
+      ],
+      "id": "box-2026-10-27-01"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 68.18,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4660-token prompt, 256-512 output tokens)",
+      "range": [
+        68.13,
+        68.46
+      ],
+      "note": "long-prompt run",
+      "id": "box-2026-10-27-02"
+    },
+    {
+      "metric": "decode_code",
+      "value": 70.43,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 256-512 output tokens)",
+      "range": [
+        70.39,
+        70.61
+      ],
+      "id": "box-2026-10-27-03"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 72.1,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 256-512 output tokens)",
+      "range": [
+        71.01,
+        74.21
+      ],
+      "id": "box-2026-10-27-04"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 1573,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold 4660-token prompt",
+      "id": "box-2026-10-27-05"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 27.9,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-10-27",
+      "n": 1,
+      "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)",
+      "id": "box-2026-10-27-06"
+    }
   ],
-  "provenance_tier": null,
+  "caveats": [
+    "No numbers yet; bartowski cards list per-quant quality samples, use them.",
+    "Works as written on a DGX Spark (2026-10-27): `llama-server -hf bartowski/Qwen_Qwen3.5-35B-A3B-GGUF:Q4_K_M` — llama.cpp build 11866 (commit 3f03b1772); server ready 30 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 27.9 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build))."
+  ],
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://huggingface.co/bartowski/Qwen_Qwen3.5-35B-A3B-GGUF",
@@ -63,5 +165,6 @@
       "note": "weights / quant card"
     }
   ],
-  "updated": "2026-09-05"
+  "updated": "2026-11-02",
+  "schema_version": 2
 }
