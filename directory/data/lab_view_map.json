@@ -1,0 +1,11 @@
+{
+  "_comment": "SR-126: lab quality2 label -> directory setup id. Manual entries are 1:1 obvious (ollama tag == recipe). Anything not exact/auto/manual stays in gaps_no_page and needs a new model/recipe page (proposed, not built).",
+  "flint": "flint-ollama",
+  "gemma4:26b": "gemma4-26b-a4b-ollama",
+  "gemma4:31b": "gemma4-31b-ollama",
+  "gpt-oss:120b": "gpt-oss-120b-ollama",
+  "gpt-oss:20b": "gpt-oss-20b-ollama",
+  "nemotron-3.5-bolt": "nemotron-3-5-bolt-74b-a9b-ollama",
+  "nemotron-3.5-bolt:e4b": "nemotron-3-5-bolt-e4b-ollama",
+  "_note_qwen3.8-27b": "UNMAPPED: lab ran plain ggml-org Q4_K_M; the only ggml-org spark setup is the MTP recipe. Ambiguous -> stays a gap, not guessed."
+}
