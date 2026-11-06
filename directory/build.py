@@ -75,6 +75,14 @@ def collect() -> dict:
     engines = {e["id"]: e for e in load_dir("engines")}
     setups = load_dir("setups")
 
+    # SR-214: the lab-results blob (retired quality-v2 suite + box bench
+    # medians, built by tools/make_lab_blob.py) and its prompt set (frozen
+    # v2 task prompts only, built by tools/make_lab_prompts.py). Optional by
+    # design: the site must still build and render when either file is absent
+    # -- app.js treats a missing D.lab as "no lab block anywhere".
+    lab = load_json("lab_results.json") if os.path.exists(os.path.join(DATA, "lab_results.json")) else None
+    lab_prompts = load_json("lab_prompts.json") if os.path.exists(os.path.join(DATA, "lab_prompts.json")) else None
+
     # Newest generation first, then biggest model, so shelves read top-down.
     def model_sort_key(m: dict):
         try:
@@ -93,6 +101,8 @@ def collect() -> dict:
         "hardware": hardware,
         "engines": engines,
         "setups": setups,
+        "lab": lab,
+        "lab_prompts": lab_prompts,
         "counts": {
             "setups": len(setups),
             "models": len(models),
@@ -100,6 +110,7 @@ def collect() -> dict:
             "engines": len(engines),
             "publishers": len(publishers),
             "measured": sum(1 for s in setups if s.get("provenance_tier") == "box"),
+            "lab_recipes": len((lab or {}).get("models") or {}),
         },
     }
 
@@ -208,7 +219,7 @@ def main() -> int:
         f"wrote {args.out}  ({len(html):,} bytes)\n"
         f"  {c['setups']} setups, {c['models']} model families, "
         f"{c['hardware']} hardware classes, {c['engines']} engines, "
-        f"{c['publishers']} publishers"
+        f"{c['publishers']} publishers, {c['lab_recipes']} lab recipes"
     )
     return 0
 

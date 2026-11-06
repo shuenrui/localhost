@@ -9,6 +9,19 @@ var MODELS = D.models, ENG = D.engines, HW = D.hardware, PUB = D.publishers;
 var SETUPS = D.setups;
 var TODAY = new Date(D.generated + "T00:00:00Z");
 
+/* SR-214 — lab results (retired quality-v2 suite + box bench medians).
+   Optional: when the build has no lab blob these stay null and no recipe
+   page renders the Lab results block. The numbers come from
+   data/lab_results.json (tools/make_lab_blob.py) and the frozen v2 prompts
+   from data/lab_prompts.json (tools/make_lab_prompts.py). Never blend this
+   with the setup-level quality canaries (AGENTS.md law 4): the block stands
+   on its own, labelled with its own harness and date. */
+var LAB = D.lab || null;
+var LAB_MODELS = (LAB && LAB.models) || {};
+var LABSUITE = (LAB && LAB.suite) || null;
+var LAB_PROMPTS = {};
+((D.lab_prompts || {}).tasks || []).forEach(function (t) { LAB_PROMPTS[t.id] = t; });
+
 /* Hardware references are ids, optionally with a unit count:
    "dgx-spark" or {"id":"dgx-spark","count":2}. Normalize to ids for all
    downstream logic, and keep the ref list for count-aware labels. */
@@ -2381,8 +2394,286 @@ function detectMachine(cb) {
   }
 }
 
+/* ----------------------------------------------------- SR-214 lab block */
+/* The Lab results block on a recipe page shows ONE harness: the retired
+   quality-v2 suite scored on the owner's DGX Spark (tier box). It is never
+   merged with setup-level quality canaries (AGENTS.md law 4): this suite's
+   "X / 23" is a count of this harness's tasks, not a quality index. The
+   replay animates the RECORDED answer at the RECORDED average speed — it is
+   a reveal-rate illustration, not a live run, and says so. */
+function labOf(s) { return LAB_MODELS[s.id] || null; }
+function labCatMax(m) {
+  /* denominators come from the shipped frozen prompt set (task -> cat). */
+  var max = {};
+  Object.keys(m.tasks).forEach(function (tid) {
+    var p = LAB_PROMPTS[tid];
+    if (p && p.cat) max[p.cat] = (max[p.cat] || 0) + 1;
+  });
+  return max;
+}
+function labCatScores(m) {
+  var sum = {};
+  Object.keys(m.tasks).forEach(function (tid) {
+    var p = LAB_PROMPTS[tid];
+    var sc = m.tasks[tid].score;
+    if (!p || !p.cat || sc == null) return;
+    sum[p.cat] = (sum[p.cat] || 0) + sc;
+  });
+  return sum;
+}
+function labTaskOrder(m) {
+  var cats = ["code", "tools", "long", "math", "json", "chinese"];
+  return Object.keys(m.tasks).sort(function (a, b) {
+    var ca = (LAB_PROMPTS[a] || {}).cat || "", cb = (LAB_PROMPTS[b] || {}).cat || "";
+    var ia = cats.indexOf(ca), ib = cats.indexOf(cb);
+    if (ia !== ib) return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    return a < b ? -1 : 1;
+  });
+}
+function labScoreTxt(v) {
+  if (v == null) return "—";
+  return (Math.round(v * 100) / 100).toFixed(2).replace(/\.?0+$/, "")
+    .replace(/\.$/, "");
+}
+function labBlockHtml(s) {
+  var m = labOf(s);
+  if (!m) return "";
+  var suite = LABSUITE || {};
+  var maxT = suite.max_total || m.n_tasks || 23;
+  var sp = m.speed || null;
+  var toks = sp && sp.decode_tok_s != null ? sp.decode_tok_s : null;
+  var ttft = sp && sp.ttft_ms != null ? sp.ttft_ms : null;
+  var h = '<section class="psec lab-block" data-lab="' + esc(s.id) + '" aria-labelledby="lab-h-' + esc(s.id) + '">';
+  h += '<h2 id="lab-h-' + esc(s.id) + '">Lab results <span class="g">' +
+    esc("Lab quality v2 — retired test set, one harness, box-measured " + (suite.date || "date not recorded")) + "</span></h2>";
+  h += '<p class="lab-note">' + esc(suite.method || "Method not recorded.") +
+    " Scores are per this suite only; they are never blended with other quality canaries." +
+    ((suite.void || []).length ? " Voided task" + (suite.void.length > 1 ? "s" : "") + " excluded: " + suite.void.join(", ") + "." : "") + "</p>";
+
+  h += '<div class="lab-grid">';
+  h += '<div class="lab-score-card"><span class="lbl">' + esc("Score on this suite") + "</span>" +
+    '<div class="lab-score num" data-lab-score="' + esc(String(m.total)) + '">' + esc(labScoreTxt(m.total)) +
+    ' <small>' + esc("/ " + maxT) + "</small></div>" +
+    '<p class="lab-sub">' + esc("rank " + m.rank + " of " + Object.keys(LAB_MODELS).length + " recipes measured in this suite") +
+    (m.all3 != null ? esc(" · tasks passed on all 3 seeds: " + m.all3) : "") + "</p></div>";
+
+  var csum = labCatScores(m), cmax = labCatMax(m);
+  var catKeys = Object.keys(cmax).length ? Object.keys(cmax) : Object.keys(m.cats || {});
+  if (catKeys.length) {
+    h += '<div class="lab-cats"><span class="lbl">' + esc("Per category") + "</span><ul>";
+    catKeys.forEach(function (c) {
+      var got = csum[c] != null ? csum[c] : (m.cats || {})[c];
+      var mx = cmax[c];
+      h += "<li><b>" + esc(c) + "</b> <span class=\"num\">" + esc(labScoreTxt(got)) +
+        (mx != null ? esc(" / " + mx) : "") + "</span></li>";
+    });
+    h += "</ul><p class=\"lab-sub\">" + esc("Category totals are the sums of this suite's per-task scores; nothing from another harness enters them.") + "</p></div>";
+  }
+
+  h += '<div class="lab-speed"><span class="lbl">' + esc("Measured decode speed") + "</span>";
+  if (toks != null) {
+    h += '<div class="lab-toks num" data-lab-toks="' + esc(String(toks)) + '">' + esc(String(toks)) +
+      " <small>" + esc("tok/s") + "</small></div>" +
+      '<p class="lab-sub">' + '<span class="tier t-box">box</span> ' +
+      esc("median of n=" + (sp.n != null ? sp.n : "?") + " bench runs" +
+        (sp.date ? ", " + sp.date : "") +
+        (ttft != null ? " · first token " + ttft + " ms (measured)" : " · first-token time not measured — replay starts immediately")) +
+      "</p>";
+  } else {
+    h += '<p class="lab-nospeed" data-lab-nospeed="1">' + esc("No speed measured for this config.") + "</p>" +
+      '<p class="lab-sub">' + esc("The lab run used a different engine configuration than this page's recipe, so no tok/s number applies. Answers are shown statically; replay is disabled rather than invented.") + "</p>";
+  }
+  h += "</div></div>";
+
+  /* the 23 tasks: each row is a native <details>, so expansion needs no JS */
+  var order = labTaskOrder(m);
+  var rows = order.map(function (tid) {
+    var t = m.tasks[tid], p = LAB_PROMPTS[tid] || {};
+    var empty = !t.answer || !t.answer.trim();
+    var d = '<details class="lab-task" data-lab-task="' + esc(tid) + '">' +
+      '<summary><span class="mono lab-tid">' + esc(tid) + "</span>" +
+      '<span class="lab-tcat">' + esc(p.cat || "category not shipped") + "</span>" +
+      '<span class="num lab-tdone">' + esc(t.score == null ? "score not recorded" : labScoreTxt(t.score) + " / 1") + "</span>" +
+      (t.wall_s != null ? '<span class="g">' + esc("seed-1 run " + t.wall_s + " s") + "</span>" : "") + "</summary>";
+    if (p.prompt) d += '<div class="lab-prompt"><p class="lbl">' + esc("Prompt (frozen v2)") + '</p><pre>' + esc(p.prompt) + "</pre></div>";
+    else d += '<p class="lab-sub">' + esc("Prompt text for this task is not in the shipped set.") + "</p>";
+    d += '<p class="lbl">' + esc("Recorded answer (seed 1)") + "</p>";
+    var ansAttrs = ' data-rep-ans="' + esc(s.id) + "|" + esc(tid) + '"';
+    if (empty) {
+      d += "<pre" + ansAttrs + ' class="lab-ans is-empty">' +
+        esc("No answer recorded (done reason: " + (t.done || "unrecorded") + ")") + "</pre>";
+    } else {
+      d += "<pre" + ansAttrs + " class=\"lab-ans\">" + esc(t.answer) + "</pre>";
+    }
+    if (empty || toks == null) {
+      d += '<p class="lab-replay-off">' + esc(empty
+        ? "Nothing to replay — no answer text was recorded for this task."
+        : "Replay disabled — no measured decode speed exists for this config.") + "</p>";
+    } else {
+      var key = s.id + "|" + tid;
+      d += '<div class="lab-replay" data-rep-wrap="' + esc(key) + '">' +
+        '<button type="button" class="btn" data-rep="start" data-rep-key="' + esc(key) + '">Replay</button>' +
+        '<button type="button" class="btn" data-rep="pause" data-rep-key="' + esc(key) + '" hidden>Pause</button>' +
+        '<button type="button" class="btn" data-rep="reset" data-rep-key="' + esc(key) + '" hidden>Show full text</button>' +
+        '<span class="rep-rate" role="group" aria-label="Replay speed">' +
+        '<button type="button" class="btn btn-sm on" data-rep-rate="1" data-rep-key="' + esc(key) + '" aria-pressed="true">1×</button>' +
+        '<button type="button" class="btn btn-sm" data-rep-rate="10" data-rep-key="' + esc(key) + '" aria-pressed="false">10×</button></span>' +
+        '<span class="lab-rep-status" data-rep-status="' + esc(key) + '"></span></div>' +
+        '<p class="lab-sub lab-cap">' + esc("Replay at average measured speed (not a live run)") + " — " +
+        esc("tokens are approximated as whitespace-separated words of the recorded answer text; the reveal pace uses the measured " + toks + " tok/s.") + "</p>";
+    }
+    return d + "</details>";
+  }).join("");
+  h += '<div class="lab-tasks"><span class="lbl">' + esc("Tasks (" + order.length + ")") + "</span>" + rows + "</div>";
+  h += "</section>";
+  return h;
+}
+
+/* replay engine — one active run at a time, plain setInterval on wall clock.
+   Timing model: effective elapsed = (now - t0) * rate; emitted words =
+   floor(effective_elapsed_s * tok_s). Pausing/resuming and 1×/10× toggling
+   rebaseline t0 so the text emitted so far is preserved, never rewound. */
+var LAB_REPLAY = null;
+function labPrefersReduced() {
+  return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+}
+function labTokenize(txt) {
+  var chunks = [], re = /\S+[ \t\r\n]*/g, mt;
+  while ((mt = re.exec(txt)) !== null) chunks.push(txt.slice(0, mt.index + mt[0].length));
+  return chunks;
+}
+function labRepEls(key) {
+  var wraps = document.querySelectorAll("[data-rep-wrap]");
+  var wrap = null;
+  for (var i = 0; i < wraps.length; i++) {
+    if (wraps[i].getAttribute("data-rep-wrap") === key) { wrap = wraps[i]; break; }
+  }
+  if (!wrap) return null;
+  var ans = null, holder = wrap.parentNode;
+  var pre = holder ? holder.querySelector("[data-rep-ans]") : null;
+  var pres = document.querySelectorAll("[data-rep-ans]");
+  for (var j = 0; j < pres.length; j++) {
+    if (pres[j].getAttribute("data-rep-ans") === key) { ans = pres[j]; break; }
+  }
+  if (!ans && pre) ans = pre;
+  return {
+    wrap: wrap, ans: ans,
+    start: wrap.querySelector('[data-rep="start"]'),
+    pause: wrap.querySelector('[data-rep="pause"]'),
+    reset: wrap.querySelector('[data-rep="reset"]'),
+    status: wrap.querySelector(".lab-rep-status"),
+    rates: Array.prototype.slice.call(wrap.querySelectorAll("[data-rep-rate]"))
+  };
+}
+function labRepPaint(r, n) {
+  var shown = n >= r.chunks.length ? r.answer : (n > 0 ? r.chunks[n - 1] : "");
+  r.emittedN = n;
+  r.els.ans.textContent = shown;
+  var chars = shown.length, totalWords = r.chunks.length;
+  var pct = totalWords ? Math.round((n / totalWords) * 100) : 100;
+  r.els.status.textContent =
+    (r.phase === "wait" ? "waiting for first token (" + Math.round(r.ttftMs) + " ms measured TTFT, " + r.rate + "×)"
+      : r.phase === "done" ? "done — " + totalWords + " approx. tokens / " + chars + " chars revealed"
+      : "emitted " + n + " approx. tokens / " + chars + " chars (" + pct + "%)");
+  r.emittedChars = chars;
+}
+function labRepStop(r) { if (r.timer) { clearInterval(r.timer); r.timer = null; } }
+function labRepFinal(r) {
+  r.phase = "done";
+  labRepStop(r);
+  labRepPaint(r, r.chunks.length);
+  r.els.start.hidden = false; r.els.pause.hidden = true; r.els.reset.hidden = false;
+}
+function labRepStep(r) {
+  var eff = (performance.now() - r.t0) / 1000 * r.rate;
+  if (r.phase === "wait") {
+    labRepPaint(r, 0);
+    if (eff < r.ttftMs / 1000) return;
+    r.t0 = performance.now() - (eff - r.ttftMs / 1000) / r.rate * 1000;
+    r.phase = "emit";
+    r.emittedN = 0;
+  }
+  var elapsed = (performance.now() - r.t0) / 1000 * r.rate;
+  var n = Math.min(r.chunks.length, Math.floor(elapsed * r.tokS));
+  labRepPaint(r, n);
+  if (n >= r.chunks.length) labRepFinal(r);
+}
+function labRepRunTimer(r) {
+  r.timer = setInterval(function () { labRepStep(r); }, 40);
+}
+function labRepResume(r) {
+  /* keep the text emitted so far; give t0 the value that makes the step
+     function recompute exactly that n at the current rate */
+  r.t0 = performance.now() - (r.phase === "wait" ? 0 : r.emittedN / r.tokS) / r.rate * 1000;
+  r.els.start.hidden = true; r.els.pause.hidden = false;
+  labRepRunTimer(r);
+}
+function labRepStart(key) {
+  var bar = key.indexOf("|"), sid = key.slice(0, bar), tid = key.slice(bar + 1);
+  var m = LAB_MODELS[sid];
+  if (!m || !m.speed || m.speed.decode_tok_s == null) return;
+  var t = m.tasks[tid];
+  if (!t || !t.answer || !t.answer.trim()) return;
+  var els = labRepEls(key);
+  if (!els || !els.ans) return;
+  if (LAB_REPLAY && LAB_REPLAY.key === key && LAB_REPLAY.phase !== "done") {
+    if (LAB_REPLAY.timer) labRepPause(LAB_REPLAY); else labRepResume(LAB_REPLAY);
+    return;
+  }
+  if (LAB_REPLAY) labRepReset(LAB_REPLAY);
+  var rate = els.wrap.getAttribute("data-rep-cur-rate") === "10" ? 10 : 1;
+  var r = {
+    key: key, answer: t.answer, chunks: labTokenize(t.answer),
+    tokS: m.speed.decode_tok_s,
+    ttftMs: m.speed.ttft_ms != null ? m.speed.ttft_ms : 0,
+    rate: rate,
+    /* with no measured TTFT the replay starts emitting immediately, and the
+       speed line says so; with one, there is a measured wait first */
+    phase: (m.speed.ttft_ms != null ? "wait" : "emit"),
+    emittedN: 0, emittedChars: 0, t0: performance.now(), timer: null, els: els
+  };
+  LAB_REPLAY = r;
+  els.start.hidden = true; els.pause.hidden = false; els.reset.hidden = false;
+  if (labPrefersReduced()) {
+    r.els.status.textContent = "reduced motion — showing the full recorded text instead of animating";
+    labRepFinal(r);
+    return;
+  }
+  labRepPaint(r, 0);
+  labRepRunTimer(r);
+}
+function labRepPause(r) {
+  if (!r || r.phase === "done" || !r.timer) return;
+  labRepStop(r);
+  r.els.start.hidden = false; r.els.pause.hidden = true;
+  r.els.status.textContent += " — paused";
+}
+function labRepReset(r) {
+  if (!r) return;
+  labRepStop(r);
+  if (r.els && r.els.ans) { r.els.ans.textContent = r.answer; if (r.els.status) r.els.status.textContent = ""; }
+  if (r.els) { r.els.start.hidden = false; r.els.pause.hidden = true; r.els.reset.hidden = true; }
+  if (LAB_REPLAY === r) LAB_REPLAY = null;
+}
+function labRepRate(key, rate) {
+  var els = labRepEls(key);
+  if (!els) return;
+  els.rates.forEach(function (b) {
+    var on = b.getAttribute("data-rep-rate") === String(rate);
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  els.wrap.setAttribute("data-rep-cur-rate", String(rate));
+  if (LAB_REPLAY && LAB_REPLAY.key === key && LAB_REPLAY.phase !== "done") {
+    var emittedEff = LAB_REPLAY.phase === "wait" ? 0 : LAB_REPLAY.emittedN / LAB_REPLAY.tokS;
+    LAB_REPLAY.rate = rate;
+    LAB_REPLAY.t0 = performance.now() - emittedEff / rate * 1000;
+  }
+}
+
 /* -------------------------------------------------------- other routes */
 function viewRecipe(id) {
+  if (LAB_REPLAY) { labRepStop(LAB_REPLAY); LAB_REPLAY = null; }
   var s = SETUPS.filter(function (x) { return x.id === id; })[0];
   setRail("");
   if (!s) return notFound("No recipe with the id " + id + " is in this dataset.");
@@ -2426,7 +2717,11 @@ function viewRecipe(id) {
      '<span class="mark m-none">' + esc(READY_GLYPH[readiness(s)] + " " + READY_WORD[readiness(s)]) + "</span>" +
      '<span class="mark m-none">' + esc(s.status || "status unrecorded") + "</span>" +
      '<span class="mark m-none">' + esc("updated " + (s.updated || "—") + " · " + freshness(s).word) + "</span></div>";
-  h += '<div class="psec">' + detailBody(s, { page: true }) + '</div></div><aside class="recipe-rail" aria-label="Recipe summary"><section><h2>CONDITION SUMMARY</h2><dl><dt>Headline</dt><dd>' + esc(condition) + '</dd><dt>Memory</dt><dd>' + esc(req.memory_gb == null ? "not recorded" : gb(req.memory_gb)) + '</dd><dt>Hardware</dt><dd>' + esc(hwFirstLabel(s) || "not recorded") + '</dd></dl><p>Compatibility is checked only in My Hardware; this recipe is not a bare fits claim.</p></section><section><h2>PROVENANCE KEY</h2><ul class="pkey">' + provenance.map(function (x) { return '<li><span class="pmark" data-tier="' + x.tier + '" aria-hidden="true"></span>' + esc(x.t) + '</li>'; }).join("") + '</ul><p>Confidence dimensions remain separate; they are not a ranking.</p></section></aside></div></div>';
+  h += '<div class="psec">' + detailBody(s, { page: true }) + '</div>' +
+     /* SR-214: the Lab results block. Shown only when data/lab_results.json
+        has this exact setup id; it stands alone after the recipe body so it
+        can never blend with the setup's own quality canaries (law 4). */
+     labBlockHtml(s) + '</div><aside class="recipe-rail" aria-label="Recipe summary"><section><h2>CONDITION SUMMARY</h2><dl><dt>Headline</dt><dd>' + esc(condition) + '</dd><dt>Memory</dt><dd>' + esc(req.memory_gb == null ? "not recorded" : gb(req.memory_gb)) + '</dd><dt>Hardware</dt><dd>' + esc(hwFirstLabel(s) || "not recorded") + '</dd></dl><p>Compatibility is checked only in My Hardware; this recipe is not a bare fits claim.</p></section><section><h2>PROVENANCE KEY</h2><ul class="pkey">' + provenance.map(function (x) { return '<li><span class="pmark" data-tier="' + x.tier + '" aria-hidden="true"></span>' + esc(x.t) + '</li>'; }).join("") + '</ul><p>Confidence dimensions remain separate; they are not a ranking.</p></section></aside></div></div>';
   el("main").innerHTML = h;
 }
 function featuredRecipeTable(m, list) {
@@ -2925,7 +3220,7 @@ document.addEventListener("change", function (e) {
   }
 });
 document.addEventListener("click", function (e) {
-  var t = e.target.closest ? e.target.closest("[data-hero-gen],[data-exp],[data-copy],[data-clear],[data-rail-f],[data-rail-clear],[data-jump],[data-cmp],[data-ev],[data-grp],[data-goal],[data-load],[data-model-select],[data-mode-jump],[data-mopen],[data-smore],[data-hwchip],[data-hwmemory],#model-clear,#clear-all,#adv-toggle,#cmp-clear,#theme,#mode-lite,#mode-pro,#hw-detect,#hw-save,#hw-clear,#hw-export,#hw-import,#mi-compare-clear,#mi-compare-go") : null;
+  var t = e.target.closest ? e.target.closest("[data-hero-gen],[data-exp],[data-copy],[data-clear],[data-rail-f],[data-rail-clear],[data-jump],[data-cmp],[data-ev],[data-grp],[data-goal],[data-load],[data-model-select],[data-mode-jump],[data-mopen],[data-smore],[data-hwchip],[data-hwmemory],[data-rep],[data-rep-rate],#model-clear,#clear-all,#adv-toggle,#cmp-clear,#theme,#mode-lite,#mode-pro,#hw-detect,#hw-save,#hw-clear,#hw-export,#hw-import,#mi-compare-clear,#mi-compare-go") : null;
   if (!t) {
     hidePop();
     /* Clicking the non-interactive part of a recipe row opens its full page.
@@ -2949,6 +3244,25 @@ document.addEventListener("click", function (e) {
   }
   if (t.id === "mode-lite") { setMode("lite"); return; }
   if (t.id === "mode-pro") { setMode("pro"); return; }
+  /* SR-214 replay controls (recipe pages only) */
+  var repKey = t.getAttribute("data-rep-key");
+  if (repKey) {
+    var repAct = t.getAttribute("data-rep");
+    if (repAct === "start") labRepStart(repKey);
+    else if (repAct === "pause") { if (LAB_REPLAY && LAB_REPLAY.key === repKey) labRepPause(LAB_REPLAY); }
+    else if (repAct === "reset") {
+      if (LAB_REPLAY && LAB_REPLAY.key === repKey) labRepReset(LAB_REPLAY);
+      else {
+        var rel = labRepEls(repKey);
+        var bar2 = repKey.indexOf("|");
+        var mm = LAB_MODELS[repKey.slice(0, bar2)];
+        var tt = mm && mm.tasks[repKey.slice(bar2 + 1)];
+        if (rel && rel.ans && tt && tt.answer) rel.ans.textContent = tt.answer;
+      }
+    }
+    else if (t.hasAttribute("data-rep-rate")) labRepRate(repKey, parseInt(t.getAttribute("data-rep-rate"), 10));
+    return;
+  }
   var mj = t.getAttribute("data-mode-jump");
   if (mj) { setMode(mj); return; }
   var modelSelect = t.getAttribute("data-model-select");
