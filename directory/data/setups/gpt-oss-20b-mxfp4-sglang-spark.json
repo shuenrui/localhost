@@ -1,0 +1,161 @@
+{
+  "id": "gpt-oss-20b-mxfp4-sglang-spark",
+  "title": "gpt-oss-20b MXFP4 on SGLang, DGX Spark",
+  "slug_note": "The official MXFP4 weights on SGLang on the Spark: 41 tok/s on one stream, the slowest of four engines on the same weights; boots only with --disable-flashinfer-autotune.",
+  "model": "gpt-oss-20b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "openai/gpt-oss-20b",
+    "publisher": "openai",
+    "quant": "mxfp4",
+    "quant_detail": "MXFP4, 13.76 GB (official safetensors; MoE experts in MXFP4 as OpenAI shipped them)",
+    "format": "safetensors",
+    "size_gb": 13.76,
+    "url": "https://huggingface.co/openai/gpt-oss-20b",
+    "license": "Apache-2.0",
+    "revision": "6cee5e81ee83917806bbde320786a8fb61efebee",
+    "revision_note": "HF snapshot of openai/gpt-oss-20b served on the Spark during the 2026-11-04 test (offline from the local cache)"
+  },
+  "engine": {
+    "id": "sglang",
+    "config": "sglang.launch_server in the lmsysorg/sglang:qwen38-27b image, context 16,384, up to 4 requests, half the memory pool, FlashInfer autotune off",
+    "image": "lmsysorg/sglang:qwen38-27b",
+    "image_digest": "sha256:febfb971c7352570fc445c466ebd6ffc9d896024958e544a60f2137fd85856b1",
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "--context-length 16384",
+      "--max-running-requests 4",
+      "--mem-fraction-static 0.50",
+      "--disable-flashinfer-autotune"
+    ],
+    "version": "0.0.0.dev0+qwen38.27b.g561c8f3"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 16,
+    "disk_gb": 13.8,
+    "min_vram_gb": null,
+    "notes": "Not measured. The lab run reserved half of the 128 GB pool (0.50 memory fraction), which is a reservation, not the model's need. 16 GB is OpenAI's stated footprint for the 20B."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 131072,
+    "max_context": 131072
+  },
+  "run": {
+    "repo": "https://huggingface.co/openai/gpt-oss-20b",
+    "command": "python3 -m sglang.launch_server --model-path openai/gpt-oss-20b --served-model-name gpt-oss-20b --context-length 16384 --max-running-requests 4 --mem-fraction-static 0.50 --host 127.0.0.1 --port 30000 --disable-flashinfer-autotune",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Run the command inside the lmsysorg/sglang:qwen38-27b image with --gpus all, host networking, --shm-size 16g and your Hugging Face cache mounted."
+      },
+      {
+        "kind": "cmd",
+        "text": "python3 -m sglang.launch_server --model-path openai/gpt-oss-20b --served-model-name gpt-oss-20b --context-length 16384 --max-running-requests 4 --mem-fraction-static 0.50 --host 127.0.0.1 --port 30000 --disable-flashinfer-autotune"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "box-2026-11-04-01",
+      "metric": "decode_per_stream",
+      "value": 40.85,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (676-681-token prompt, 256-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); SGLang 0.0.0.dev0+qwen38.27b.g561c8f3 in lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), command as shown",
+      "range": [
+        40.8,
+        40.87
+      ]
+    },
+    {
+      "id": "box-2026-11-04-02",
+      "metric": "decode_per_stream",
+      "value": 40.08,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4705-4710-token prompt, 239-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); SGLang 0.0.0.dev0+qwen38.27b.g561c8f3 in lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), command as shown",
+      "range": [
+        39.92,
+        40.13
+      ],
+      "note": "long-prompt run"
+    },
+    {
+      "id": "box-2026-11-04-03",
+      "metric": "decode_code",
+      "value": 40.64,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (94-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); SGLang 0.0.0.dev0+qwen38.27b.g561c8f3 in lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), command as shown",
+      "range": [
+        40.61,
+        40.76
+      ]
+    },
+    {
+      "id": "box-2026-11-04-04",
+      "metric": "decode_essay",
+      "value": 40.7,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (86-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); SGLang 0.0.0.dev0+qwen38.27b.g561c8f3 in lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), command as shown",
+      "range": [
+        40.69,
+        40.82
+      ]
+    },
+    {
+      "id": "box-2026-11-04-05",
+      "metric": "ttft_ms",
+      "value": 515,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold ~4,700-token prompt; SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); SGLang 0.0.0.dev0+qwen38.27b.g561c8f3 in lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), command as shown"
+    }
+  ],
+  "caveats": [
+    "Measured on a DGX Spark (2026-11-04) as the SGLang leg of the SR-98 four-engine run: the same official MXFP4 weights ran at 81.6 tok/s on llama.cpp, 58.48 on Ollama, 47.2 on vLLM and 40.85 here (short summarise prompt, median of 3).",
+    "Without --disable-flashinfer-autotune the server crashed at boot on the Spark (2026-11-04): FlashInfer's MoE autotuner hit \"CUDA error: an illegal instruction was encountered\". With the flag it booted and all 12 bench runs completed.",
+    "With this command the reply text carried the raw gpt-oss channel markup (for example `<|start|>assistant<|channel|>final<|message|>OK`): no reasoning parser was set, so chat UIs will show the analysis channel.",
+    "The image is the SGLang build tagged qwen38-27b (sglang 0.0.0.dev0+qwen38.27b.g561c8f3), the image the lab had on disk; a stock SGLang release was not tried."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://huggingface.co/openai/gpt-oss-20b",
+      "kind": "model",
+      "note": "official model card and MXFP4 safetensors"
+    }
+  ],
+  "updated": "2026-11-06"
+}

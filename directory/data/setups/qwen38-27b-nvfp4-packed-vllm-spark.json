@@ -1,0 +1,165 @@
+{
+  "id": "qwen38-27b-nvfp4-packed-vllm-spark",
+  "title": "Qwen3.8-27B NVFP4 (RadixArk) on vLLM, DGX Spark",
+  "slug_note": "RadixArk's NVFP4 checkpoint on stock vLLM 0.32.0 with no drafting: 12 tok/s on one stream, about half of llama.cpp + MTP and SGLang + DSpark on the same box.",
+  "model": "qwen3-8-27b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "RadixArk/Qwen3.8-27B-NVFP4",
+    "publisher": "radixark",
+    "quant": "nvfp4",
+    "quant_detail": "NVFP4, 21.92 GB (W4A4 body with lm_head packed to FP4)",
+    "format": "safetensors",
+    "size_gb": 21.92,
+    "url": "https://huggingface.co/RadixArk/Qwen3.8-27B-NVFP4",
+    "license": "Apache-2.0",
+    "revision": "319f741cce68d7914884900c138a1fbb70a42f30",
+    "revision_note": "HF refs/main snapshot served on the Spark during the 2026-11-04 test (offline from the local cache)"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "vllm serve in the vllm/vllm-openai:v0.32.0 image, no speculative decoding, context 16,384, up to 4 sequences, half the memory pool",
+    "image": "vllm/vllm-openai:v0.32.0",
+    "image_digest": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34",
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "--max-model-len 16384",
+      "--max-num-seqs 4",
+      "--gpu-memory-utilization 0.50"
+    ],
+    "version": "v0.32.0"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 30,
+    "disk_gb": 22,
+    "min_vram_gb": null,
+    "notes": "Not measured. The lab run reserved half of the 128 GB pool (--gpu-memory-utilization 0.50), which is a reservation, not the model's need. 30 GB mirrors the SGLang NVFP4 recipe for this checkpoint (22 GB weights + KV)."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": true,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/RadixArk/Qwen3.8-27B-NVFP4",
+    "command": "vllm serve RadixArk/Qwen3.8-27B-NVFP4 --served-model-name qwen38-nvfp4 --trust-remote-code --max-model-len 16384 --max-num-seqs 4 --gpu-memory-utilization 0.50 --seed 42",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Run the command inside the vllm/vllm-openai:v0.32.0 image with --gpus all, host networking and your Hugging Face cache mounted."
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve RadixArk/Qwen3.8-27B-NVFP4 --served-model-name qwen38-nvfp4 --trust-remote-code --max-model-len 16384 --max-num-seqs 4 --gpu-memory-utilization 0.50 --seed 42"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "id": "box-2026-11-04-01",
+      "metric": "decode_per_stream",
+      "value": 12.05,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (671-677-token prompt, 256-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); vLLM 0.32.0 in vllm/vllm-openai:v0.32.0 (sha256:befccf0e7e40), command as shown",
+      "range": [
+        12.05,
+        12.06
+      ]
+    },
+    {
+      "id": "box-2026-11-04-02",
+      "metric": "decode_per_stream",
+      "value": 11.96,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4699-4702-token prompt, 213-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); vLLM 0.32.0 in vllm/vllm-openai:v0.32.0 (sha256:befccf0e7e40), command as shown",
+      "range": [
+        11.96,
+        12.01
+      ],
+      "note": "long-prompt run"
+    },
+    {
+      "id": "box-2026-11-04-03",
+      "metric": "decode_code",
+      "value": 12.11,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (79-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); vLLM 0.32.0 in vllm/vllm-openai:v0.32.0 (sha256:befccf0e7e40), command as shown",
+      "range": [
+        12.04,
+        12.13
+      ]
+    },
+    {
+      "id": "box-2026-11-04-04",
+      "metric": "decode_essay",
+      "value": 12.14,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (73-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); vLLM 0.32.0 in vllm/vllm-openai:v0.32.0 (sha256:befccf0e7e40), command as shown",
+      "range": [
+        12.14,
+        12.15
+      ]
+    },
+    {
+      "id": "box-2026-11-04-05",
+      "metric": "ttft_ms",
+      "value": 1566,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold ~4,700-token prompt; SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); vLLM 0.32.0 in vllm/vllm-openai:v0.32.0 (sha256:befccf0e7e40), command as shown"
+    }
+  ],
+  "provenance_tier": "box",
+  "caveats": [
+    "Measured on a DGX Spark (2026-11-04) as the vLLM leg of the SR-98 four-engine run. Same box, same script, short summarise prompt: 12.05 tok/s here vs 29.21 for this checkpoint on SGLang with DSpark drafting and 24.48 for the ggml-org Q4_K_M GGUF with MTP on llama.cpp.",
+    "No speculative decoding on this lane; most of the gap to the SGLang row is the DSpark draft, which this command does not use.",
+    "vLLM 0.32.0 could not load the Qwen3.8 GGUF (it parsed the .gguf as a config file), which is why this lane uses the NVFP4 safetensors.",
+    "--gpu-memory-utilization 0.50 reserves half of the shared 128 GB pool up front; that is a reservation, not what the model needs."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/RadixArk/Qwen3.8-27B-NVFP4",
+      "kind": "model",
+      "note": "NVFP4 checkpoint card"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "kind": "model",
+      "note": "base model card"
+    }
+  ],
+  "updated": "2026-11-06"
+}

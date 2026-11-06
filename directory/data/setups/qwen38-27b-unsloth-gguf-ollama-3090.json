@@ -134,7 +134,8 @@
     "WEAK METHOD, kept deliberately: 40.2 tok/s is wall-clock division, not Ollama's eval_duration; a thread reply is a full decision tree for verifying it properly.",
     "Card was downclocked at a 90% power limit — treat 40.2 as a floor for a stock 3090.",
     "Corroborated in-thread against crowd-sourced llamabench.ai RTX 3090 numbers.",
-    "27B loads fully GPU-resident through Ollama's HF bridge with the 928MB vision projector alongside."
+    "27B loads fully GPU-resident through Ollama's HF bridge with the 928MB vision projector alongside.",
+    "DGX Spark lab run (2026-10-26, Ollama 0.40.10): `ollama pull hf.co/unsloth/Qwen3.8-27B-GGUF:Q4_K_M` downloaded the layers, including the 927 MB vision projector, then stopped with `Error: file does not exist` (exit 1). One run; cause not isolated (Ollama's Hugging Face import is the suspect). Not re-run since."
   ],
   "provenance_tier": "forum",
   "sources": [
@@ -161,7 +162,7 @@
       "locator": "cited in-thread by John6666; corroboration only, not a reproduction"
     }
   ],
-  "updated": "2026-09-12",
+  "updated": "2026-11-06",
   "schema_version": 2,
   "evidence": {
     "rubric_version": "1.0",

@@ -53,8 +53,14 @@
     "repo": "https://github.com/MiaAI-Lab/Qwen3.8-27B-SGLang-DGX-Spark",
     "profile": "profiles/qwen3.8-27b.env",
     "steps": [
-      {"kind": "cmd", "text": "cp .env.sample .env"},
-      {"kind": "cmd", "text": "./start-dspark.sh"}
+      {
+        "kind": "cmd",
+        "text": "cp .env.sample .env"
+      },
+      {
+        "kind": "cmd",
+        "text": "./start-dspark.sh"
+      }
     ],
     "auto_bootable": true
   },
@@ -102,6 +108,87 @@
       "n": 5,
       "method": "bench/ndec.py two-call net-decode, median of 5, tokens counted from the server's completion_tokens via stream_options.include_usage; streamed, temperature 1.0, thinking on",
       "note": "Slightly beat MTP (21.0) on default chat with thinking on and no degrade. Thinking-off chat was a small MTP edge (22.0 / 21.3 here vs 24.6 / 23.4)."
+    },
+    {
+      "id": "box-2026-11-04-01",
+      "metric": "decode_per_stream",
+      "value": 29.21,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (672-677-token prompt, 251-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), RadixArk/Qwen3.8-27B-NVFP4 + RadixArk/Qwen3.8-27B-DSpark, --speculative-algorithm DSPARK --speculative-dspark-block-size 7 --speculative-draft-model-quantization unquant --mem-fraction-static 0.50 --attention-backend flashinfer --chunked-prefill-size 8192 --disable-prefill-cuda-graph --cuda-graph-max-bs 4 --mamba-scheduler-strategy extra_buffer --enable-torch-compile --torch-compile-max-bs 4 --num-continuous-decode-steps 2 --reasoning-parser qwen3 --tool-call-parser qwen3_coder (lab script sr75_start.sh config A, not ./start-dspark.sh)",
+      "range": [
+        28.85,
+        30.69
+      ],
+      "note": "lab launch: memory fraction 0.50 and default KV dtype, not the recipe's 0.90 and fp8 KV"
+    },
+    {
+      "id": "box-2026-11-04-02",
+      "metric": "decode_per_stream",
+      "value": 27.99,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4702-4704-token prompt, 256-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), RadixArk/Qwen3.8-27B-NVFP4 + RadixArk/Qwen3.8-27B-DSpark, --speculative-algorithm DSPARK --speculative-dspark-block-size 7 --speculative-draft-model-quantization unquant --mem-fraction-static 0.50 --attention-backend flashinfer --chunked-prefill-size 8192 --disable-prefill-cuda-graph --cuda-graph-max-bs 4 --mamba-scheduler-strategy extra_buffer --enable-torch-compile --torch-compile-max-bs 4 --num-continuous-decode-steps 2 --reasoning-parser qwen3 --tool-call-parser qwen3_coder (lab script sr75_start.sh config A, not ./start-dspark.sh)",
+      "range": [
+        24.71,
+        28.13
+      ],
+      "note": "long-prompt run; lab launch: memory fraction 0.50 and default KV dtype, not the recipe's 0.90 and fp8 KV"
+    },
+    {
+      "id": "box-2026-11-04-03",
+      "metric": "decode_code",
+      "value": 26.95,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (79-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), RadixArk/Qwen3.8-27B-NVFP4 + RadixArk/Qwen3.8-27B-DSpark, --speculative-algorithm DSPARK --speculative-dspark-block-size 7 --speculative-draft-model-quantization unquant --mem-fraction-static 0.50 --attention-backend flashinfer --chunked-prefill-size 8192 --disable-prefill-cuda-graph --cuda-graph-max-bs 4 --mamba-scheduler-strategy extra_buffer --enable-torch-compile --torch-compile-max-bs 4 --num-continuous-decode-steps 2 --reasoning-parser qwen3 --tool-call-parser qwen3_coder (lab script sr75_start.sh config A, not ./start-dspark.sh)",
+      "range": [
+        26.16,
+        30.45
+      ],
+      "note": "lab launch: memory fraction 0.50 and default KV dtype, not the recipe's 0.90 and fp8 KV"
+    },
+    {
+      "id": "box-2026-11-04-04",
+      "metric": "decode_essay",
+      "value": 22.99,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (73-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), RadixArk/Qwen3.8-27B-NVFP4 + RadixArk/Qwen3.8-27B-DSpark, --speculative-algorithm DSPARK --speculative-dspark-block-size 7 --speculative-draft-model-quantization unquant --mem-fraction-static 0.50 --attention-backend flashinfer --chunked-prefill-size 8192 --disable-prefill-cuda-graph --cuda-graph-max-bs 4 --mamba-scheduler-strategy extra_buffer --enable-torch-compile --torch-compile-max-bs 4 --num-continuous-decode-steps 2 --reasoning-parser qwen3 --tool-call-parser qwen3_coder (lab script sr75_start.sh config A, not ./start-dspark.sh)",
+      "range": [
+        21.73,
+        23.59
+      ],
+      "note": "lab launch: memory fraction 0.50 and default KV dtype, not the recipe's 0.90 and fp8 KV"
+    },
+    {
+      "id": "box-2026-11-04-05",
+      "metric": "ttft_ms",
+      "value": 2158,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold ~4,700-token prompt; SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); lmsysorg/sglang:qwen38-27b (sha256:febfb971c735), RadixArk/Qwen3.8-27B-NVFP4 + RadixArk/Qwen3.8-27B-DSpark, --speculative-algorithm DSPARK --speculative-dspark-block-size 7 --speculative-draft-model-quantization unquant --mem-fraction-static 0.50 --attention-backend flashinfer --chunked-prefill-size 8192 --disable-prefill-cuda-graph --cuda-graph-max-bs 4 --mamba-scheduler-strategy extra_buffer --enable-torch-compile --torch-compile-max-bs 4 --num-continuous-decode-steps 2 --reasoning-parser qwen3 --tool-call-parser qwen3_coder (lab script sr75_start.sh config A, not ./start-dspark.sh)",
+      "note": "lab launch: memory fraction 0.50 and default KV dtype, not the recipe's 0.90 and fp8 KV"
     }
   ],
   "caveats": [
@@ -109,7 +196,8 @@
     "--cuda-graph-max-bs is a deprecated alias in this build; the DSpark stack uses --cuda-graph-max-bs-decode 4.",
     "--speculative-accept-threshold-acc below 1.0 measured worse. Leave it at 1.0.",
     "The DSpark draft was trained on FP8, but switching the target to QUANT=fp8 did not lift acceptance.",
-    "Recorded on the older stock image with an event-counting script for the short-chat cell, where events did approximate single tokens. That is not true of the DFlash2 image."
+    "Recorded on the older stock image with an event-counting script for the short-chat cell, where events did approximate single tokens. That is not true of the DFlash2 image.",
+    "2026-11-04 rows come from the SR-98 four-engine run, launched with the lab's own docker command (same checkpoint, image and DSpark block-7 draft, but memory fraction 0.50 and default KV cache) rather than ./start-dspark.sh. Same box, same script: 29.21 tok/s here vs 24.48 for the ggml-org GGUF + MTP on llama.cpp and 12.05 for this NVFP4 checkpoint on vLLM without drafting (short summarise prompt, median of 3)."
   ],
   "provenance_tier": "box",
   "sources": [
@@ -134,5 +222,5 @@
       "note": "SGLang DGX Spark serving recipe"
     }
   ],
-  "updated": "2026-09-05"
+  "updated": "2026-11-06"
 }

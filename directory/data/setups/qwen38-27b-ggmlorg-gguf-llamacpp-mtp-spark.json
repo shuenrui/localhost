@@ -177,6 +177,83 @@
       "n": 1,
       "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) at the build default context (4 slots x 8192 tokens)",
       "id": "box-2026-10-26-06"
+    },
+    {
+      "id": "box-2026-11-03-01",
+      "metric": "decode_per_stream",
+      "value": 24.48,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (674-677-token prompt, 207-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m Qwen3.8-27B-Q4_K_M.gguf -md mtp-Qwen3.8-27B-Q4_0.gguf --spec-type draft-mtp -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42 (same ggml-org snapshot a316ea52), llama.cpp build 12035 (commit 4e910a86e), outside the container",
+      "range": [
+        22.8,
+        33.97
+      ]
+    },
+    {
+      "id": "box-2026-11-03-02",
+      "metric": "decode_per_stream",
+      "value": 22.93,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4702-4705-token prompt, 256-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m Qwen3.8-27B-Q4_K_M.gguf -md mtp-Qwen3.8-27B-Q4_0.gguf --spec-type draft-mtp -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42 (same ggml-org snapshot a316ea52), llama.cpp build 12035 (commit 4e910a86e), outside the container",
+      "range": [
+        21.89,
+        23.23
+      ],
+      "note": "long-prompt run"
+    },
+    {
+      "id": "box-2026-11-03-03",
+      "metric": "decode_code",
+      "value": 23.16,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (79-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m Qwen3.8-27B-Q4_K_M.gguf -md mtp-Qwen3.8-27B-Q4_0.gguf --spec-type draft-mtp -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42 (same ggml-org snapshot a316ea52), llama.cpp build 12035 (commit 4e910a86e), outside the container",
+      "range": [
+        22.98,
+        23.34
+      ]
+    },
+    {
+      "id": "box-2026-11-03-04",
+      "metric": "decode_essay",
+      "value": 20.72,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (73-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m Qwen3.8-27B-Q4_K_M.gguf -md mtp-Qwen3.8-27B-Q4_0.gguf --spec-type draft-mtp -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42 (same ggml-org snapshot a316ea52), llama.cpp build 12035 (commit 4e910a86e), outside the container",
+      "range": [
+        20.54,
+        20.75
+      ]
+    },
+    {
+      "id": "box-2026-11-03-05",
+      "metric": "ttft_ms",
+      "value": 5286,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold ~4,700-token prompt; SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m Qwen3.8-27B-Q4_K_M.gguf -md mtp-Qwen3.8-27B-Q4_0.gguf --spec-type draft-mtp -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42 (same ggml-org snapshot a316ea52), llama.cpp build 12035 (commit 4e910a86e), outside the container"
     }
   ],
   "caveats": [
@@ -184,7 +261,9 @@
     "A 'small increase' over the thread OP's unsloth UD-Q4_K_XL config on the same box (~15 -> 18.08 tok/s).",
     "ggerganov posted the identical command line on X (https://x.com/ggerganov/status/2088340681701925253) — cited as corroboration; rot-prone.",
     "Full command lines and raw server logs are in the discussion thread.",
-    "Works as written on a DGX Spark (2026-10-26): `llama-server -hf ggml-org/Qwen3.8-27B-GGUF:Q4_K_M -hfd ggml-org/Qwen3.8-27B-GGUF:Q4_0 --spec-default --spec-type draft-mtp --reasoning-preserve` — llama.cpp build 11866 (commit 3f03b1772); server ready 3820 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 42.3 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build))."
+    "Works as written on a DGX Spark (2026-10-26): `llama-server -hf ggml-org/Qwen3.8-27B-GGUF:Q4_K_M -hfd ggml-org/Qwen3.8-27B-GGUF:Q4_0 --spec-default --spec-type draft-mtp --reasoning-preserve` — llama.cpp build 11866 (commit 3f03b1772); server ready 3820 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 42.3 GiB (weights + KV at llama.cpp's default context (4 slots x 8192 tokens on this build)).",
+    "SR-98 four-engine run (2026-11-03/04, one stream, context 16,384, median of 3 on the short summarise prompt): this GGUF with the MTP draft ran at 24.48 tok/s on llama.cpp. The same Q4_K_M file loaded into Ollama 0.40.10 through a local Modelfile (no draft) ran at 11.1 tok/s (11.08 code, 11.0 essay). SGLang and vLLM could not load this GGUF (architecture qwen35 not supported), so their legs used RadixArk NVFP4 safetensors: 29.21 tok/s on SGLang with DSpark drafting, 12.05 on vLLM without drafting. Different quantization and drafting per engine: read it as \"what each engine can serve today\", not as an engine A/B.",
+    "The MTP draft makes run-to-run speed vary: the three short-prompt runs on 2026-11-03 were 22.8, 33.97 and 24.48 tok/s."
   ],
   "provenance_tier": "box",
   "sources": [
@@ -204,6 +283,6 @@
       "note": "corroborating post of the same command line"
     }
   ],
-  "updated": "2026-11-02",
+  "updated": "2026-11-06",
   "schema_version": 2
 }

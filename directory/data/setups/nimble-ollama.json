@@ -3,7 +3,7 @@
   "title": "Bespoke Nimble 9B via Ollama",
   "slug_note": "One command; under 100 ms per answer on an M5 Max MacBook Pro (Ollama page).",
   "model": "bespoke-nimble-9b",
-  "status": "untested",
+  "status": "measured",
   "variation": {
     "license": "Apache-2.0",
     "downloads": null,
@@ -13,7 +13,9 @@
     "quant_detail": "Ollama's nimble:latest tag, 9.3 GB (q4_K_M 5.6 GB and bf16 18 GB tags also exist)",
     "format": "gguf",
     "size_gb": 9.3,
-    "url": "https://ollama.com/library/nimble"
+    "url": "https://ollama.com/library/nimble",
+    "revision": "ollama manifest 6aa3fde96874",
+    "revision_note": "Ollama model ID shown by `ollama list` on the Spark (pulled 2026-10-25, measured 2026-11-03)"
   },
   "engine": {
     "id": "ollama",
@@ -22,11 +24,13 @@
     "requires_fork": false,
     "draft_model": null,
     "spec_decode": "none",
-    "flags": []
+    "flags": [],
+    "version": "0.40.10"
   },
   "hardware": [
     "gpu-12gb",
-    "mac-64gb"
+    "mac-64gb",
+    "dgx-spark"
   ],
   "requirements": {
     "memory_gb": 11,
@@ -60,12 +64,51 @@
       }
     ]
   },
-  "measurements": [],
+  "measurements": [
+    {
+      "id": "box-2026-11-03-01",
+      "metric": "bench_other",
+      "value": 92,
+      "unit": "%",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 12,
+      "context": "team routing: 11 of 12 tickets",
+      "method": "decision_check.py: POST /v1/systemone on Ollama 0.40.10, 3 typed questions per ticket (team: choice of billing / technical / other; refund asked: yes/no probability, cut at 0.5; urgency: score over Routine / Soon / Urgent, rounded), 12 hand-written support tickets labelled by hand before any model output was seen, one warm-up call discarded; accuracy = share of the 12 tickets matching the label",
+      "note": "Single run. Question: team routing."
+    },
+    {
+      "id": "box-2026-11-03-02",
+      "metric": "bench_other",
+      "value": 100,
+      "unit": "%",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 12,
+      "context": "refund asked: 12 of 12 tickets",
+      "method": "decision_check.py: POST /v1/systemone on Ollama 0.40.10, 3 typed questions per ticket (team: choice of billing / technical / other; refund asked: yes/no probability, cut at 0.5; urgency: score over Routine / Soon / Urgent, rounded), 12 hand-written support tickets labelled by hand before any model output was seen, one warm-up call discarded; accuracy = share of the 12 tickets matching the label",
+      "note": "Single run. Question: refund asked."
+    },
+    {
+      "id": "box-2026-11-03-03",
+      "metric": "bench_other",
+      "value": 83,
+      "unit": "%",
+      "provenance": "box",
+      "date": "2026-11-03",
+      "n": 12,
+      "context": "urgency: 10 of 12 tickets",
+      "method": "decision_check.py: POST /v1/systemone on Ollama 0.40.10, 3 typed questions per ticket (team: choice of billing / technical / other; refund asked: yes/no probability, cut at 0.5; urgency: score over Routine / Soon / Urgent, rounded), 12 hand-written support tickets labelled by hand before any model output was seen, one warm-up call discarded; accuracy = share of the 12 tickets matching the label",
+      "note": "Single run. Question: urgency."
+    }
+  ],
   "caveats": [
     "Decision model: it answers typed questions with probabilities on /v1/systemone; it does not chat, so OpenCode and chat UIs cannot use it.",
-    "Every question's prompt must fit Nimble's 8,192-token context (Ollama page)."
+    "Every question's prompt must fit Nimble's 8,192-token context (Ollama page).",
+    "Works as written on a DGX Spark (2026-11-03): `ollama pull nimble`, then POST /v1/systemone with model \"nimble\" answered all 12 test tickets. Accuracy on 12 hand-labelled tickets: team 92%, refund 100%, urgency 83%. Median 0.205 s per request (3 questions) on the DGX Spark.",
+    "Small test: 12 tickets, one run. Read the accuracy as \"it works and roughly how well\", not as a ranking between decision models."
   ],
-  "provenance_tier": null,
+  "provenance_tier": "box",
   "sources": [
     {
       "url": "https://ollama.com/library/nimble",
@@ -78,6 +121,6 @@
       "note": "model card"
     }
   ],
-  "updated": "2026-10-13",
+  "updated": "2026-11-06",
   "schema_version": 2
 }

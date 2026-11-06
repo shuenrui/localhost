@@ -145,12 +145,24 @@
       "n": 1,
       "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama-server build 11866 (commit 3f03b1772) with --ctx-size 8192",
       "id": "box-2026-10-27-06"
+    },
+    {
+      "id": "box-2026-11-04-01",
+      "metric": "bench_other",
+      "value": 100.0,
+      "unit": "%",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 4,
+      "context": "4 of 4 images",
+      "method": "SR-101 image test: 4 synthetic PNGs (solid red, solid blue, red/blue split, the letters \"AI\"), one short question each, answer checked for the expected word; llama-server -m MiniCPM-V-4_7-35B-A3B-Q4_K_M.gguf --mmproj mmproj-model-f16-4x.gguf -ngl 99 -fa on -c 16384, llama.cpp build 12035 (commit 4e910a86e)",
+      "note": "Single run. A basic \"can it see\" check, not a vision benchmark. Answers: Red / Blue / Red and blue / AI."
     }
   ],
   "caveats": [
     "Works as written on a DGX Spark (2026-10-27): `llama-server -hf openbmb/MiniCPM-V-4.7-35B-A3B-gguf:Q4_K_M --ctx-size 8192 -ngl 99` — llama.cpp build 11866 (commit 3f03b1772); server ready 20 s after start with the OS file cache dropped; the functional check passed; MemAvailable dropped 22.1 GiB (weights + KV at --ctx-size 8192).",
     "The existing MiniCPM-V 4.7 recipe is an untested lead with no literal command; this Spark recipe is the first runnable command for the model in this directory.",
-    "Vision was not exercised in the text bench; the functional check only answers a text question. llama.cpp loaded the repo mmproj automatically."
+    "Vision checked on 2026-11-04: 4 of 4 basic image questions answered correctly (colours, a two-colour split, the letters \"AI\") with the repo's mmproj-model-f16-4x.gguf. A basic \"can it see\" check, not a vision benchmark."
   ],
   "provenance_tier": "box",
   "sources": [
@@ -165,5 +177,5 @@
       "note": "model card: license, Qwen3.6 language backbone"
     }
   ],
-  "updated": "2026-11-02"
+  "updated": "2026-11-06"
 }

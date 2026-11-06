@@ -151,14 +151,91 @@
       "n": 1,
       "method": "drop in MemAvailable from before start (OS file cache dropped) to server ready; llama serve defaults on this box: 4 slots x 131072 context, unified KV",
       "id": "box-2026-10-25-06"
+    },
+    {
+      "id": "box-2026-11-04-01",
+      "metric": "decode_per_stream",
+      "value": 81.6,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (677-680-token prompt, 230-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m gpt-oss-20b-MXFP4.gguf (same ggml-org snapshot 15dcfc7e) -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42, llama.cpp build 12035 (commit 4e910a86e)",
+      "range": [
+        81.49,
+        82.07
+      ]
+    },
+    {
+      "id": "box-2026-11-04-02",
+      "metric": "decode_per_stream",
+      "value": 78.48,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4704-4708-token prompt, 158-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m gpt-oss-20b-MXFP4.gguf (same ggml-org snapshot 15dcfc7e) -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42, llama.cpp build 12035 (commit 4e910a86e)",
+      "range": [
+        78.47,
+        79.56
+      ],
+      "note": "long-prompt run"
+    },
+    {
+      "id": "box-2026-11-04-03",
+      "metric": "decode_code",
+      "value": 79.98,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (94-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m gpt-oss-20b-MXFP4.gguf (same ggml-org snapshot 15dcfc7e) -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42, llama.cpp build 12035 (commit 4e910a86e)",
+      "range": [
+        79.44,
+        81.36
+      ]
+    },
+    {
+      "id": "box-2026-11-04-04",
+      "metric": "decode_essay",
+      "value": 78.9,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (86-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m gpt-oss-20b-MXFP4.gguf (same ggml-org snapshot 15dcfc7e) -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42, llama.cpp build 12035 (commit 4e910a86e)",
+      "range": [
+        78.62,
+        79.56
+      ]
+    },
+    {
+      "id": "box-2026-11-04-05",
+      "metric": "ttft_ms",
+      "value": 1008,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold ~4,700-token prompt; SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); llama-server -m gpt-oss-20b-MXFP4.gguf (same ggml-org snapshot 15dcfc7e) -ngl 99 -fa on -c 16384 -np 1 --jinja --seed 42, llama.cpp build 12035 (commit 4e910a86e)"
     }
   ],
   "caveats": [
-    "No speed or memory numbers recorded yet.",
     "`llama serve` is the newer unified llama.cpp command used on the ggml-org card; on older builds the equivalent server binary is `llama-server -hf ...`.",
     "On DGX OS 7.4 (Ubuntu 24.04) a source build of llama.cpp has no HTTPS unless OpenSSL headers are present, and `-hf` then fails with \"HTTPS is not supported ... model download failed\". Run `sudo apt install libssl-dev` before building (found 2026-10-25).",
     "Works as written on a DGX Spark once llama.cpp is built with OpenSSL (2026-10-25). The command shown downloads the model on first run.",
-    "Same box, same test script: 78.5 vs 59.3 tok/s for the Ollama gpt-oss:20b tag (short prompt), even though Ollama runs llama.cpp underneath. Cause not yet isolated."
+    "Same box, same test script: 78.5 vs 59.3 tok/s for the Ollama gpt-oss:20b tag (short prompt), even though Ollama runs llama.cpp underneath. Cause not yet isolated.",
+    "Re-measured on 2026-11-04 in the SR-98 four-engine run (same official MXFP4 weights on every engine, context 16,384, one stream): llama.cpp 81.6, Ollama 58.48, vLLM 47.2, SGLang 40.85 tok/s on the short summarise prompt (median of 3 each). The vLLM and SGLang rows are their own recipes for this model."
   ],
   "provenance_tier": "box",
   "sources": [
@@ -173,6 +250,6 @@
       "note": "official model card"
     }
   ],
-  "updated": "2026-10-25",
+  "updated": "2026-11-06",
   "schema_version": 2
 }

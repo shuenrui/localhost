@@ -119,13 +119,90 @@
       "n": 1,
       "method": "drop in MemAvailable from cold (OS file cache dropped) to loaded after `ollama run gpt-oss:20b`, at the default context Ollama chose (131072 tokens)",
       "id": "box-2026-10-25-04"
+    },
+    {
+      "id": "box-2026-11-04-01",
+      "metric": "decode_per_stream",
+      "value": 58.48,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (677-680-token prompt, 256-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); Ollama 0.40.10 API, local tag built with a Modelfile: FROM gpt-oss:20b, num_ctx 16384, temperature 0.6, seed 1",
+      "range": [
+        58.28,
+        58.61
+      ]
+    },
+    {
+      "id": "box-2026-11-04-02",
+      "metric": "decode_per_stream",
+      "value": 57.69,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler, long prompt (4705-4709-token prompt, 240-256 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); Ollama 0.40.10 API, local tag built with a Modelfile: FROM gpt-oss:20b, num_ctx 16384, temperature 0.6, seed 1",
+      "range": [
+        56.67,
+        57.78
+      ],
+      "note": "long-prompt run"
+    },
+    {
+      "id": "box-2026-11-04-03",
+      "metric": "decode_code",
+      "value": 61.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (94-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); Ollama 0.40.10 API, local tag built with a Modelfile: FROM gpt-oss:20b, num_ctx 16384, temperature 0.6, seed 1",
+      "range": [
+        60.46,
+        61.0
+      ]
+    },
+    {
+      "id": "box-2026-11-04-04",
+      "metric": "decode_essay",
+      "value": 59.16,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (86-token prompt, 512-512 output tokens); SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); Ollama 0.40.10 API, local tag built with a Modelfile: FROM gpt-oss:20b, num_ctx 16384, temperature 0.6, seed 1",
+      "range": [
+        58.57,
+        59.54
+      ]
+    },
+    {
+      "id": "box-2026-11-04-05",
+      "metric": "ttft_ms",
+      "value": 987,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-04",
+      "n": 3,
+      "method": "openai_bench.py: streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on a cold ~4,700-token prompt; SR-98 four-engine comparison (same bench script, same prompts, context 16,384 on every engine); Ollama 0.40.10 API, local tag built with a Modelfile: FROM gpt-oss:20b, num_ctx 16384, temperature 0.6, seed 1"
     }
   ],
   "caveats": [
     "Ollama 0.40.10 on a 128 GB DGX Spark picked a 128K default context by itself, so memory use is well above the file size. Set num_ctx lower to save memory, or keep it for long documents.",
-    "No speed or memory numbers recorded yet; the size is Ollama's listed tag size.",
     "Reasoning effort (low/medium/high) is set in the system prompt and changes speed and accuracy a lot; record it with any number.",
-    "Works as written on a DGX Spark (2026-10-24): `ollama run gpt-oss:20b` answered after 8.3 s from a cold start (model files read from disk)."
+    "Works as written on a DGX Spark (2026-10-24): `ollama run gpt-oss:20b` answered after 8.3 s from a cold start (model files read from disk).",
+    "2026-11-04 rows (SR-98 four-engine run) used the same gpt-oss:20b weights with num_ctx capped at 16,384 so every engine had the same context; they are not the recipe's default 128K context."
   ],
   "provenance_tier": "box",
   "sources": [
@@ -140,6 +217,6 @@
       "note": "official model card: parameters, MXFP4, memory guidance, ollama run command"
     }
   ],
-  "updated": "2026-10-25",
+  "updated": "2026-11-06",
   "schema_version": 2
 }
