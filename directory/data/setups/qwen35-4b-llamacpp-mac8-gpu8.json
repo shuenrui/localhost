@@ -1,0 +1,82 @@
+{
+  "id": "qwen35-4b-llamacpp-mac8-gpu8",
+  "title": "Qwen3.5-4B Q4_K_M — llama.cpp on 8 GB Macs and 8 GB laptop GPUs",
+  "slug_note": "The card's own llama-server command at 2.71 GB: fits the 5.3 GB Metal budget of an 8 GB Mac and 7.5 GB of VRAM on an RTX 4060.",
+  "model": "qwen3-5-4b",
+  "status": "untested",
+  "variation": {
+    "checkpoint": "AtomicChat/Qwen3.5-4B-GGUF",
+    "publisher": "atomicchat",
+    "quant": "gguf-q4",
+    "quant_detail": "qwen35-4b-Q4_K_M.gguf (2.71 GB, HF tree), self-quantized from Qwen's original weights with a per-tensor imatrix",
+    "format": "gguf",
+    "size_gb": 2.71,
+    "url": "https://huggingface.co/AtomicChat/Qwen3.5-4B-GGUF",
+    "license": "Apache-2.0",
+    "downloads": null
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama.cpp llama-server; -hf pulls the Q4_K_M quant directly, --jinja applies the Qwen3.5 chat template, -c 8192 context. Metal on Apple Silicon, CUDA on NVIDIA.",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "--jinja",
+      "-c 8192"
+    ]
+  },
+  "hardware": [
+    "mac-8gb",
+    "gpu-8gb"
+  ],
+  "requirements": {
+    "memory_gb": 3.5,
+    "disk_gb": 2.71,
+    "min_vram_gb": 3.5,
+    "notes": "Estimate: 2.71 GB Q4_K_M file + 8192-token KV ≈ 3.5 GB — fits the 5.3 GB default Metal budget of an 8 GB Mac and the 7.5 GB usable VRAM of an 8 GB laptop GPU. The 8 GB tier's own notes state a 4-bit 4B fits and a 9B does not."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": null,
+    "thinking": null,
+    "long_context": 8192,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/AtomicChat/Qwen3.5-4B-GGUF",
+    "command": "llama-server -hf AtomicChat/Qwen3.5-4B-GGUF:Q4_K_M --jinja -c 8192",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (brew install llama.cpp on macOS, winget install llama.cpp on Windows; see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf AtomicChat/Qwen3.5-4B-GGUF:Q4_K_M --jinja -c 8192"
+      },
+      {
+        "kind": "do",
+        "text": "Open the local Web UI or point a client at the served OpenAI-compatible endpoint."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No laptop measurement recorded: status untested. The exact command ran as written on our DGX Spark on 2026-11-16; that box's speeds do not carry over to 8 GB laptops.",
+    "On an 8 GB Mac the browser and the model share the same pool — close other apps first (see the mac-8gb tier notes).",
+    "The repo ships text-only quants — it carries no vision projector, so this lane has no image input even though the base model is multimodal.",
+    "The card insists on --jinja: without the chat template the model can emit malformed turns."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/AtomicChat/Qwen3.5-4B-GGUF",
+      "kind": "model",
+      "note": "card's Get started section states the llama-server command verbatim; quant sizes from the repo tree"
+    }
+  ],
+  "updated": "2026-11-17"
+}

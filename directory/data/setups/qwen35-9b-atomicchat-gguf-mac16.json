@@ -1,0 +1,82 @@
+{
+  "id": "qwen35-9b-atomicchat-gguf-mac16",
+  "title": "Qwen3.5-9B Q4_K_M — Atomic Chat on a 16 GB Mac",
+  "slug_note": "5.63 GB GGUF inside macOS's ~10.7 GB Metal budget — the biggest model that fits the most common Mac in the room.",
+  "model": "qwen3-5-9b",
+  "status": "untested",
+  "variation": {
+    "checkpoint": "AtomicChat/Qwen3.5-9B-GGUF",
+    "publisher": "atomicchat",
+    "quant": "gguf-q4",
+    "quant_detail": "qwen35-9b-Q4_K_M.gguf (5.63 GB, HF tree), self-quantized from Qwen's original weights with a per-tensor imatrix",
+    "format": "gguf",
+    "size_gb": 5.63,
+    "url": "https://huggingface.co/AtomicChat/Qwen3.5-9B-GGUF",
+    "license": "Apache-2.0",
+    "downloads": null
+  },
+  "engine": {
+    "id": "atomic-chat",
+    "config": "Atomic Chat app on macOS 13.6+ (Apple Silicon); its llama.cpp backend. Model found by searching AtomicChat/Qwen3.5-9B-GGUF and picking Q4_K_M. Backend/context not stated.",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "mac-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 6.5,
+    "disk_gb": 5.63,
+    "min_vram_gb": null,
+    "notes": "Estimate: 5.63 GB Q4_K_M file + short-context KV headroom ≈ 6.5 GB, inside the ~10.7 GB default Metal budget of a 16 GB Mac (mac-16gb record). Close other apps; the pool is shared."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": null,
+    "thinking": null,
+    "long_context": 8192,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://atomic.chat/",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Atomic Chat for Mac from https://atomic.chat/ (macOS 13.6+, Intel and Apple Silicon)."
+      },
+      {
+        "kind": "do",
+        "text": "Open the app, search AtomicChat/Qwen3.5-9B-GGUF, pick a quant, hit Use this model."
+      },
+      {
+        "kind": "do",
+        "text": "Start chatting; the app runs the GGUF on its bundled engine."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No laptop measurement recorded: status untested. The same 5.63 GB Q4_K_M artifact served as written with llama-server on our DGX Spark on 2026-11-16; that box's speeds do not carry over to a 16 GB Mac.",
+    "The AtomicChat GGUF repo ships text-only quants — no vision projector, so this lane has no image input.",
+    "Atomic Chat has three swappable backends (see the engine record's gotchas); no speed is claimed here, so attribution does not bind."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/AtomicChat/Qwen3.5-9B-GGUF",
+      "kind": "model",
+      "note": "quant sizes and the Atomic Chat load steps (Get started section)"
+    },
+    {
+      "url": "https://atomic.chat/",
+      "kind": "docs",
+      "note": "app homepage: macOS 13.6+ (Intel and Apple Silicon) download"
+    }
+  ],
+  "updated": "2026-11-17"
+}

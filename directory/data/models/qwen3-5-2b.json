@@ -1,0 +1,37 @@
+{
+  "id": "qwen3-5-2b",
+  "name": "Qwen3.5-2B",
+  "family": "Qwen3.5",
+  "generation": "3.5",
+  "publisher": "qwen",
+  "released": "2026-02",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 2.27,
+    "hybrid": false,
+    "anatomy": "Card: 'Number of Parameters: 2B' (safetensors count 2.27B); Hidden Dimension 2048, 24 layers, vocab 248,320 (padded); early-fusion vision encoder (config carries a vision_config); card: 'MTP: trained with multi-steps'"
+  },
+  "context": {
+    "native": 262144,
+    "max": null,
+    "extension": null
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "base_weight_size": {
+    "bf16_gb": 4.55
+  },
+  "url": "https://huggingface.co/Qwen/Qwen3.5-2B",
+  "summary": "Qwen3.5's small dense model with a vision encoder and 262,144-token native context; the card states the intended use cases are prototyping, task-specific fine-tuning and research. At 4.55 GB BF16 (2.7 GB as Q8_0) it is the size that fits 8 GB laptops.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "No reported or measured stable 4-bit-or-better run is currently recorded.",
+    "reviewed": "2026-11-17"
+  },
+  "updated": "2026-11-17",
+  "released_note": "Month of the Hugging Face repo's creation date 2026-02-28 (retrieved 2026-11-17); the publisher's exact launch day is not recorded here."
+}

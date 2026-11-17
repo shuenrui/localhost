@@ -1,0 +1,81 @@
+{
+  "id": "qwen35-2b-ollama-laptops",
+  "title": "Qwen3.5-2B via Ollama on 8 GB Macs, 8 GB GPUs and 16 GB CPU laptops",
+  "slug_note": "One command, a 2.7 GB pull: the smallest lane that fits every laptop tier in the directory, including 8 GB Macs.",
+  "model": "qwen3-5-2b",
+  "status": "untested",
+  "variation": {
+    "checkpoint": "ollama:qwen3.5:2b",
+    "publisher": "ollama",
+    "quant": "gguf-q8",
+    "quant_detail": "qwen3.5:2b (llamacpp variant) = 1.88B Q8_0 model (2.0 GB) + 331M BF16 clip projector (671 MB), 2.7 GB total per the tag's details page",
+    "format": "gguf",
+    "size_gb": 2.7,
+    "url": "https://ollama.com/library/qwen3.5:2b",
+    "license": "Apache-2.0",
+    "downloads": null
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default run of the qwen3.5:2b tag; llama.cpp engine underneath, Metal on Apple Silicon, CUDA on NVIDIA, CPU on machines with none.",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "mac-8gb",
+    "mac-16gb",
+    "mac-24gb",
+    "gpu-8gb",
+    "pc-cpu-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 3.5,
+    "disk_gb": 2.7,
+    "min_vram_gb": null,
+    "notes": "Estimate: 2.7 GB tag plus headroom for a short context. Fits the 5.3 GB Metal budget of an 8 GB Mac with room to spare; on a 16 GB CPU-only laptop (about 8 GB usable) it is the comfortable size."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": null,
+    "tools": true,
+    "thinking": null,
+    "long_context": 262144,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://ollama.com/library/qwen3.5:2b",
+    "command": "ollama run qwen3.5:2b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run qwen3.5:2b"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No laptop measurement recorded: status untested. The same command ran as written on our DGX Spark on 2026-11-16; that box's speeds do not carry over to these tiers.",
+    "The Ollama tag ships the BF16 vision projector and keeps the text weights at Q8_0 — heavier than a Q4 build of the same size, so on an 8 GB machine close other apps first."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://ollama.com/library/qwen3.5:2b",
+      "kind": "docs",
+      "note": "tag page: ollama run qwen3.5:2b, 2.7 GB llamacpp variant (1.88B Q8_0 model + 331M BF16 projector), 256K context, Text+Image input, Apache-2.0 license file"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.5-2B",
+      "kind": "model",
+      "note": "base weights card: 2B params, 262,144-token native context, Apache-2.0"
+    }
+  ],
+  "updated": "2026-11-17"
+}
