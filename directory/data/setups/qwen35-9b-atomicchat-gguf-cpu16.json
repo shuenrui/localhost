@@ -1,0 +1,83 @@
+{
+  "id": "qwen35-9b-atomicchat-gguf-cpu16",
+  "title": "Qwen3.5-9B Q4_K_M — Atomic Chat on a 16 GB CPU-only laptop",
+  "slug_note": "5.63 GB GGUF on the office laptop with no GPU: it fits the ~8 GB usable RAM but decodes slowly on CPU bandwidth.",
+  "model": "qwen3-5-9b",
+  "status": "untested",
+  "variation": {
+    "checkpoint": "AtomicChat/Qwen3.5-9B-GGUF",
+    "publisher": "atomicchat",
+    "quant": "gguf-q4",
+    "quant_detail": "qwen35-9b-Q4_K_M.gguf (5.63 GB, HF tree), self-quantized from Qwen's original weights with a per-tensor imatrix",
+    "format": "gguf",
+    "size_gb": 5.63,
+    "url": "https://huggingface.co/AtomicChat/Qwen3.5-9B-GGUF",
+    "license": "Apache-2.0",
+    "downloads": null
+  },
+  "engine": {
+    "id": "atomic-chat",
+    "config": "Atomic Chat app on Windows x64 or Linux x86_64, CPU backend (no NVIDIA GPU present). Model found by searching AtomicChat/Qwen3.5-9B-GGUF and picking Q4_K_M. Context not stated.",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "pc-cpu-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 6.5,
+    "disk_gb": 5.63,
+    "min_vram_gb": null,
+    "notes": "Estimate: 5.63 GB Q4_K_M file + short-context KV ≈ 6.5 GB resident. The tier records about 8 GB usable with Windows + a browser open, so this fits with roughly 1.5 GB to spare — the 9B is the ceiling for this box, and the tier notes call 4-bit 9B 'fits but slow'."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": null,
+    "thinking": null,
+    "long_context": 8192,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://atomic.chat/",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Atomic Chat for Windows or Linux from https://atomic.chat/."
+      },
+      {
+        "kind": "do",
+        "text": "Open the app, search AtomicChat/Qwen3.5-9B-GGUF, pick a quant, hit Use this model."
+      },
+      {
+        "kind": "do",
+        "text": "Start chatting; with no NVIDIA GPU the app runs the model on the CPU."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "No laptop measurement recorded: status untested. The same 5.63 GB Q4_K_M artifact served as written with llama-server on our DGX Spark on 2026-11-16; that box's speeds do not carry over — expect single-digit to low-teens tok/s on CPU.",
+    "The AtomicChat GGUF repo ships text-only quants — no vision projector.",
+    "Close the browser and other apps first: Windows plus a browser already holds several of the 16 GB.",
+    "Atomic Chat has three swappable backends (see the engine record's gotchas); no speed is claimed here, so attribution does not bind."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/AtomicChat/Qwen3.5-9B-GGUF",
+      "kind": "model",
+      "note": "quant sizes and the Atomic Chat load steps (Get started section)"
+    },
+    {
+      "url": "https://atomic.chat/",
+      "kind": "docs",
+      "note": "app homepage: Windows (x64) and Linux (x86_64) downloads"
+    }
+  ],
+  "updated": "2026-11-17"
+}
