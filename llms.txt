@@ -2,7 +2,8 @@
 
 > Find, set up and run open AI models on your own machine. A directory of source-backed recipes
 > (hardware, memory, measured speed and exact commands), plus a CLI for people and AI agents.
-> Qwen is the only model family covered today.
+> Covers seven model lines (Qwen, Gemma 4, Liquid LFM2.5, NVIDIA Nemotron 3.5, OpenAI gpt-oss,
+> Recursive Flint, Aleph Alpha Kolibri) on hardware from 8 GB laptops to a DGX Spark.
 
 Site: https://local.innstance.app/ (a JavaScript app; agents should use the CLI or the JSON below)
 

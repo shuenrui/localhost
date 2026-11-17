@@ -1,7 +1,7 @@
 # localhost
 
 Find, set up and run open AI models on your own machine. Formerly the Qwen Local-Run Directory;
-Qwen is the only model family covered today.
+Covers seven model lines (Qwen, Gemma 4, Liquid LFM2.5, NVIDIA Nemotron 3.5, OpenAI gpt-oss, Recursive Flint, Aleph Alpha Kolibri) on hardware from 8 GB laptops to a DGX Spark.
 
 - Site: https://local.innstance.app/
 - CLI for people and AI agents: [`cli/`](cli/README.md) (`localhost detect`, `fit`, `guide`, `check`, `connect opencode`)
