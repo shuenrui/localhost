@@ -185,13 +185,13 @@
       "kind": "quant-shop",
       "url": "https://huggingface.co/AtomicChat",
       "role": "Atomic Chat app vendor (Jan fork; atomic-llama-cpp-turboquant engine). 'Atomic Dynamic' GGUF/MLX quants with own imatrix, held-out perplexity vs BF16 published per quant.",
-      "note": "Not yet on the law-11 Scenario B whitelist — lanes recorded from forum/vendor measurements pending owner whitelist decision. Qwen3.8-27B-GGUF: 305k+ downloads."
+      "note": "Not yet on the law-11 Scenario B whitelist \u2014 lanes recorded from forum/vendor measurements pending owner whitelist decision. Qwen3.8-27B-GGUF: 305k+ downloads."
     },
     "shennguyen": {
       "name": "shennguyen (Huihui)",
       "kind": "individual",
       "url": "https://huggingface.co/shennguyen",
-      "note": "Abliterated (refusal-removed) GGUF distills; Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated. Not on the law-11 whitelist — advice lane only."
+      "note": "Abliterated (refusal-removed) GGUF distills; Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated. Not on the law-11 whitelist \u2014 advice lane only."
     },
     "ggml-org": {
       "name": "ggml-org",
@@ -290,7 +290,7 @@
       "url": "https://huggingface.co/lightonai"
     },
     "dogukanurker": {
-      "name": "Doğukan Urker",
+      "name": "Do\u011fukan Urker",
       "kind": "builder",
       "role": "Builder: LFM2.5-24B-A2B on an RTX 3060 12 GB at full 131K context.",
       "url": "https://x.com/DogukanUrker"
@@ -312,6 +312,18 @@
       "kind": "lab",
       "role": "Kolibri 1 (78B-A3.46B German/English reasoning MoE, Apache-2.0).",
       "url": "https://huggingface.co/Aleph-Alpha"
+    },
+    "0bserverx": {
+      "name": "0bserverx",
+      "kind": "individual",
+      "role": "Community heretic/abliterated GGUF builds.",
+      "url": "https://huggingface.co/0bserverx"
+    },
+    "mradermacher": {
+      "name": "mradermacher",
+      "kind": "individual",
+      "role": "Community GGUF quantiser (i1 implosion quants of finetunes and abliterations).",
+      "url": "https://huggingface.co/mradermacher"
     }
   }
 }

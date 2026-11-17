@@ -1,0 +1,41 @@
+{
+  "id": "gemma-4-26b-a4b-heretic-uncensored",
+  "name": "Gemma 4 26B-A4B Heretic Uncensored",
+  "family": "Gemma 4 Uncensored",
+  "generation": "derived",
+  "publisher": "mradermacher",
+  "released": "2026-04-13",
+  "released_note": "HF repo createdAt",
+  "license": "apache-2.0",
+  "based_on": {
+    "model": "gemma-4-26b-a4b",
+    "note": "Heretic uncensored pass over Gemma 4 26B-A4B, i1 quantisation by mradermacher."
+  },
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 25.2,
+    "params_active_b": 3.8,
+    "layers": 30,
+    "layer_mix": "sliding-window attention with periodic full-attention layers (see config.json layer_types)",
+    "hybrid": false,
+    "experts": 128
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/mradermacher/gemma-4-26B-A4B-it-ultra-uncensored-heretic-i1-GGUF",
+  "summary": "Gemma 4 26B-A4B with refusals removed (heretic). Measured on the DGX Spark: the only uncensored arm that beat its own base on the frozen battle.",
+  "practical_baseline": {
+    "status": "selected",
+    "setup": "gemma4-26b-a4b-heretic-uncensored-i1-q4k-llamacpp-spark",
+    "rationale": "The only run of this build recorded on an owner box (DGX Spark, 17 Nov): battery 14/16, battle median 6.89 (above base 6.78), X-group 10x X4.",
+    "reviewed": "2026-11-18"
+  },
+  "updated": "2026-11-18",
+  "kv_bytes_per_token": null
+}

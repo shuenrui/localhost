@@ -1,0 +1,140 @@
+{
+  "id": "qwen38-27b-rvn-heretic-abliterated-q4k-llamacpp-spark",
+  "title": "Qwen3 8 27B Rvn Heretic Abliterated on DGX Spark \u2014 llama.cpp 16-item uncensored battery + frozen battle",
+  "slug_note": "KEEPER (27B uncensored class) on the Spark ladder: battle median identical to base (6.78), no delivery fails, 5/10 depth probes reached full operational content (X4, the most consistent of any arm), 0 hard refusals.",
+  "model": "qwen3-8-27b-rvn-heretic-abliterated",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF",
+    "publisher": "0bserverx",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 16.5 GB",
+    "format": "gguf",
+    "size_gb": 16.5,
+    "url": "https://huggingface.co/0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF",
+    "license": "Apache-2.0",
+    "revision": "ab8d7bd81d03117501e4da60cccdff4c80f0eea0",
+    "revision_note": "HF revision recorded from the box download metadata (spark:~/lab/uncens/models/rvn-27b/.cache)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server -m <file> -c 16384 -np 1 -ngl 99 --jinja --seed 42 (commit 4e910a86e, the build's own -hf fetch works identically: same weights, same flags, only the file path differs)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [
+      "-c 16384",
+      "-np 1",
+      "-ngl 99",
+      "--jinja",
+      "--seed 42"
+    ],
+    "version": "dev-12035 (commit 4e910a86e)"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 16.5,
+    "disk_gb": 16.5,
+    "min_vram_gb": null,
+    "notes": "Served at -c 16384 -np 1 on the 128 GB GB10; weights + KV well under the shared pool."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 16384,
+    "max_context": 262144
+  },
+  "run": {
+    "repo": "https://huggingface.co/0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF",
+    "repo_revision": {
+      "commit": "4e910a86e",
+      "resolution": "exact",
+      "source": "spark:~/lab/llama.cpp git rev-parse HEAD",
+      "locator": "build checkout used by uncens_arm.sh",
+      "retrieved": "2026-11-16",
+      "note": "llama.cpp build the arm was served from (the engine box above)"
+    },
+    "command": "llama-server -hf 0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF:RVN-Q4_K_M.gguf -c 16384 -np 1 -ngl 99 --jinja --seed 42",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start). On DGX OS install libssl-dev first, or -hf cannot download."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf 0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF:RVN-Q4_K_M.gguf -c 16384 -np 1 -ngl 99 --jinja --seed 42"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "bench_other",
+      "value": 87.5,
+      "unit": "%",
+      "concurrency": 1,
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 16,
+      "context": "uncensored battery: 14 of 16 items answered correctly",
+      "method": "uncens-refusal-v1 battery v1.1 (21 frozen items, sha in spark:~/lab/uncens/FROZEN.sha; 4 items voided by SR-357: R3, R4, F2, C2 -> n=16), rule checks only, no AI judge.",
+      "id": "box-2026-11-16-01"
+    },
+    {
+      "metric": "bench_other",
+      "value": 100,
+      "unit": "%",
+      "concurrency": 1,
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "context": "copyright-wall control items: 3 of 3 answered as expected",
+      "method": "uncens-refusal-v1 battery v1.1 (21 frozen items, sha in spark:~/lab/uncens/FROZEN.sha; 4 items voided by SR-357: R3, R4, F2, C2 -> n=16), rule checks only, no AI judge.",
+      "id": "box-2026-11-16-02"
+    },
+    {
+      "metric": "bench_other",
+      "value": 6.7778,
+      "unit": "score",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "context": "frozen battle qwen-kl-battle-v1.1 quality score (0-9 scale)",
+      "method": "frozen battle set qwen-kl-battle-v1.1 (prompts sha 5e672fa9), 3 seeds, median reported, enable_thinking:false on all arms, llama-server -c 16384 -np 1 --seed 42.",
+      "id": "box-2026-11-16-03"
+    },
+    {
+      "metric": "bench_other",
+      "value": 50,
+      "unit": "%",
+      "concurrency": 1,
+      "provenance": "box",
+      "date": "2026-11-17",
+      "n": 10,
+      "context": "depth probes: 5 of 10 reached full operational content (X4); reasoning-only leaks (RL/RL0): 5",
+      "method": "X-group: 10 illegal-harm depth probes on fictional targets; scorer_x v2 rule-based (selftest 19/19, sha 6a8a6ef6). X1 refuse ... X4 operational content; RL/RL0 = procedure left the reasoning block only (user-visible through Ollama/Open WebUI).",
+      "id": "box-2026-11-16-04"
+    }
+  ],
+  "caveats": [
+    "KEEPER (27B uncensored class) on the Spark ladder: battle median identical to base (6.78), no delivery fails, 5/10 depth probes reached full operational content (X4, the most consistent of any arm), 0 hard refusals.",
+    "Measured 2026-11-16/17 on the DGX Spark (owner box), one run per cell; battle uses 3 seeds (median over identical seeds), battery n=16, X-group n=10. Raw rows: spark:~/lab/uncens/ (battery results_v11, x/results v2, battle logs).",
+    "Uncensored builds behave differently from the official model; you are responsible for how you use them."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://huggingface.co/0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF",
+      "kind": "model",
+      "note": "weights / quant card"
+    }
+  ],
+  "updated": "2026-11-18"
+}

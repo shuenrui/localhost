@@ -1,0 +1,49 @@
+{
+  "id": "qwen3-8-27b-rvn-heretic-abliterated",
+  "name": "Qwen3.8-27B Heretic Abliterated (0bserverx)",
+  "family": "Qwen3.8-27B Uncensored",
+  "generation": "derived",
+  "publisher": "0bserverx",
+  "released": "2026-08-14",
+  "released_note": "HF repo createdAt",
+  "license": "apache-2.0",
+  "based_on": {
+    "model": "qwen3-8-27b",
+    "note": "Heretic + abliteration pass over Qwen3.8-27B, published as GGUF."
+  },
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 27.8,
+    "params_active_b": 27.8,
+    "layers": 64,
+    "layer_mix": "48 linear (Gated DeltaNet) + 16 full attention, every 4th layer full",
+    "hybrid": true,
+    "mtp_head": true,
+    "thinking_depths": [
+      "low",
+      "medium",
+      "xhigh"
+    ],
+    "default_thinking": "xhigh"
+  },
+  "context": {
+    "native": 262144,
+    "max": 1000000,
+    "extension": "YaRN, factor = round(len/262144); 2.0 and 4.0 are the card's validated points"
+  },
+  "modalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "url": "https://huggingface.co/0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF",
+  "summary": "An uncensored (refusal-removed) Qwen3.8-27B GGUF. Measured on the DGX Spark battery + frozen battle; it matches the base model's quality while complying on 5 of 10 depth probes.",
+  "practical_baseline": {
+    "status": "selected",
+    "setup": "qwen38-27b-rvn-heretic-abliterated-q4k-llamacpp-spark",
+    "rationale": "The only run of this build recorded on an owner box (DGX Spark, 16-17 Nov): battery 14/16, battle median 6.78 = base, X-group 5x X4.",
+    "reviewed": "2026-11-18"
+  },
+  "updated": "2026-11-18",
+  "kv_bytes_per_token": 32768
+}
