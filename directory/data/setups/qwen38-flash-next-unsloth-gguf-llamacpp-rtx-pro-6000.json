@@ -1,5 +1,5 @@
 {
-  "title": "Qwen3.8-Flash-Next UD-Q4_K_XL — RTX PRO 6000 llama.cpp + MTP",
+  "title": "Qwen3.8-Flash-Next UD-Q4_K_XL \u2014 RTX PRO 6000 llama.cpp + MTP",
   "slug_note": "Vendor-claimed 170 tok/s single-stream on one RTX PRO 6000 with the shared MTP module, up from a ~100 tok/s baseline.",
   "model": "qwen3-8-flash-next",
   "status": "claimed",
@@ -136,6 +136,7 @@
     }
   ],
   "caveats": [
+    "Unverified by us: the 170 tok/s figure is Unsloth's own claim in its guide, kept at the claimed tier. Re-checked live 2026-11-17: the page still reads 'MTP enables Qwen3.8-Flash to reach 170 tokens/s on 1x RTX 6000 PRO GPU compared to the 100 token baseline.' One operating point, no n, no workload class, quant not restated per point. We have not run this recipe.",
     "Vendor claim (unsloth), not an independent reproduction. The docs chart does not re-state quant/context per point.",
     "RTX PRO 6000 has two editions with different bandwidth (Workstation 1792 GB/s, Server 1597 GB/s); the claim does not say which.",
     "The 4-bit lane is 111GB of weights; on a 96GB card it needs the PLE table offloaded, so the 170 tok/s figure assumes that configuration."
@@ -167,7 +168,7 @@
     }
   ],
   "id": "qwen38-flash-next-unsloth-gguf-llamacpp-rtx-pro-6000",
-  "updated": "2026-09-14",
+  "updated": "2026-11-17",
   "schema_version": 2,
   "evidence": {
     "rubric_version": "1.0",

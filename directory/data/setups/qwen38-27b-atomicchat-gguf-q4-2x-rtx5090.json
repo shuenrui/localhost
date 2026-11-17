@@ -1,5 +1,5 @@
 {
-  "title": "Qwen3.8-27B AD-Q4_K_M — 2x RTX 5090 llama.cpp full offload",
+  "title": "Qwen3.8-27B AD-Q4_K_M \u2014 2x RTX 5090 llama.cpp full offload",
   "slug_note": "AtomicChat's own Dynamic quants measured at 77 tok/s decode / 363 prefill at 8k on two RTX 5090s.",
   "model": "qwen3-8-27b",
   "status": "claimed",
@@ -156,7 +156,7 @@
       "provenance": "vendor",
       "date": "2026-08-18",
       "source": "https://huggingface.co/AtomicChat/Qwen3.8-27B-GGUF",
-      "context": "@32k ctx — likely batched pp across the full prompt; column semantics not restated",
+      "context": "@32k ctx \u2014 likely batched pp across the full prompt; column semantics not restated",
       "conditions": {
         "context_label": "prefill @32k, vendor table (column semantics flagged)",
         "hardware_count": 2
@@ -193,8 +193,9 @@
     }
   ],
   "caveats": [
+    "Unverified by us: every number here is AtomicChat's own claim on its model card, kept at the claimed tier. Re-checked live 2026-11-17: the card's Speed section still reads 'Measured on 2xRTX_5090 with `AD-Q4_K_M`, full offload: 8k context 363 t/s prompt / 77 t/s generation; 32k context 5244 t/s / 72 t/s'. The card itself discloses the KL/top-1 runs used 2 of 4 5090s; the speed table gives no n or batch statement. We have not run this recipe.",
     "Vendor-run and vendor-published; \"measured, not estimated\" per the card, but not independently reproduced.",
-    "The 8k/32k table columns are not fully explained (the 5244 tok/s prefill at 32k is likely batched) — verify column semantics against the raw logs before quoting."
+    "The 8k/32k table columns are not fully explained (the 5244 tok/s prefill at 32k is likely batched) \u2014 verify column semantics against the raw logs before quoting."
   ],
   "provenance_tier": "vendor",
   "builder": "atomicchat",
@@ -216,7 +217,7 @@
     }
   ],
   "id": "qwen38-27b-atomicchat-gguf-q4-2x-rtx5090",
-  "updated": "2026-09-14",
+  "updated": "2026-11-17",
   "schema_version": 2,
   "correctness": {
     "output_checked": false,
@@ -240,7 +241,7 @@
         "locator": "card line 60: AD-Q4_K_M top-1 95.59%",
         "date": "2026-08-18",
         "lineage_id": "atomicchat-27b-card",
-        "note": "Same table/same caveat. Honest curve nearby: AD-IQ2_XXS top-1 79.44% vs Q8_0 98.92% (lines 55/69) — the trade-off is measured, not hidden."
+        "note": "Same table/same caveat. Honest curve nearby: AD-IQ2_XXS top-1 79.44% vs Q8_0 98.92% (lines 55/69) \u2014 the trade-off is measured, not hidden."
       }
     ],
     "note": "The speed table has no output-quality gate; quality evidence lives only in the card's KL/top-1 table, recorded separately here and never blended into the speed rows."
@@ -259,7 +260,7 @@
         ],
         "locator": "quality table + How-we-measured + speed table + fit table",
         "archive_path": "directory/tools/history/inputs/pass4-social/raw/hf_AtomicChat_27B-GGUF.md",
-        "note": "Vendor artifact, rung 1. No independent reproduction. The 305,686 downloads figure is popularity, not quality — kept out of the measurement rows."
+        "note": "Vendor artifact, rung 1. No independent reproduction. The 305,686 downloads figure is popularity, not quality \u2014 kept out of the measurement rows."
       }
     ],
     "claims": [

@@ -1,0 +1,153 @@
+{
+  "id": "qwen35-4b-ollama-dgx-spark",
+  "title": "Qwen3.5-4B via Ollama, DGX Spark",
+  "slug_note": "Ollama's Q4_K_M 4B lane in one command: 64.8 tok/s at the default 4K context, 1.1 GiB resident.",
+  "model": "qwen3-5-4b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "ollama:qwen3.5:4b",
+    "publisher": "ollama",
+    "quant": "gguf-q4",
+    "quant_detail": "Ollama's `qwen3.5:4b` tag = Q4_K_M (read with `ollama show` on our DGX Spark, 2026-11-16)",
+    "format": "gguf",
+    "size_gb": 3.1,
+    "url": "https://ollama.com/library/qwen3.5",
+    "license": "Apache-2.0",
+    "downloads": null,
+    "revision": "ollama manifest d8b0f5e9760c",
+    "revision_note": "Ollama model ID shown by `ollama ps` on the Spark when measured (2026-11-16)"
+  },
+  "engine": {
+    "id": "ollama",
+    "config": "Ollama default tag; the 2b/4b/9b tags sit under Ollama's 24 GiB threshold, so the server ran with OLLAMA_CONTEXT_LENGTH=4096 to reproduce that default choice",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [],
+    "version": "0.40.10"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 3.8,
+    "disk_gb": 3.1,
+    "min_vram_gb": null,
+    "notes": "Measured on a DGX Spark (2026-11-16): 3.8 GB resident on the GPU (nvidia-smi, cell's own llama-server, weights + KV at num_ctx 4096); tag file 3.1 GB."
+  },
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 1010000
+  },
+  "run": {
+    "repo": "https://ollama.com/library/qwen3.5",
+    "command": "ollama run qwen3.5:4b",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install Ollama (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "ollama run qwen3.5:4b"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 64.77,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (632-token prompt, 256 output tokens)",
+      "range": [
+        64.05,
+        64.78
+      ],
+      "id": "box-2026-11-16-4bollama-01"
+    },
+    {
+      "metric": "decode_code",
+      "value": 64.15,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 512 output tokens)",
+      "range": [
+        64.1,
+        64.24
+      ],
+      "id": "box-2026-11-16-4bollama-02"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 64.52,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 512 output tokens)",
+      "range": [
+        64.4,
+        64.67
+      ],
+      "id": "box-2026-11-16-4bollama-03"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 209,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on the ~630-token summarise prompt",
+      "id": "box-2026-11-16-4bollama-04"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 3.8,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 1,
+      "method": "nvidia-smi per-process GPU allocation for the cell's own server during the bench (weights + KV at Ollama's default context for this size class (2.4-5.6 GB tag under Ollama's 24 GiB threshold -> 4096)); Ollama 0.40.10 built-in llama.cpp runner, num_ctx 4096",
+      "id": "box-2026-11-16-4bollama-05"
+    }
+  ],
+  "caveats": [
+    "Works as written on a DGX Spark (2026-11-16): `ollama run qwen3.5:4b` answered the one-word check after 5.7 s; functional check passed.",
+    "DGX Spark lab run 2026-11-16 19:40-19:47 (gpu.lock held; during-bench GPU apps = an idle 26 GB stage server + the cell's own Ollama server, no foreign load; accepted by replication against the 12:45 run - per-shape medians within 2.6%).",
+    "The tag's context is Ollama's default for its size class (4096 tokens). `ollama show` lists the full 262144 capability; raise num_ctx and memory grows with it."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://ollama.com/library/qwen3.5",
+      "kind": "model",
+      "note": "Ollama library card: qwen3.5:4b tag"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.5-4B",
+      "kind": "model",
+      "note": "official model card: parameters, context, license"
+    }
+  ],
+  "updated": "2026-11-17"
+}
