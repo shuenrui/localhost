@@ -1,0 +1,122 @@
+{
+  "id": "mac-16gb",
+  "name": "Apple Silicon Mac, 16-18 GB unified (M1-M5 base, M3 Pro 18 GB)",
+  "vendor": "Apple",
+  "chip": "M1-M5 base",
+  "arch": "arm64, Metal",
+  "form_factor": "laptop/desktop",
+  "memory_gb": 16,
+  "memory_usable_gb": 10.7,
+  "memory_type": "unified LPDDR4x/LPDDR5",
+  "bandwidth_gbs": 100,
+  "bandwidth_range_gbs": [
+    68,
+    154
+  ],
+  "cpu": "Apple Silicon base class",
+  "gpu": "integrated, shares the unified pool",
+  "notes": [
+    "The most common Mac in the room. The default Metal budget is about 10.7 GB (10,922.67 MiB logged on a 16 GB M1), so 4-bit 9B models fit with room for context; 27B models do not.",
+    "Speed scales with the chip's memory bandwidth (68 GB/s on M1 to 153 GB/s on M5), so the same recipe runs about 2x faster on an M5 than an M1."
+  ],
+  "device": {
+    "identity": {
+      "name": "Apple Silicon Mac, 16-18 GB unified (M1-M5 base, M3 Pro 18 GB)",
+      "chip": "M1-M5 base",
+      "manufacturer": "Apple",
+      "os": "macOS",
+      "form_factor": "laptop/desktop"
+    },
+    "memory": {
+      "total_gb": 16,
+      "type": "LPDDR4x/LPDDR5 (per chip)",
+      "bandwidth_gbs": null,
+      "unified": true,
+      "usable_gb": 10.7,
+      "note": "usable_gb is macOS's default Metal GPU budget (recommendedMaxWorkingSetSize), about two thirds of 16 GB on Macs this size; bandwidth is a per-chip property, so each variant carries its own"
+    },
+    "compute": {
+      "cpu_cores": "Apple Silicon; core counts vary by chip and SKU tier",
+      "note": "Apple publishes no GPU FLOPS for M-series chips. MLX and llama.cpp/Metal drive the GPU; the Neural Engine is largely unused by local-LLM runtimes."
+    },
+    "thermal": {
+      "tdp_watts": null,
+      "cooling": "fanless (MacBook Air) or active fan (MacBook Pro, Mac mini, iMac)",
+      "note": "fanless Airs throttle under long generations; short chats are unaffected"
+    },
+    "variants": [
+      {
+        "id": "m1-16",
+        "name": "M1 16 GB",
+        "chip": "Apple M1",
+        "memory_configs": "16 GB",
+        "bandwidth_gbs": 68.25
+      },
+      {
+        "id": "m2-16",
+        "name": "M2 16 GB",
+        "chip": "Apple M2",
+        "memory_configs": "16 GB",
+        "bandwidth_gbs": 100
+      },
+      {
+        "id": "m3-16",
+        "name": "M3 16 GB",
+        "chip": "Apple M3",
+        "memory_configs": "16 GB",
+        "bandwidth_gbs": 100
+      },
+      {
+        "id": "m4-16",
+        "name": "M4 16 GB",
+        "chip": "Apple M4",
+        "memory_configs": "16 GB",
+        "bandwidth_gbs": 120
+      },
+      {
+        "id": "m5-16",
+        "name": "M5 16 GB",
+        "chip": "Apple M5",
+        "memory_configs": "16 GB",
+        "bandwidth_gbs": 153
+      },
+      {
+        "id": "m3-pro-18",
+        "name": "M3 Pro 18 GB",
+        "chip": "Apple M3 Pro",
+        "memory_configs": "18 GB",
+        "bandwidth_gbs": 153.6,
+        "note": "18 GB gives about 12 GB of Metal budget; grouped here because it runs the same models"
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.apple.com/newsroom/2022/06/apple-unveils-m2-with-breakthrough-performance-and-capabilities/",
+        "note": "M2: 100GB/s unified memory bandwidth, 50 percent more than M1; up to 24GB"
+      },
+      {
+        "url": "https://arstechnica.com/apple/2024/10/apples-m4-m4-pro-and-m4-max-compared-to-past-generations-and-to-each-other/",
+        "note": "M4: 16/24/32GB options, 120GB/s; M4 Pro 24GB entry config, 273GB/s"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/",
+        "note": "M5: 153GB/s unified memory bandwidth, more than 2x over M1"
+      },
+      {
+        "url": "https://vramneeded.com/guides/llm-on-mac/",
+        "note": "Metal's recommendedMaxWorkingSetSize is the GPU budget llama.cpp, Ollama, LM Studio and MLX plan around; a 24 GB M3 log shows 16,383 MiB for the GPU at the default setting"
+      },
+      {
+        "url": "https://github.com/unslothai/unsloth/pull/13776",
+        "note": "real 8 GB M1 Mac mini reads a 5,461 MiB Metal working set"
+      },
+      {
+        "url": "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GGUF/discussions/3",
+        "note": "16 GB Apple M1 llama.cpp log: recommendedMaxWorkingSetSize = 10922,67 MiB"
+      }
+    ]
+  },
+  "measured_by_us": false,
+  "url": "https://vramneeded.com/guides/llm-on-mac/",
+  "updated": "2026-11-16"
+}

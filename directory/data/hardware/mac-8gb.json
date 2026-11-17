@@ -1,0 +1,102 @@
+{
+  "id": "mac-8gb",
+  "name": "Apple Silicon Mac, 8 GB unified (M1-M3 base MacBook Air / Mac mini)",
+  "vendor": "Apple",
+  "chip": "M1/M2/M3 base",
+  "arch": "arm64, Metal",
+  "form_factor": "laptop/desktop",
+  "memory_gb": 8,
+  "memory_usable_gb": 5.3,
+  "memory_type": "unified LPDDR4x/LPDDR5",
+  "bandwidth_gbs": 100,
+  "bandwidth_range_gbs": [
+    68,
+    154
+  ],
+  "cpu": "Apple Silicon base class",
+  "gpu": "integrated, shares the unified pool",
+  "notes": [
+    "The smallest Mac most people still carry. macOS lets the GPU use about 5.3 GB of the 8 GB by default (Metal working set 5,461 MiB on an 8 GB M1), so a 4-bit 4B model fits and a 9B does not.",
+    "Close other apps first: the browser and the model share the same 8 GB.",
+    "Apple stopped selling 8 GB Macs with the M4 generation (16 GB became the base), so this tier is M1-M3."
+  ],
+  "device": {
+    "identity": {
+      "name": "Apple Silicon Mac, 8 GB unified (M1-M3 base MacBook Air / Mac mini)",
+      "chip": "M1/M2/M3 base",
+      "manufacturer": "Apple",
+      "os": "macOS",
+      "form_factor": "laptop/desktop"
+    },
+    "memory": {
+      "total_gb": 8,
+      "type": "LPDDR4x/LPDDR5 (per chip)",
+      "bandwidth_gbs": null,
+      "unified": true,
+      "usable_gb": 5.3,
+      "note": "usable_gb is macOS's default Metal GPU budget (recommendedMaxWorkingSetSize), about two thirds of 8 GB on Macs this size; bandwidth is a per-chip property, so each variant carries its own"
+    },
+    "compute": {
+      "cpu_cores": "Apple Silicon; core counts vary by chip and SKU tier",
+      "note": "Apple publishes no GPU FLOPS for M-series chips. MLX and llama.cpp/Metal drive the GPU; the Neural Engine is largely unused by local-LLM runtimes."
+    },
+    "thermal": {
+      "tdp_watts": null,
+      "cooling": "fanless (MacBook Air) or active fan (MacBook Pro, Mac mini, iMac)",
+      "note": "fanless Airs throttle under long generations; short chats are unaffected"
+    },
+    "variants": [
+      {
+        "id": "m1-8",
+        "name": "M1 8 GB",
+        "chip": "Apple M1",
+        "memory_configs": "8 GB",
+        "bandwidth_gbs": 68.25,
+        "note": "Apple states M2's 100GB/s is 50 percent more than M1"
+      },
+      {
+        "id": "m2-8",
+        "name": "M2 8 GB",
+        "chip": "Apple M2",
+        "memory_configs": "8 GB",
+        "bandwidth_gbs": 100
+      },
+      {
+        "id": "m3-8",
+        "name": "M3 8 GB",
+        "chip": "Apple M3",
+        "memory_configs": "8 GB",
+        "bandwidth_gbs": 100
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.apple.com/newsroom/2022/06/apple-unveils-m2-with-breakthrough-performance-and-capabilities/",
+        "note": "M2: 100GB/s unified memory bandwidth, 50 percent more than M1; up to 24GB"
+      },
+      {
+        "url": "https://arstechnica.com/apple/2024/10/apples-m4-m4-pro-and-m4-max-compared-to-past-generations-and-to-each-other/",
+        "note": "M4: 16/24/32GB options, 120GB/s; M4 Pro 24GB entry config, 273GB/s"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/",
+        "note": "M5: 153GB/s unified memory bandwidth, more than 2x over M1"
+      },
+      {
+        "url": "https://vramneeded.com/guides/llm-on-mac/",
+        "note": "Metal's recommendedMaxWorkingSetSize is the GPU budget llama.cpp, Ollama, LM Studio and MLX plan around; a 24 GB M3 log shows 16,383 MiB for the GPU at the default setting"
+      },
+      {
+        "url": "https://github.com/unslothai/unsloth/pull/13776",
+        "note": "real 8 GB M1 Mac mini reads a 5,461 MiB Metal working set"
+      },
+      {
+        "url": "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GGUF/discussions/3",
+        "note": "16 GB Apple M1 llama.cpp log: recommendedMaxWorkingSetSize = 10922,67 MiB"
+      }
+    ]
+  },
+  "measured_by_us": false,
+  "url": "https://vramneeded.com/guides/llm-on-mac/",
+  "updated": "2026-11-16"
+}

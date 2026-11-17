@@ -1,0 +1,51 @@
+{
+  "id": "pc-cpu-16gb",
+  "name": "Windows/Linux laptop, no discrete GPU, 16 GB RAM (CPU + integrated graphics)",
+  "vendor": "Intel/AMD",
+  "chip": "x86_64 laptop CPU (Core Ultra / Ryzen class)",
+  "arch": "x86_64 CPU only (integrated graphics)",
+  "form_factor": "laptop",
+  "memory_gb": 16,
+  "memory_usable_gb": 8,
+  "memory_type": "DDR5/LPDDR5x system RAM, CPU only",
+  "bandwidth_gbs": 89.6,
+  "bandwidth_range_gbs": [
+    68,
+    120
+  ],
+  "cpu": "x86_64, 8-16 cores",
+  "gpu": "integrated (no dedicated VRAM)",
+  "notes": [
+    "The ordinary office or student laptop. Models run on the CPU (Ollama, llama.cpp, Atomic Chat all do this by default when no NVIDIA GPU is found).",
+    "Bandwidth is derived: 2 channels x 64-bit x 5,600 MT/s DDR5 / 8 = 89.6 GB/s (AMD lists 2 channels, DDR5-5600 / LPDDR5x-7500 for the Ryzen 7 8845HS). LPDDR5x-7500 laptops reach 120 GB/s.",
+    "Windows plus a browser takes 6-8 GB, so plan on about 8 GB for the model. 4-bit 2B-4B models are the comfortable size; a 4-bit 9B fits but is slow.",
+    "Expect single-digit to low-teens tokens per second for 4B-9B models: CPU decode is bandwidth-bound, and 89.6 GB/s is a third of an 8 GB laptop GPU."
+  ],
+  "device": {
+    "identity": {
+      "name": "x86_64 laptop, CPU + integrated graphics, 16 GB",
+      "chip": "Intel Core Ultra / AMD Ryzen 7000-8000 class",
+      "manufacturer": "Intel / AMD",
+      "os": null,
+      "form_factor": "laptop"
+    },
+    "memory": {
+      "total_gb": 16,
+      "type": "DDR5-5600 / LPDDR5x",
+      "bandwidth_gbs": 89.6,
+      "unified": false,
+      "usable_gb": 8,
+      "channels": 2,
+      "note": "system RAM, read by the CPU; usable_gb assumes Windows + a browser hold about 8 GB. 89.6 GB/s derived from 2 x 64-bit x 5600 MT/s."
+    },
+    "sources": [
+      {
+        "url": "https://www.amd.com/en/products/processors/laptop/ryzen/8000-series/amd-ryzen-7-8845hs.html",
+        "note": "Ryzen 7 8845HS: System Memory Type DDR5 / LPDDR5X, Memory Channels 2, Max Memory Speed DDR5-5600, LPDDR5x-7500"
+      }
+    ]
+  },
+  "measured_by_us": false,
+  "url": "https://www.amd.com/en/products/processors/laptop/ryzen/8000-series/amd-ryzen-7-8845hs.html",
+  "updated": "2026-11-16"
+}

@@ -37,6 +37,12 @@ PROFILES = {
     "2x5090": {"os": "linux", "gpu": "RTX 5090", "gpuCount": 2, "ramGb": 128, "vramGb": 64, "unified": "separate"},
     "3060_16": {"os": "windows", "gpu": "RTX 3060", "gpuCount": 1, "ramGb": 16, "vramGb": 12, "unified": "separate"},
     "vram_only": {"os": "linux", "gpu": "RTX 4090", "gpuCount": 1, "vramGb": 24, "unified": "separate"},
+    "mac8": {"os": "macos", "chip": "Apple M1", "gpuCount": 1, "ramGb": 8, "unified": "unified"},
+    "mac24": {"os": "macos", "chip": "Apple M3", "gpuCount": 1, "ramGb": 24, "unified": "unified"},
+    "4060_laptop": {"os": "windows", "gpu": "RTX 4060 Laptop GPU", "gpuCount": 1, "ramGb": 16, "vramGb": 8, "unified": "separate"},
+    "cpu16_win": {"os": "windows", "chip": "Intel Core Ultra 7 155H", "ramGb": 16, "unified": "cpu-only"},
+    "dev_mac16": {"os": "macos", "ramGb": 16, "unified": "unified", "deviceId": "mac-16gb"},
+    "dev_cpu16": {"os": "windows", "ramGb": 16, "unified": "cpu-only", "deviceId": "pc-cpu-16gb"},
 }
 
 

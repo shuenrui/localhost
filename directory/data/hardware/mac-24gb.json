@@ -1,0 +1,114 @@
+{
+  "id": "mac-24gb",
+  "name": "Apple Silicon Mac, 24 GB unified (M2-M5 base 24 GB, M4 Pro 24 GB)",
+  "vendor": "Apple",
+  "chip": "M2-M5 base / M4 Pro",
+  "arch": "arm64, Metal",
+  "form_factor": "laptop/desktop",
+  "memory_gb": 24,
+  "memory_usable_gb": 16,
+  "memory_type": "unified LPDDR4x/LPDDR5",
+  "bandwidth_gbs": 100,
+  "bandwidth_range_gbs": [
+    68,
+    273
+  ],
+  "cpu": "Apple Silicon base class (plus M4 Pro 24 GB)",
+  "gpu": "integrated, shares the unified pool",
+  "notes": [
+    "The default Metal budget is 16 GiB (16,383 MiB logged on a 24 GB M3). 9B models fit easily; a 27B only fits as a ~3.5-bit build of about 13 GB, at short context.",
+    "An 18 GB Q4 32B file fails at the 16 GiB default with an out-of-memory error; raising iogpu.wired_limit_mb is possible but risky, and no recipe here assumes it."
+  ],
+  "device": {
+    "identity": {
+      "name": "Apple Silicon Mac, 24 GB unified (M2-M5 base 24 GB, M4 Pro 24 GB)",
+      "chip": "M2-M5 base / M4 Pro",
+      "manufacturer": "Apple",
+      "os": "macOS",
+      "form_factor": "laptop/desktop"
+    },
+    "memory": {
+      "total_gb": 24,
+      "type": "LPDDR4x/LPDDR5 (per chip)",
+      "bandwidth_gbs": null,
+      "unified": true,
+      "usable_gb": 16,
+      "note": "usable_gb is macOS's default Metal GPU budget (recommendedMaxWorkingSetSize), about two thirds of 24 GB on Macs this size; bandwidth is a per-chip property, so each variant carries its own"
+    },
+    "compute": {
+      "cpu_cores": "Apple Silicon; core counts vary by chip and SKU tier",
+      "note": "Apple publishes no GPU FLOPS for M-series chips. MLX and llama.cpp/Metal drive the GPU; the Neural Engine is largely unused by local-LLM runtimes."
+    },
+    "thermal": {
+      "tdp_watts": null,
+      "cooling": "fanless (MacBook Air) or active fan (MacBook Pro, Mac mini, iMac)",
+      "note": "fanless Airs throttle under long generations; short chats are unaffected"
+    },
+    "variants": [
+      {
+        "id": "m2-24",
+        "name": "M2 24 GB",
+        "chip": "Apple M2",
+        "memory_configs": "24 GB",
+        "bandwidth_gbs": 100
+      },
+      {
+        "id": "m3-24",
+        "name": "M3 24 GB",
+        "chip": "Apple M3",
+        "memory_configs": "24 GB",
+        "bandwidth_gbs": 100
+      },
+      {
+        "id": "m4-24",
+        "name": "M4 24 GB",
+        "chip": "Apple M4",
+        "memory_configs": "24 GB",
+        "bandwidth_gbs": 120
+      },
+      {
+        "id": "m5-24",
+        "name": "M5 24 GB",
+        "chip": "Apple M5",
+        "memory_configs": "24 GB",
+        "bandwidth_gbs": 153
+      },
+      {
+        "id": "m4-pro-24",
+        "name": "M4 Pro 24 GB",
+        "chip": "Apple M4 Pro",
+        "memory_configs": "24 GB",
+        "bandwidth_gbs": 273
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.apple.com/newsroom/2022/06/apple-unveils-m2-with-breakthrough-performance-and-capabilities/",
+        "note": "M2: 100GB/s unified memory bandwidth, 50 percent more than M1; up to 24GB"
+      },
+      {
+        "url": "https://arstechnica.com/apple/2024/10/apples-m4-m4-pro-and-m4-max-compared-to-past-generations-and-to-each-other/",
+        "note": "M4: 16/24/32GB options, 120GB/s; M4 Pro 24GB entry config, 273GB/s"
+      },
+      {
+        "url": "https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/",
+        "note": "M5: 153GB/s unified memory bandwidth, more than 2x over M1"
+      },
+      {
+        "url": "https://vramneeded.com/guides/llm-on-mac/",
+        "note": "Metal's recommendedMaxWorkingSetSize is the GPU budget llama.cpp, Ollama, LM Studio and MLX plan around; a 24 GB M3 log shows 16,383 MiB for the GPU at the default setting"
+      },
+      {
+        "url": "https://github.com/unslothai/unsloth/pull/13776",
+        "note": "real 8 GB M1 Mac mini reads a 5,461 MiB Metal working set"
+      },
+      {
+        "url": "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GGUF/discussions/3",
+        "note": "16 GB Apple M1 llama.cpp log: recommendedMaxWorkingSetSize = 10922,67 MiB"
+      }
+    ]
+  },
+  "measured_by_us": false,
+  "url": "https://vramneeded.com/guides/llm-on-mac/",
+  "updated": "2026-11-16"
+}

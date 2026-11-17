@@ -1979,7 +1979,7 @@ var HW_FIELDS = [
   ["gpuCount", "GPU count", "number"],
   ["ramGb", "RAM (GB)", "number"],
   ["vramGb", "VRAM (GB)", "number"],
-  ["unified", "Memory layout", "select", ["", "unified", "separate"]],
+  ["unified", "Memory layout", "select", ["", "unified", "separate", "cpu-only"]],
   ["diskGb", "Free storage (GB)", "number"],
   ["driver", "Driver version", "text"],
   ["runtime", "Runtime version", "text"],
@@ -1991,6 +1991,9 @@ function blankProfile() {
 }
 function defaultReserve(p) {
   if (state.assume.reserve != null) return state.assume.reserve;
+  /* Small Macs: macOS lets the GPU use about two thirds of RAM by default (Metal working
+     set ~5.3 of 8 GB, ~10.7 of 16, 16 of 24), so the reserve there is a third of RAM. */
+  if (p && p.os === "macos" && p.ramGb != null && p.ramGb <= 24) return Math.round(p.ramGb / 3 * 10) / 10;
   return p && p.os === "macos" ? 6 : p && p.os === "linux" ? 4 : 8;
 }
 function availableGb(p) {
@@ -2014,14 +2017,19 @@ function profileClasses(p) {
   if (p.os === "macos" || /Apple|M[1-9]\b/i.test(chip)) {
     if (ram != null && ram >= 200) return ["mac-256gb", "mac-128gb", "mac-64gb"];
     if (ram != null && ram >= 96) return ["mac-128gb", "mac-64gb"];
+    if (ram != null && ram <= 10) return ["mac-8gb"];
+    if (ram != null && ram <= 20) return ["mac-16gb", "mac-8gb"];
+    if (ram != null && ram <= 28) return ["mac-24gb", "mac-16gb"];
     return ["mac-64gb"];
   }
+  if (p.unified === "cpu-only") return ["pc-cpu-16gb"];
   if (/\b5090\b/i.test(chip)) {
     return (p.gpuCount || 1) > 1
       ? ["rtx-5090", "gpu-multigpu-72gb", "gpu-24gb"]
       : ["rtx-5090", "gpu-24gb"];
   }
   if (/RTX PRO 6000|PRO 6000 Blackwell|RTX 6000/i.test(chip)) return ["rtx-pro-6000"];
+  if ((p.gpuCount || 1) <= 1 && p.vramGb != null && p.vramGb <= 8) return ["gpu-8gb", "gpu-12gb"];
   if ((p.gpuCount || 1) <= 1 && p.vramGb != null && p.vramGb <= 16) return ["gpu-12gb", "gpu-24gb"];
   if ((p.gpuCount || 1) > 1) return ["gpu-multigpu-72gb", "gpu-24gb"];
   return ["gpu-24gb"];
@@ -2029,17 +2037,19 @@ function profileClasses(p) {
 function archFamily(id) {
   var a = (HW[id] || {}).arch || "";
   if (/Metal/i.test(a)) return "apple";
+  if (/CPU only/i.test(a)) return "cpu";
   if (/RDNA|AMD|gfx/i.test(a)) return "amd";
   return "nvidia";
 }
 function familyLabel(fam) {
-  return fam === "apple" ? "Apple Silicon" : fam === "amd" ? "AMD iGPU" : "NVIDIA hardware";
+  return fam === "apple" ? "Apple Silicon" : fam === "amd" ? "AMD iGPU" : fam === "cpu" ? "CPU only" : "NVIDIA hardware";
 }
 function profileArch(p) {
   if (p.deviceId) return archFamily(p.deviceId);
   var t = (p.chip || "") + " " + (p.gpu || "");
   if (p.os === "macos" || /Apple|M[1-9]\b/i.test(t)) return "apple";
   if (/Ryzen AI Max|Radeon 8060S|Strix Halo|gfx1151/i.test(t)) return "amd";
+  if (p.unified === "cpu-only") return "cpu";
   return "nvidia";
 }
 function kvGb(s, assume) {
@@ -2191,8 +2201,10 @@ function hydrateKnownProfile(id) {
   state.profile.ramGb = hw.memory_gb;
   state.profile.chip = hw.chip || "";
   state.profile.gpu = hw.gpu || "";
-  state.profile.unified = /unified/i.test(hw.memory_type || "") ? "unified" : "separate";
-  state.profile.os = /Metal/i.test(hw.arch || "") ? "macos" : "linux";
+  state.profile.unified = /CPU only/i.test(hw.memory_type || "") ? "cpu-only" : /unified/i.test(hw.memory_type || "") ? "unified" : "separate";
+  /* A discrete-GPU class is described by its VRAM; without it the fit check had nothing to compare. */
+  if (state.profile.unified === "separate") state.profile.vramGb = hw.memory_gb;
+  state.profile.os = /Metal/i.test(hw.arch || "") ? "macos" : /windows/i.test(hw.name || "") ? "windows" : "linux";
   state.profile.gpuCount = /multi/i.test(hw.form_factor || "") ? 2 : 1;
 }
 
@@ -2222,7 +2234,7 @@ function viewHardware() {
       return '<button type="button" class="hw-chip' + (active ? " on" : "") + '" data-hwchip="' + esc(id) + '" aria-pressed="' + active + '"><b>' + esc(x.name) + '</b><span>' + esc((x.memory_gb != null ? gb(x.memory_gb) : "memory not recorded") + " · " + (x.arch || "architecture not recorded")) + '</span></button>';
     }).join("") + '</div>' +
     '<div class="hw-choice-head hw-memory-head"><span id="hw-memory-label" class="lbl">MEMORY AVAILABLE</span><span class="g">optional shorthand</span></div>' +
-    '<div class="hw-memory-grid" role="group" aria-labelledby="hw-memory-label">' + [16, 24, 32, 64, 96, 128, 256].map(function (n) {
+    '<div class="hw-memory-grid" role="group" aria-labelledby="hw-memory-label">' + [8, 16, 24, 32, 64, 96, 128, 256].map(function (n) {
       var active = p && p.ramGb === n;
       return '<button type="button" class="hw-memory' + (active ? " on" : "") + '" data-hwmemory="' + n + '" aria-pressed="' + active + '">' + esc(gb(n)) + '</button>';
     }).join("") + '</div></div>';

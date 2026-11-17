@@ -1,0 +1,55 @@
+{
+  "id": "gpu-8gb",
+  "name": "8 GB laptop or desktop GPU (RTX 4060 / 4060 Laptop / 4070 Laptop class)",
+  "vendor": "NVIDIA",
+  "chip": "AD107/AD106",
+  "arch": "x86_64 host + discrete GPU, sm_89",
+  "form_factor": "discrete-gpu (gaming laptop or desktop)",
+  "memory_gb": 8,
+  "memory_usable_gb": 7.5,
+  "memory_type": "GDDR6, dedicated VRAM",
+  "bandwidth_gbs": 256,
+  "bandwidth_range_gbs": [
+    256,
+    272
+  ],
+  "cpu": "host CPU varies",
+  "gpu": "8 GB VRAM on a 128-bit bus",
+  "notes": [
+    "The usual gaming-laptop GPU. NVIDIA lists 8 GB of GDDR6 on a 128-bit bus for the RTX 4060 and 8 GB for the 4060/4070 Laptop GPUs.",
+    "Bandwidth is derived, not published by NVIDIA: 128-bit x 16-17 Gbps GDDR6 / 8 = 256-272 GB/s.",
+    "4-bit 9B models fit in VRAM with a few GB for context. Anything bigger spills into system RAM and slows down sharply.",
+    "Laptop GPUs run at lower power limits than desktop cards, so expect lower speeds than an RTX 4060 desktop."
+  ],
+  "device": {
+    "identity": {
+      "name": "GeForce RTX 4060 / RTX 4060 Laptop / RTX 4070 Laptop (8 GB)",
+      "chip": "AD107 / AD106 (Ada Lovelace)",
+      "manufacturer": "NVIDIA",
+      "os": null,
+      "form_factor": "discrete-gpu"
+    },
+    "memory": {
+      "total_gb": 8,
+      "type": "GDDR6",
+      "bandwidth_gbs": null,
+      "unified": false,
+      "usable_gb": 7.5,
+      "interface_bits": 128,
+      "note": "dedicated VRAM; host RAM is separate and matters only for offload. NVIDIA publishes size and bus width but not memory speed, so bandwidth stays null here (256-272 GB/s at 16-17 Gbps)."
+    },
+    "sources": [
+      {
+        "url": "https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4060-4060ti/",
+        "note": "RTX 4060: 8 GB GDDR6, 128-bit memory interface"
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/geforce/laptops/40-series/",
+        "note": "RTX 40 Laptop GPUs: 4070 Laptop 8 GB, 4060 Laptop 8 GB GDDR6"
+      }
+    ]
+  },
+  "measured_by_us": false,
+  "url": "https://www.nvidia.com/en-us/geforce/laptops/40-series/",
+  "updated": "2026-11-16"
+}

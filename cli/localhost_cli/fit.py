@@ -6,6 +6,7 @@ gets the arch family "cpu". The site's default ("nvidia") would wrongly mark eve
 recipe as architecture-compatible on a CPU-only box. The site has no way to enter such a
 profile, so parity is unaffected.
 """
+import math
 import re
 
 GROUPS = [
@@ -26,6 +27,10 @@ def gb(v):
 def default_reserve(p, override=None):
     if override is not None:
         return override
+    # Small Macs: macOS lets the GPU use about two thirds of RAM by default (Metal working
+    # set ~5.3 of 8 GB, ~10.7 of 16, 16 of 24), so the reserve there is a third of RAM.
+    if p.get("os") == "macos" and p.get("ramGb") is not None and p["ramGb"] <= 24:
+        return math.floor(p["ramGb"] / 3 * 10 + 0.5) / 10
     return 6 if p.get("os") == "macos" else 4 if p.get("os") == "linux" else 8
 
 
@@ -52,13 +57,21 @@ def profile_classes(p, HW):
             return ["mac-256gb", "mac-128gb", "mac-64gb"]
         if ram is not None and ram >= 96:
             return ["mac-128gb", "mac-64gb"]
+        if ram is not None and ram <= 10:
+            return ["mac-8gb"]
+        if ram is not None and ram <= 20:
+            return ["mac-16gb", "mac-8gb"]
+        if ram is not None and ram <= 28:
+            return ["mac-24gb", "mac-16gb"]
         return ["mac-64gb"]
     if p.get("unified") == "cpu-only":
-        return []
+        return ["pc-cpu-16gb"]
     if re.search(r"\b5090\b", chip, re.I):
         return ["rtx-5090", "gpu-multigpu-72gb", "gpu-24gb"] if (p.get("gpuCount") or 1) > 1 else ["rtx-5090", "gpu-24gb"]
     if re.search(r"RTX PRO 6000|PRO 6000 Blackwell|RTX 6000", chip, re.I):
         return ["rtx-pro-6000"]
+    if (p.get("gpuCount") or 1) <= 1 and p.get("vramGb") is not None and p["vramGb"] <= 8:
+        return ["gpu-8gb", "gpu-12gb"]
     if (p.get("gpuCount") or 1) <= 1 and p.get("vramGb") is not None and p["vramGb"] <= 16:
         return ["gpu-12gb", "gpu-24gb"]
     if (p.get("gpuCount") or 1) > 1:
@@ -70,6 +83,8 @@ def arch_family(hw_id, HW):
     a = (HW.get(hw_id) or {}).get("arch") or ""
     if re.search(r"Metal", a, re.I):
         return "apple"
+    if re.search(r"CPU only", a, re.I):
+        return "cpu"
     if re.search(r"RDNA|AMD|gfx", a, re.I):
         return "amd"
     return "nvidia"
