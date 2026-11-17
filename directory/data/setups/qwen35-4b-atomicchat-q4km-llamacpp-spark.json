@@ -1,0 +1,153 @@
+{
+  "id": "qwen35-4b-atomicchat-q4km-llamacpp-spark",
+  "title": "Qwen3.5-4B AtomicChat GGUF Q4_K_M on llama.cpp, DGX Spark",
+  "slug_note": "AtomicChat's Q4_K_M 4B in llama.cpp: 67.4 tok/s at 8K context - 4% above the same weights through Ollama.",
+  "model": "qwen3-5-4b",
+  "schema_version": 2,
+  "status": "measured",
+  "variation": {
+    "checkpoint": "AtomicChat/Qwen3.5-4B-GGUF",
+    "publisher": "atomicchat",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 2.71 GB (AtomicChat)",
+    "format": "gguf",
+    "size_gb": 2.71,
+    "url": "https://huggingface.co/AtomicChat/Qwen3.5-4B-GGUF",
+    "license": "Apache-2.0",
+    "downloads": null,
+    "revision": "3462e78ead6c19e37bb60334624a37c55b442e33",
+    "revision_note": "HF snapshot resolved and served on the Spark during the 2026-11-16 test"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "llama-server with --jinja and -c 8192",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": [],
+    "version": "build 12035 (commit 4e910a86e)"
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 3.2,
+    "disk_gb": 2.71,
+    "min_vram_gb": null,
+    "notes": "Measured on a DGX Spark (2026-11-16): 3.2 GB resident on the GPU (nvidia-smi, cell's own llama-server, weights + KV at -c 8192); file 2.71 GB."
+  },
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": true,
+    "thinking": true,
+    "long_context": 262144,
+    "max_context": 1010000
+  },
+  "run": {
+    "repo": "https://huggingface.co/AtomicChat/Qwen3.5-4B-GGUF",
+    "command": "llama-server -hf AtomicChat/Qwen3.5-4B-GGUF:Q4_K_M --jinja -c 8192",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start). On Ubuntu / DGX OS install libssl-dev first, or -hf cannot download."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf AtomicChat/Qwen3.5-4B-GGUF:Q4_K_M --jinja -c 8192"
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 67.44,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; summarise neutral filler (629-token prompt, 256 output tokens)",
+      "range": [
+        67.26,
+        67.48
+      ],
+      "id": "box-2026-11-16-4bq4km-01"
+    },
+    {
+      "metric": "decode_code",
+      "value": 67.41,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write an LRU cache module with tests (37-token prompt, 512 output tokens)",
+      "range": [
+        67.29,
+        67.6
+      ],
+      "id": "box-2026-11-16-4bq4km-02"
+    },
+    {
+      "metric": "decode_essay",
+      "value": 66.09,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; write a 400-word essay (31-token prompt, 512 output tokens)",
+      "range": [
+        65.93,
+        66.3
+      ],
+      "id": "box-2026-11-16-4bq4km-03"
+    },
+    {
+      "metric": "ttft_ms",
+      "value": 191,
+      "unit": "ms",
+      "concurrency": 1,
+      "stat": "median",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 3,
+      "method": "openai_bench (SR-344 short_bench.py): streaming /v1/chat/completions, single stream, one warm-up discarded, fresh nonce per summarise prompt (cold prefill), decode = (completion_tokens-1)/(last-first token time), temperature 0.6, median of 3; time to first streamed token on the ~630-token summarise prompt",
+      "id": "box-2026-11-16-4bq4km-04"
+    },
+    {
+      "metric": "memory_gb",
+      "value": 3.2,
+      "unit": "GB",
+      "provenance": "box",
+      "date": "2026-11-16",
+      "n": 1,
+      "method": "nvidia-smi per-process GPU allocation for the cell's own server during the bench (weights + KV at -c 8192); llama.cpp build 12035 (commit 4e910a86e) with -c 8192",
+      "id": "box-2026-11-16-4bq4km-05"
+    }
+  ],
+  "caveats": [
+    "Works as written on a DGX Spark (2026-11-16): `llama-server -hf AtomicChat/Qwen3.5-4B-GGUF:Q4_K_M --jinja -c 8192` - llama.cpp build 12035 (commit 4e910a86e); server ready 6.0 s after start; the functional check passed.",
+    "GPU utilisation 0 before the bench; the only other GPU process was an idle 26 GB stage server (no foreign load). See the AtomicChat card for the quant method and quality table; speed here is our own measurement.",
+    "Served at -c 8192 for comparability with the queue; the weights support much longer context - memory grows with it."
+  ],
+  "provenance_tier": "box",
+  "sources": [
+    {
+      "url": "https://huggingface.co/AtomicChat/Qwen3.5-4B-GGUF",
+      "kind": "model",
+      "note": "GGUF repo: Q4_K_M 2.71 GB"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.5-4B",
+      "kind": "model",
+      "note": "official model card: parameters, context, license"
+    }
+  ],
+  "updated": "2026-11-17"
+}
