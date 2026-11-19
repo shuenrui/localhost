@@ -1,0 +1,76 @@
+{
+  "id": "thinkingcap-nvidia-nemotron-3-5-lightning-30b-a3b-bf16-vllm-bottlecapai",
+  "title": "ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B BF16 on vLLM (bottlecapai)",
+  "slug_note": "65.83 GB safetensors from bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B; untested.",
+  "model": "thinkingcap-nvidia-nemotron-3-5-lightning-30b-a3b",
+  "status": "untested",
+  "variation": {
+    "license": "Other (custom licence)",
+    "downloads": 1150,
+    "checkpoint": "bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+    "publisher": "bottlecapai",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 65.83 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 65.83,
+    "url": "https://huggingface.co/bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+    "revision": "f5cc436e3205ec3c79362f1d525e93f2a6e7dd38",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 74,
+    "disk_gb": 65.83,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+    "command": "vllm serve bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B --async-scheduling --reasoning-parser nemotron_v3 --enable-auto-tool-choice --tool-call-parser qwen3_coder",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install vLLM (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B --async-scheduling --reasoning-parser nemotron_v3 --enable-auto-tool-choice --tool-call-parser qwen3_coder"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-12, story \"llama.cpp: 18 releases in 30h, FP8 KV-cache lands; Ollama goes mmap-on-Vulkan\"). Nothing on this page is measured yet.",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

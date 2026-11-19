@@ -1,0 +1,69 @@
+{
+  "id": "thinklite-27b-q4-k-m-llama-cpp-mradermacher",
+  "title": "Thinklite-27B Q4_K_M on llama.cpp (mradermacher)",
+  "slug_note": "16.81 GB GGUF from mradermacher/thinklite-27B-i1-GGUF; untested.",
+  "model": "thinklite-27b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 1333,
+    "checkpoint": "mradermacher/thinklite-27B-i1-GGUF",
+    "publisher": "mradermacher",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 16.81 GB (also published: IQ3_M, IQ3_S, IQ4_XS, Q2_K, Q3_K_L, Q3_K_M)",
+    "format": "gguf",
+    "size_gb": 16.81,
+    "url": "https://huggingface.co/mradermacher/thinklite-27B-i1-GGUF",
+    "revision": "cffff8c91349593ba82ffe37761ef715ba874c32",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-24gb",
+    "mac-24gb"
+  ],
+  "requirements": {
+    "memory_gb": 20,
+    "disk_gb": 16.81,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/mradermacher/thinklite-27B-i1-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-11, story \"Nous Arete-27B: Qwen3.8-27B re-post-trained on values, eval published\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/mradermacher/thinklite-27B-i1-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2
+}

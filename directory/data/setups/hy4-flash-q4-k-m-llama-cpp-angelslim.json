@@ -1,0 +1,68 @@
+{
+  "id": "hy4-flash-q4-k-m-llama-cpp-angelslim",
+  "title": "Hy4-flash Q4_K_M on llama.cpp (AngelSlim)",
+  "slug_note": "168.35 GB GGUF from AngelSlim/Hy4-flash-GGUF; untested.",
+  "model": "hy4-flash",
+  "status": "untested",
+  "variation": {
+    "license": "unknown",
+    "downloads": 744,
+    "checkpoint": "AngelSlim/Hy4-flash-GGUF",
+    "publisher": "angelslim",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 168.35 GB (also published: IQ2_AH, Q3_K)",
+    "format": "gguf",
+    "size_gb": 168.35,
+    "url": "https://huggingface.co/AngelSlim/Hy4-flash-GGUF",
+    "revision": "ecd803c859a36bdf9f3614dbd7c548165df74c30",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "mac-256gb"
+  ],
+  "requirements": {
+    "memory_gb": 187,
+    "disk_gb": 168.35,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/AngelSlim/Hy4-flash-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-19, story \"Tencent Hy4 Flash: 220B MoE open-weights, and a measured Mac-vs-Spark decode gap\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/AngelSlim/Hy4-flash-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2
+}

@@ -185,13 +185,13 @@
       "kind": "quant-shop",
       "url": "https://huggingface.co/AtomicChat",
       "role": "Atomic Chat app vendor (Jan fork; atomic-llama-cpp-turboquant engine). 'Atomic Dynamic' GGUF/MLX quants with own imatrix, held-out perplexity vs BF16 published per quant.",
-      "note": "Not yet on the law-11 Scenario B whitelist \u2014 lanes recorded from forum/vendor measurements pending owner whitelist decision. Qwen3.8-27B-GGUF: 305k+ downloads."
+      "note": "Not yet on the law-11 Scenario B whitelist — lanes recorded from forum/vendor measurements pending owner whitelist decision. Qwen3.8-27B-GGUF: 305k+ downloads."
     },
     "shennguyen": {
       "name": "shennguyen (Huihui)",
       "kind": "individual",
       "url": "https://huggingface.co/shennguyen",
-      "note": "Abliterated (refusal-removed) GGUF distills; Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated. Not on the law-11 whitelist \u2014 advice lane only."
+      "note": "Abliterated (refusal-removed) GGUF distills; Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated. Not on the law-11 whitelist — advice lane only."
     },
     "ggml-org": {
       "name": "ggml-org",
@@ -290,7 +290,7 @@
       "url": "https://huggingface.co/lightonai"
     },
     "dogukanurker": {
-      "name": "Do\u011fukan Urker",
+      "name": "Doğukan Urker",
       "kind": "builder",
       "role": "Builder: LFM2.5-24B-A2B on an RTX 3060 12 GB at full 131K context.",
       "url": "https://x.com/DogukanUrker"
@@ -324,6 +324,90 @@
       "kind": "individual",
       "role": "Community GGUF quantiser (i1 implosion quants of finetunes and abliterations).",
       "url": "https://huggingface.co/mradermacher"
+    },
+    "ricursiveai": {
+      "name": "Ricursive Intelligence",
+      "kind": "lab",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/ricursiveAI"
+    },
+    "conceptcountry": {
+      "name": "ConceptCountry",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/ConceptCountry"
+    },
+    "nousresearch": {
+      "name": "Nous Research",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/NousResearch"
+    },
+    "ccore": {
+      "name": "ccore",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/ccore"
+    },
+    "microsoft": {
+      "name": "Microsoft",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/microsoft"
+    },
+    "webai-official": {
+      "name": "webAI",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/webAI-Official"
+    },
+    "sparset": {
+      "name": "Sparset",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/Sparset"
+    },
+    "baidu": {
+      "name": "Baidu",
+      "kind": "lab",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/baidu"
+    },
+    "inclusionai": {
+      "name": "inclusionAI",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/inclusionAI"
+    },
+    "bottlecapai": {
+      "name": "bottlecap.ai",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/bottlecapai"
+    },
+    "docling-project": {
+      "name": "docling-project",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/docling-project"
+    },
+    "maxwell-model": {
+      "name": "Maxwell AI",
+      "kind": "lab",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/maxwell-model"
+    },
+    "tencent": {
+      "name": "Tencent",
+      "kind": "lab",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/tencent"
+    },
+    "angelslim": {
+      "name": "AngelSlim",
+      "kind": "quant-shop",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/AngelSlim"
     }
   }
 }

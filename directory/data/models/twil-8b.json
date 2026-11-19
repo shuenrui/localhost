@@ -1,0 +1,36 @@
+{
+  "id": "twil-8b",
+  "name": "TwIL-8B",
+  "family": "TwIL-8B",
+  "generation": "derived",
+  "line": "Built on other models",
+  "publisher": "webai-official",
+  "released": "2026-10-14",
+  "released_note": "HF repo created 2026-10-14 (API createdAt).",
+  "license": "Other (custom licence)",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 8.79,
+    "params_active_b": 8.79
+  },
+  "context": {
+    "native": 131072,
+    "max": 131072
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/webAI-Official/TwIL-8B",
+  "summary": "webAI-Official's TwIL-8B: about 8.79B parameters, licence Other (custom licence). About 5.35 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-11; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-19"
+  },
+  "updated": "2026-11-19",
+  "based_on": {
+    "model": "granite-4.2-8b",
+    "note": "webAI-Official tuned ibm-granite/granite-4.2-8b and publishes it under its own name (HF base_model tag)."
+  }
+}

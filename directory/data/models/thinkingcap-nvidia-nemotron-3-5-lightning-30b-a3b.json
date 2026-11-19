@@ -1,0 +1,35 @@
+{
+  "id": "thinkingcap-nvidia-nemotron-3-5-lightning-30b-a3b",
+  "name": "ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+  "family": "ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+  "generation": "derived",
+  "line": "Built on other models",
+  "publisher": "bottlecapai",
+  "released": "2026-10-07",
+  "released_note": "HF repo created 2026-10-07 (API createdAt).",
+  "license": "Other (custom licence)",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 31.58
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/bottlecapai/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+  "summary": "bottlecapai's ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B: about 31.58B parameters (mixture of experts), licence Other (custom licence). About 20.8 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-12; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-19"
+  },
+  "updated": "2026-11-19",
+  "based_on": {
+    "model": "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+    "note": "bottlecapai tuned nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16 and publishes it under its own name (HF base_model tag)."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "hy4-flash",
+  "name": "Hy4-flash",
+  "family": "Hy4",
+  "generation": "hy4",
+  "line": "Hy4",
+  "publisher": "tencent",
+  "released": "2026-11-17",
+  "released_note": "HF repo created 2026-11-17 (API createdAt).",
+  "license": "Other (custom licence)",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 220.25
+  },
+  "context": {
+    "native": 1048576,
+    "max": 1048576
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/tencent/Hy4-flash",
+  "summary": "tencent's Hy4-flash: about 220.25B parameters (mixture of experts), licence Other (custom licence). About 145.4 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-19; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-19"
+  },
+  "updated": "2026-11-19"
+}

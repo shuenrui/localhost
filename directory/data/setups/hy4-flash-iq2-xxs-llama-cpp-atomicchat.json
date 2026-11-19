@@ -1,0 +1,70 @@
+{
+  "id": "hy4-flash-iq2-xxs-llama-cpp-atomicchat",
+  "title": "Hy4-flash IQ2_XXS on llama.cpp (AtomicChat)",
+  "slug_note": "84.7 GB GGUF from AtomicChat/Hy4-flash-GGUF; untested.",
+  "model": "hy4-flash",
+  "status": "untested",
+  "variation": {
+    "license": "Other (custom licence)",
+    "downloads": 0,
+    "checkpoint": "AtomicChat/Hy4-flash-GGUF",
+    "publisher": "atomicchat",
+    "quant": "gguf-q2",
+    "quant_detail": "IQ2_XXS, 84.7 GB",
+    "format": "gguf",
+    "size_gb": 84.7,
+    "url": "https://huggingface.co/AtomicChat/Hy4-flash-GGUF",
+    "revision": "dc1525fe06bd84009c5c321b690348489f7be35e",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "mac-128gb",
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 95,
+    "disk_gb": 84.7,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/AtomicChat/Hy4-flash-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-19, story \"Tencent Hy4 Flash: 220B MoE open-weights, and a measured Mac-vs-Spark decode gap\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/AtomicChat/Hy4-flash-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2
+}

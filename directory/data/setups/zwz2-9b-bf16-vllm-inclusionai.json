@@ -1,0 +1,77 @@
+{
+  "id": "zwz2-9b-bf16-vllm-inclusionai",
+  "title": "ZwZ2-9B BF16 on vLLM (inclusionAI)",
+  "slug_note": "18.82 GB safetensors from inclusionAI/ZwZ2-9B; untested.",
+  "model": "zwz2-9b",
+  "status": "untested",
+  "variation": {
+    "license": "unknown",
+    "downloads": 1313,
+    "checkpoint": "inclusionAI/ZwZ2-9B",
+    "publisher": "inclusionai",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 18.82 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 18.82,
+    "url": "https://huggingface.co/inclusionAI/ZwZ2-9B",
+    "revision": "de52e7291860cf8f4e09c829c5f6d1337674926d",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-24gb"
+  ],
+  "requirements": {
+    "memory_gb": 23,
+    "disk_gb": 18.82,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/inclusionAI/ZwZ2-9B",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install vLLM (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-12, story \"llama.cpp: 18 releases in 30h, FP8 KV-cache lands; Ollama goes mmap-on-Vulkan\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/ZwZ2-9B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

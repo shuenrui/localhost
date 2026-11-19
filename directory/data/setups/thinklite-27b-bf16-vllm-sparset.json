@@ -1,0 +1,75 @@
+{
+  "id": "thinklite-27b-bf16-vllm-sparset",
+  "title": "Thinklite-27B BF16 on vLLM (Sparset)",
+  "slug_note": "55.56 GB safetensors from Sparset/Thinklite-27B; untested.",
+  "model": "thinklite-27b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 772,
+    "checkpoint": "Sparset/Thinklite-27B",
+    "publisher": "sparset",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 55.56 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 55.56,
+    "url": "https://huggingface.co/Sparset/Thinklite-27B",
+    "revision": "2aa81615c583852cd561164946f1a458ed21b13f",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 63,
+    "disk_gb": 55.56,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/Sparset/Thinklite-27B",
+    "command": "vllm serve Sparset/Thinklite-27B --reasoning-parser qwen3 --max-model-len 135168 --kv-cache-dtype fp8",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install vLLM (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve Sparset/Thinklite-27B --reasoning-parser qwen3 --max-model-len 135168 --kv-cache-dtype fp8"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-11, story \"Nous Arete-27B: Qwen3.8-27B re-post-trained on values, eval published\"). Nothing on this page is measured yet."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/Sparset/Thinklite-27B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "id": "maxwell-v1-flash-iq4-xs-llama-cpp-atomicchat",
+  "title": "Maxwell-V1-Flash IQ4_XS on llama.cpp (AtomicChat)",
+  "slug_note": "20.79 GB GGUF from AtomicChat/Maxwell-V1-Flash-GGUF; untested.",
+  "model": "maxwell-v1-flash",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 4437,
+    "checkpoint": "AtomicChat/Maxwell-V1-Flash-GGUF",
+    "publisher": "atomicchat",
+    "quant": "gguf-q4",
+    "quant_detail": "IQ4_XS, 20.79 GB (also published: BF16, Q4_K, Q5_K, Q6_K, Q8_0)",
+    "format": "gguf",
+    "size_gb": 20.79,
+    "url": "https://huggingface.co/AtomicChat/Maxwell-V1-Flash-GGUF",
+    "revision": "0e2d02c0139150c6c0f2f99cd4b6142eafa76c09",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "mac-64gb",
+    "rtx-5090"
+  ],
+  "requirements": {
+    "memory_gb": 25,
+    "disk_gb": 20.79,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/AtomicChat/Maxwell-V1-Flash-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-17, story \"Maxwell V1 Flash: a new 35B/A3B MoE that claims it wasn't distilled from Qwen\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/AtomicChat/Maxwell-V1-Flash-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2
+}

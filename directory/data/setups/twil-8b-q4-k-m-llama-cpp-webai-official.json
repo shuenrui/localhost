@@ -1,0 +1,77 @@
+{
+  "id": "twil-8b-q4-k-m-llama-cpp-webai-official",
+  "title": "TwIL-8B Q4_K_M on llama.cpp (webAI-Official)",
+  "slug_note": "5.35 GB GGUF from webAI-Official/TwIL-8B; untested.",
+  "model": "twil-8b",
+  "status": "untested",
+  "variation": {
+    "license": "Other (custom licence)",
+    "downloads": 63419,
+    "checkpoint": "webAI-Official/TwIL-8B",
+    "publisher": "webai-official",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 5.35 GB (also published: F16, Q8_0)",
+    "format": "gguf",
+    "size_gb": 5.35,
+    "url": "https://huggingface.co/webAI-Official/TwIL-8B",
+    "revision": "9563ba7dfb70eeca4a26654b195011cbf818e7d9",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-12gb",
+    "mac-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 8,
+    "disk_gb": 5.35,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/webAI-Official/TwIL-8B",
+    "command": "llama-cli -hf webAI-Official/TwIL-8B --hf-file TwIL-8B-Q4_K_M-balanced.gguf -cnv -c 40960 -n 32768",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-cli -hf webAI-Official/TwIL-8B --hf-file TwIL-8B-Q4_K_M-balanced.gguf -cnv -c 40960 -n 32768"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-11, story \"Nous Arete-27B: Qwen3.8-27B re-post-trained on values, eval published\"). Nothing on this page is measured yet.",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/webAI-Official/TwIL-8B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 131072,
+    "max_context": 131072
+  }
+}

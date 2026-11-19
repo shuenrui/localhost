@@ -1,0 +1,32 @@
+{
+  "id": "ripple-65b-preview",
+  "name": "Ripple-65B-Preview",
+  "family": "Ripple",
+  "generation": "ripple",
+  "line": "Ripple",
+  "publisher": "ricursiveai",
+  "released": "2026-11-04",
+  "released_note": "HF repo created 2026-11-04 (API createdAt).",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 64.78,
+    "params_active_b": 64.78
+  },
+  "context": {
+    "native": 2097152,
+    "max": 2097152
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/ricursiveAI/Ripple-65B-Preview",
+  "summary": "ricursiveAI's Ripple-65B-Preview: about 64.78B parameters, licence Apache-2.0. About 42.8 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-10; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-19"
+  },
+  "updated": "2026-11-19"
+}

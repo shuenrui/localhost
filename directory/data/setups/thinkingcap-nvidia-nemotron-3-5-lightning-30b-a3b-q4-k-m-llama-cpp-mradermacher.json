@@ -1,0 +1,70 @@
+{
+  "id": "thinkingcap-nvidia-nemotron-3-5-lightning-30b-a3b-q4-k-m-llama-cpp-mradermacher",
+  "title": "ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B Q4_K_M on llama.cpp (mradermacher)",
+  "slug_note": "25.43 GB GGUF from mradermacher/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-i1-GGUF; untested.",
+  "model": "thinkingcap-nvidia-nemotron-3-5-lightning-30b-a3b",
+  "status": "untested",
+  "variation": {
+    "license": "Other (custom licence)",
+    "downloads": 1735,
+    "checkpoint": "mradermacher/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-i1-GGUF",
+    "publisher": "mradermacher",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 25.43 GB (also published: IQ3_M, IQ3_S, IQ4_XS, Q2_K, Q3_K_L, Q3_K_M)",
+    "format": "gguf",
+    "size_gb": 25.43,
+    "url": "https://huggingface.co/mradermacher/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-i1-GGUF",
+    "revision": "76e34da1646a20d8118f12824b71cf242b89301c",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "mac-64gb",
+    "rtx-5090"
+  ],
+  "requirements": {
+    "memory_gb": 30,
+    "disk_gb": 25.43,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/mradermacher/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-i1-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-12, story \"llama.cpp: 18 releases in 30h, FP8 KV-cache lands; Ollama goes mmap-on-Vulkan\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/mradermacher/ThinkingCap-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-i1-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2
+}

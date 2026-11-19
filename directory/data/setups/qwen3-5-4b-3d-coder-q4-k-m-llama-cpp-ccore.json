@@ -1,0 +1,77 @@
+{
+  "id": "qwen3-5-4b-3d-coder-q4-k-m-llama-cpp-ccore",
+  "title": "Qwen3.5-4B-3D-Coder Q4_K_M on llama.cpp (ccore)",
+  "slug_note": "2.71 GB GGUF from ccore/Qwen3.5-4B-3D-Coder; untested.",
+  "model": "qwen3-5-4b-3d-coder",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 492283,
+    "checkpoint": "ccore/Qwen3.5-4B-3D-Coder",
+    "publisher": "ccore",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 2.71 GB (also published: Q8_0)",
+    "format": "gguf",
+    "size_gb": 2.71,
+    "url": "https://huggingface.co/ccore/Qwen3.5-4B-3D-Coder",
+    "revision": "4b9f05f3a0382725b679c5e32a338b88acaf0064",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-8gb",
+    "mac-8gb"
+  ],
+  "requirements": {
+    "memory_gb": 5,
+    "disk_gb": 2.71,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/ccore/Qwen3.5-4B-3D-Coder",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-10, story \"Thunderbolt eGPU is suddenly a real local path: 210 tok/s from a Mac + one 5090\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ccore/Qwen3.5-4B-3D-Coder",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

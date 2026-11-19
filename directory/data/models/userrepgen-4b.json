@@ -1,0 +1,36 @@
+{
+  "id": "userrepgen-4b",
+  "name": "UserRepGen-4B",
+  "family": "UserRepGen-4B",
+  "generation": "derived",
+  "line": "Built on other models",
+  "publisher": "microsoft",
+  "released": "2026-10-14",
+  "released_note": "HF repo created 2026-10-14 (API createdAt).",
+  "license": "MIT",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 4.54,
+    "params_active_b": 4.54
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/microsoft/UserRepGen-4B",
+  "summary": "microsoft's UserRepGen-4B: about 4.54B parameters, licence MIT. About 3.0 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-10; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-19"
+  },
+  "updated": "2026-11-19",
+  "based_on": {
+    "model": "qwen3-5-4b",
+    "note": "microsoft tuned Qwen/Qwen3.5-4B and publishes it under its own name (HF base_model tag)."
+  }
+}

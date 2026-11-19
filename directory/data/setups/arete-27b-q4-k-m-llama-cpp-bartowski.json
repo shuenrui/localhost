@@ -1,0 +1,68 @@
+{
+  "id": "arete-27b-q4-k-m-llama-cpp-bartowski",
+  "title": "Arete-27B Q4_K_M on llama.cpp (bartowski)",
+  "slug_note": "17.2 GB GGUF from bartowski/NousResearch_Arete-27B-GGUF; untested.",
+  "model": "arete-27b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 91238,
+    "checkpoint": "bartowski/NousResearch_Arete-27B-GGUF",
+    "publisher": "bartowski",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 17.2 GB (also published: BF16, IQ2_M, IQ2_S, IQ2_XS, IQ2_XXS, IQ3_M)",
+    "format": "gguf",
+    "size_gb": 17.2,
+    "url": "https://huggingface.co/bartowski/NousResearch_Arete-27B-GGUF",
+    "revision": "9762c8502a79bd2b8634735d75f426b9febe092c",
+    "revision_note": "HF main at intake (2026-11-19)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-24gb",
+    "mac-24gb"
+  ],
+  "requirements": {
+    "memory_gb": 21,
+    "disk_gb": 17.2,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/bartowski/NousResearch_Arete-27B-GGUF",
+    "command": "llama-server -hf bartowski/NousResearch_Arete-27B-GGUF:Q4_K_M",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -hf bartowski/NousResearch_Arete-27B-GGUF:Q4_K_M"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-10, story \"Thunderbolt eGPU is suddenly a real local path: 210 tok/s from a Mac + one 5090\"). Nothing on this page is measured yet."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/bartowski/NousResearch_Arete-27B-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-19",
+  "schema_version": 2
+}
