@@ -320,11 +320,21 @@ function genLabel(g) {
   g = String(g || "");
   var named = { "4": "Gemma 4", "lfm2.5": "Liquid LFM2.5", "nemotron3.5": "NVIDIA Nemotron 3.5", "gpt-oss": "OpenAI gpt-oss",
     "flint": "Recursive Flint", "kolibri": "Aleph Alpha Kolibri", "derived": "Built on other models", "decision": "Decision models (Jev-style)" };
-  return named[g] || "Qwen" + g;
+  if (named[g]) return named[g];
+  /* Lines added from data (Radar intake): label = publisher + the model's `line`, no code edit needed. */
+  if (g && !/^\d/.test(g)) { var dl = dataLine(g); if (dl) return dl; }
+  return "Qwen" + g;
+}
+function dataLine(g) {
+  var ids = Object.keys(MODELS).filter(function (id) { return String(MODELS[id].generation || "") === g; });
+  if (!ids.length) return "";
+  var m = MODELS[ids[0]], p = PUB[m.publisher] || {}, who = String(p.name || m.publisher || "").split(" (")[0];
+  var line = String(m.line || m.family || g);
+  return line.toLowerCase().indexOf(who.toLowerCase()) === 0 ? line : (who + " " + line).trim();
 }
 /* Non-Qwen model lines (named generations, not numbers) rank with Gemma 4 and LFM2.5. */
 var OTHER_LINES = { "4": 1, "lfm2.5": 1, "nemotron3.5": 1, "gpt-oss": 1, "flint": 1, "kolibri": 1 };
-function genRank(g) { g = String(g || ""); return g === "decision" ? 3 : g === "derived" ? 2 : OTHER_LINES[g] ? 1 : 0; }
+function genRank(g) { g = String(g || ""); return g === "decision" ? 3 : g === "derived" ? 2 : (OTHER_LINES[g] || (g && !/^\d/.test(g))) ? 1 : 0; }
 /* Maker badge for the Models index: who made the model (Qwen, Google, or another company). */
 function makerOf(m) {
   var p = PUB[m.publisher] || {}, name = String(p.name || m.publisher || "").split(" (")[0];
@@ -2547,6 +2557,17 @@ function notFound(msg) {
     "</ul></div></div>";
 }
 
+/* Model lines added from data after the scope sentence was written (Radar intake). */
+var SCOPE_KNOWN = { "4": 1, "lfm2.5": 1, "nemotron3.5": 1, "gpt-oss": 1, "flint": 1, "kolibri": 1, "derived": 1, "decision": 1 };
+function scopeExtra() {
+  var seen = {}, extra = [];
+  Object.keys(MODELS).forEach(function (id) {
+    var g = String(MODELS[id].generation || "");
+    if (!g || /^\d/.test(g) || SCOPE_KNOWN[g] || seen[g]) return;
+    seen[g] = 1; extra.push(genLabel(g));
+  });
+  return extra.length ? " " + esc("Lines added since from the Local Hosting Radar, untested until measured: " + extra.join(", ") + ".") : "";
+}
 function viewMethodology() {
   setRail("");
   el("mast-note").innerHTML = esc("How the evidence labels are defined, how derived values are computed, and what the dataset does not record.");
@@ -2616,7 +2637,7 @@ function viewMethodology() {
     "</ul></div>";
 
   h += '<div class="psec"><h2>Scope</h2><p>' +
-    esc("The directory now covers seven model lines: Qwen (the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches), Gemma 4 (Google DeepMind, E2B/E4B/12B/26B-A4B/31B), Liquid LFM2.5 (24B-A2B), NVIDIA Nemotron 3.5 (Bolt 74B-A9B, Super VL 120B-A12B), OpenAI gpt-oss (20b, 120b), Recursive Flint (40B-A2.5B) and Aleph Alpha Kolibri (78B-A3.46B). Deliberately excluded: cluster-scale models with no single-box lane, sub-2B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") +
+    esc("The directory now covers seven model lines: Qwen (the 3.0, 3.5, 3.6 and 3.8 text, vision and omni branches), Gemma 4 (Google DeepMind, E2B/E4B/12B/26B-A4B/31B), Liquid LFM2.5 (24B-A2B), NVIDIA Nemotron 3.5 (Bolt 74B-A9B, Super VL 120B-A12B), OpenAI gpt-oss (20b, 120b), Recursive Flint (40B-A2.5B) and Aleph Alpha Kolibri (78B-A3.46B). Deliberately excluded: cluster-scale models with no single-box lane, sub-2B edge models below the smallest hardware class recorded here, and the embedding, reranker, ASR and TTS families, which are not text-generation serving.") + scopeExtra() +
     "</p></div></div>";
   el("main").innerHTML = h;
 }
