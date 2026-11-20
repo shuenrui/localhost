@@ -1,0 +1,36 @@
+{
+  "id": "nvidia-nemotron-3-5-bolt-e4b-4gb",
+  "name": "NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+  "family": "NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+  "generation": "derived",
+  "line": "Built on other models",
+  "publisher": "nvidia",
+  "released": "2026-10-05",
+  "released_note": "HF repo created 2026-10-05 (API createdAt).",
+  "license": "Other (custom licence)",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 4.0,
+    "params_active_b": 4.0
+  },
+  "context": {
+    "native": null,
+    "max": null
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+  "summary": "nvidia's NVIDIA-Nemotron-3.5-Bolt-E4B-4GB: about 4.0B parameters, licence Other (custom licence). About 6.18 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-20; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-20"
+  },
+  "updated": "2026-11-20",
+  "based_on": {
+    "model": "nemotron-3-5-bolt-e4b",
+    "note": "nvidia tuned nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16 and publishes it under its own name (HF base_model tag)."
+  }
+}

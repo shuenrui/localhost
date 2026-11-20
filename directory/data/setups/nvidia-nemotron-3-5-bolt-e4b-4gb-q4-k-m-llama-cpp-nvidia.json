@@ -1,0 +1,70 @@
+{
+  "id": "nvidia-nemotron-3-5-bolt-e4b-4gb-q4-k-m-llama-cpp-nvidia",
+  "title": "NVIDIA-Nemotron-3.5-Bolt-E4B-4GB Q4_K_M on llama.cpp (nvidia)",
+  "slug_note": "6.18 GB GGUF from nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB; untested.",
+  "model": "nvidia-nemotron-3-5-bolt-e4b-4gb",
+  "status": "untested",
+  "variation": {
+    "license": "Other (custom licence)",
+    "downloads": 172088,
+    "checkpoint": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+    "publisher": "nvidia",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 6.18 GB",
+    "format": "gguf",
+    "size_gb": 6.18,
+    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+    "revision": "1db54d5b12533ff1bcaa8e42cf4c667988a1f1be",
+    "revision_note": "HF main at intake (2026-11-20)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-12gb",
+    "mac-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 9,
+    "disk_gb": 6.18,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-20, story \"NVIDIA Nemotron-3.5-Bolt-E4B-4GB: official Q4 GGUF, commercial use OK\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-20",
+  "schema_version": 2
+}
