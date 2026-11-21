@@ -1,0 +1,69 @@
+{
+  "id": "ccore-web-coder-4b-q8-0-llama-cpp-ccore",
+  "title": "CCORE-Web-Coder-4B Q8_0 on llama.cpp (ccore)",
+  "slug_note": "4.48 GB GGUF from ccore/CCORE-Web-Coder-4B; untested.",
+  "model": "ccore-web-coder-4b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 0,
+    "checkpoint": "ccore/CCORE-Web-Coder-4B",
+    "publisher": "ccore",
+    "quant": "gguf-q8",
+    "quant_detail": "Q8_0, 4.48 GB",
+    "format": "gguf",
+    "size_gb": 4.48,
+    "url": "https://huggingface.co/ccore/CCORE-Web-Coder-4B",
+    "revision": "f08147a23aac4a671bc1d3bf47a3a0d498ab0c32",
+    "revision_note": "HF main at intake (2026-11-21)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-8gb",
+    "mac-8gb"
+  ],
+  "requirements": {
+    "memory_gb": 7,
+    "disk_gb": 4.48,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/ccore/CCORE-Web-Coder-4B",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-21, story \"Qwen4 serving prep is visibly underway — release watch, not a release\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ccore/CCORE-Web-Coder-4B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-21",
+  "schema_version": 2
+}

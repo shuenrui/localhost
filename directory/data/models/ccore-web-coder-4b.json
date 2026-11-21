@@ -1,0 +1,36 @@
+{
+  "id": "ccore-web-coder-4b",
+  "name": "CCORE-Web-Coder-4B",
+  "family": "CCORE-Web-Coder-4B",
+  "generation": "derived",
+  "line": "Built on other models",
+  "publisher": "ccore",
+  "released": "2026-11-20",
+  "released_note": "HF repo created 2026-11-20 (API createdAt).",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 4.0,
+    "params_active_b": 4.0
+  },
+  "context": {
+    "native": null,
+    "max": null
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/ccore/CCORE-Web-Coder-4B",
+  "summary": "ccore's CCORE-Web-Coder-4B: about 4.0B parameters, licence Apache-2.0. About 4.48 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-21; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-21"
+  },
+  "updated": "2026-11-21",
+  "based_on": {
+    "model": "Qwen3.5-4B-Base",
+    "note": "ccore tuned Qwen/Qwen3.5-4B-Base and publishes it under its own name (HF base_model tag)."
+  }
+}

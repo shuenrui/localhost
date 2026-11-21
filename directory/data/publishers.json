@@ -408,6 +408,12 @@
       "kind": "quant-shop",
       "role": "Added by the Radar intake from its Hugging Face org page.",
       "url": "https://huggingface.co/AngelSlim"
+    },
+    "thinkingmachines": {
+      "name": "thinkingmachines",
+      "kind": "lab",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/thinkingmachines"
     }
   }
 }
