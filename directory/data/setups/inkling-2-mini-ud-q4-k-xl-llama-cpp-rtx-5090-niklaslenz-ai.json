@@ -1,0 +1,108 @@
+{
+  "id": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai",
+  "title": "Inkling-2-Mini UD-Q4_K_XL on llama.cpp, NVIDIA GeForce RTX 5090 (reported by @niklaslenz_ai)",
+  "slug_note": "Numbers @niklaslenz_ai posted for this file on this hardware; we have not run it.",
+  "model": "inkling-2-mini",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 805993,
+    "checkpoint": "unsloth/Inkling-2-Mini-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q4",
+    "quant_detail": "UD-Q4_K_XL, 17.63 GB",
+    "format": "gguf",
+    "size_gb": 17.63,
+    "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as described in the post (llama.cpp b12631)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "rtx-5090"
+  ],
+  "requirements": {
+    "memory_gb": 21,
+    "disk_gb": 17.63,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The post gives no full run command; see the source post for the author's setup."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 86.7,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-22",
+      "source": "https://x.com/niklaslenz_ai/status/2124490414337999359",
+      "context": "RTX 5090, llama.cpp b12631, UD-Q4_K_XL, 512 tokens out, temp 1.0, no draft model",
+      "conditions": {
+        "context_label": "512 tokens out, temp 1.0, no draft model",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-414337999359",
+        "quality_status": "unchecked"
+      },
+      "id": "r001"
+    }
+  ],
+  "provenance_tier": "forum",
+  "caveats": [
+    "Community-reported: @niklaslenz_ai posted these numbers; we have not run this recipe. Picked up by the Local Hosting Radar (2026-11-23)."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2124490414337999359",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-414337999359",
+      "quote": "llama.cpp b12631, Unsloth UD-Q4_K_XL, no draft model: 86.7 and 86.7 tok/s"
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "niklaslenz-ai-414337999359",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2124490414337999359"
+        ],
+        "locator": "post 2124490414337999359, Radar 2026-11-23",
+        "note": "Verbatim: \"llama.cpp b12631, Unsloth UD-Q4_K_XL, no draft model: 86.7 and 86.7 tok/s\" (checked against the Radar's saved sources)."
+      }
+    ]
+  },
+  "updated": "2026-11-23",
+  "schema_version": 2
+}
