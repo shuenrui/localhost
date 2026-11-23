@@ -52,7 +52,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-20, story \"Community benchmark corner: a Rust engine claims 4.5x llama.cpp on ASR; a solo run of 22 l\"). Nothing on this page is measured yet.",
+    "Untested: added from the Local Hosting Radar (2026-11-20, Model scout section). Nothing on this page is measured yet.",
     "No run command on the model card, so none is shown here (the directory never makes one up)."
   ],
   "provenance_tier": null,

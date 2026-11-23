@@ -53,7 +53,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-23, story \"model scout (tested)\"). Nothing on this page is measured yet.",
+    "Untested: added from the Local Hosting Radar (2026-11-07, story \"ccore's 3D coder now exports GLB — but our test of its sibling failed 1/6\"). Nothing on this page is measured yet.",
     "No run command on the model card, so none is shown here (the directory never makes one up).",
     "Our DGX Spark scout test, job \"text prompt -> Three.js page with Export GLB (game assets)\": TRY: 9/12 valid GLB first try (Q4 5/6, Q8 4/6); fails = 1 JS bug each; Q4 61 tok/s, ~3.6 min/asset Evidence: spark:~/lab/glbtest/eval."
   ],

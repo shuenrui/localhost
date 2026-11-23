@@ -53,7 +53,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-10, story \"Thunderbolt eGPU is suddenly a real local path: 210 tok/s from a Mac + one 5090\"). Nothing on this page is measured yet.",
+    "Untested: added from the Local Hosting Radar (2026-11-10, Model scout section). Nothing on this page is measured yet.",
     "Our DGX Spark scout test, job \"multi-turn conversation -> JSON {task, user_behavior}\": TRY: 6/6 rule-checks pass, raw {task,user_behavior} JSON no fence, greedy, 69.1 tok/s median, 3s/answer median. Card protocol followed exactly; KL->Penang shipping prompt answered correctly too. Evidence: spark:~/lab/scout/userrepgen4b."
   ],
   "provenance_tier": null,

@@ -52,7 +52,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-11, story \"Nous Arete-27B: Qwen3.8-27B re-post-trained on values, eval published\"). Nothing on this page is measured yet.",
+    "Untested: added from the Local Hosting Radar (2026-11-11, Model scout section). Nothing on this page is measured yet.",
     "Our DGX Spark scout test, job \"Qwen3.8-27B fine-tune that reaches the same answer with about half the reasoning tokens -> short answer to a coding/debu\": TRY: 6/6 rule-pass, zero failures; reasoning stayed short (14-607 chars/answer) and every answer landed correct under the cap - no runaway thinking loop; 12.5 tok/s, median 12 s/answer (Q4_K_M, llama-server -np 1 -c 32768) Evidence: spark:~/lab/scout/thinklite27b."
   ],
   "provenance_tier": null,

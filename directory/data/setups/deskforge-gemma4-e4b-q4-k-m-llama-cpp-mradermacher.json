@@ -53,7 +53,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-13, story \"The quant rush: 1.4-bit Nemotron-120B in 22 GB, \"3.7× better KL\" KQuant, Huawei MACaQ\"). Nothing on this page is measured yet.",
+    "Untested: added from the Local Hosting Radar (2026-11-13, Model scout section). Nothing on this page is measured yet.",
     "No run command on the model card, so none is shown here (the directory never makes one up)."
   ],
   "provenance_tier": null,

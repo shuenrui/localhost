@@ -53,7 +53,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-10, story \"Ripple-65B: a US open-weight coding model that actually fits one GPU\"). Nothing on this page is measured yet.",
+    "Untested: added from the Local Hosting Radar (2026-11-05, story \"Ripple-65B Preview: a US lab bets dense 65B fits on your Spark\"). Nothing on this page is measured yet.",
     "No run command on the model card, so none is shown here (the directory never makes one up)."
   ],
   "provenance_tier": null,

@@ -52,7 +52,7 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-23, story \"model scout (tested)\"). Nothing on this page is measured yet.",
+    "Untested: added from our model scout list (2026-11-23). Nothing on this page is measured yet.",
     "No run command on the model card, so none is shown here (the directory never makes one up).",
     "Our DGX Spark scout test, job \"structured extraction: text/doc + JSON template -> filled JSON\": TRY: 6/6 rule-checked JSON extractions (invoice, booking, null-on-missing, Malay receipt, choice fields, 4-item list), ~1 s/answer, 65.7 tok/s Q4_K_M; easy text-only smoke test, no images/long docs yet Evidence: spark:~/lab/scout/nuextract3."
   ],
