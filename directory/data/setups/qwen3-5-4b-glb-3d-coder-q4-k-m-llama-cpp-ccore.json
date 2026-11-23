@@ -1,0 +1,78 @@
+{
+  "id": "qwen3-5-4b-glb-3d-coder-q4-k-m-llama-cpp-ccore",
+  "title": "Qwen3.5-4B-GLB-3D-Coder Q4_K_M on llama.cpp (ccore)",
+  "slug_note": "2.71 GB GGUF from ccore/Qwen3.5-4B-GLB-3D-Coder; untested.",
+  "model": "qwen3-5-4b-glb-3d-coder",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 69666,
+    "checkpoint": "ccore/Qwen3.5-4B-GLB-3D-Coder",
+    "publisher": "ccore",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 2.71 GB (also published: Q8_0)",
+    "format": "gguf",
+    "size_gb": 2.71,
+    "url": "https://huggingface.co/ccore/Qwen3.5-4B-GLB-3D-Coder",
+    "revision": "8f32a199f8b22fe3157b9c5c8b42b052a0750dd3",
+    "revision_note": "HF main at intake (2026-11-23)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-8gb",
+    "mac-8gb"
+  ],
+  "requirements": {
+    "memory_gb": 5,
+    "disk_gb": 2.71,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/ccore/Qwen3.5-4B-GLB-3D-Coder",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-23, story \"model scout (tested)\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Our DGX Spark scout test, job \"text prompt -> Three.js page with Export GLB (game assets)\": TRY: 9/12 valid GLB first try (Q4 5/6, Q8 4/6); fails = 1 JS bug each; Q4 61 tok/s, ~3.6 min/asset Evidence: spark:~/lab/glbtest/eval."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ccore/Qwen3.5-4B-GLB-3D-Coder",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-23",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

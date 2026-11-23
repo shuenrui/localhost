@@ -1,0 +1,36 @@
+{
+  "id": "nuextract3",
+  "name": "NuExtract3",
+  "family": "NuExtract3",
+  "generation": "derived",
+  "line": "Built on other models",
+  "publisher": "numind",
+  "released": "2026-04-29",
+  "released_note": "HF repo created 2026-04-29 (API createdAt).",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "dense",
+    "params_total_b": 4.54,
+    "params_active_b": 4.54
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text"
+  ],
+  "url": "https://huggingface.co/numind/NuExtract3",
+  "summary": "numind's NuExtract3: about 4.54B parameters, licence Apache-2.0. About 3.0 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-23; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-23"
+  },
+  "updated": "2026-11-23",
+  "based_on": {
+    "model": "qwen3-5-4b",
+    "note": "numind tuned Qwen/Qwen3.5-4B and publishes it under its own name (HF base_model tag)."
+  }
+}

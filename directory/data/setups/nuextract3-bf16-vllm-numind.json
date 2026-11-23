@@ -1,0 +1,77 @@
+{
+  "id": "nuextract3-bf16-vllm-numind",
+  "title": "NuExtract3 BF16 on vLLM (numind)",
+  "slug_note": "9.32 GB safetensors from numind/NuExtract3; untested.",
+  "model": "nuextract3",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 38674,
+    "checkpoint": "numind/NuExtract3",
+    "publisher": "numind",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 9.32 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 9.32,
+    "url": "https://huggingface.co/numind/NuExtract3",
+    "revision": "c99dc8f5641b866aa0192b6ea78f84bf9f3535f1",
+    "revision_note": "HF main at intake (2026-11-23)"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-24gb"
+  ],
+  "requirements": {
+    "memory_gb": 12,
+    "disk_gb": 9.32,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/numind/NuExtract3",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install vLLM (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-23, story \"model scout (tested)\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Our DGX Spark scout test, job \"structured extraction: text/doc + JSON template -> filled JSON\": TRY: 6/6 rule-checked JSON extractions (invoice, booking, null-on-missing, Malay receipt, choice fields, 4-item list), ~1 s/answer, 65.7 tok/s Q4_K_M; easy text-only smoke test, no images/long docs yet Evidence: spark:~/lab/scout/nuextract3."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/numind/NuExtract3",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-23",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

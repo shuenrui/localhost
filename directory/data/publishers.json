@@ -414,6 +414,12 @@
       "kind": "lab",
       "role": "Added by the Radar intake from its Hugging Face org page.",
       "url": "https://huggingface.co/thinkingmachines"
+    },
+    "numind": {
+      "name": "numind",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/numind"
     }
   }
 }

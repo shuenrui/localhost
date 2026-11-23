@@ -53,7 +53,8 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-10, story \"Thunderbolt eGPU is suddenly a real local path: 210 tok/s from a Mac + one 5090\"). Nothing on this page is measured yet."
+    "Untested: added from the Local Hosting Radar (2026-11-10, story \"Thunderbolt eGPU is suddenly a real local path: 210 tok/s from a Mac + one 5090\"). Nothing on this page is measured yet.",
+    "Same command ran as written on our DGX Spark on 2026-11-20; the measured numbers are on recipe arete-27b-q4-k-m-llama-cpp-bartowski-spark."
   ],
   "provenance_tier": null,
   "sources": [
@@ -63,6 +64,6 @@
       "note": "model card (all facts on this page)"
     }
   ],
-  "updated": "2026-11-19",
+  "updated": "2026-11-23",
   "schema_version": 2
 }
