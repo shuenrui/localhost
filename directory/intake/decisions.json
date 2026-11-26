@@ -1,0 +1,572 @@
+{
+ "abiray/minimax-h3-image-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-18",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-image)",
+  "seen": "2026-11-19"
+ },
+ "aj-gonzalez/coder-lfm3-1.7b-k3.1-pro": {
+  "decision": "skip",
+  "radar_date": "2026-11-13",
+  "reason": "sub-2B edge model (1.73B), outside the directory's stated scope",
+  "seen": "2026-11-19"
+ },
+ "aj9o9/qwen3.8-27b-dspine-b16-gguf": {
+  "decision": "review",
+  "radar_date": "2026-11-10",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-19"
+ },
+ "akahsizrr/voltron-1-mini": {
+  "decision": "skip",
+  "radar_date": "2026-11-17",
+  "reason": "sub-2B edge model (1.73B), outside the directory's stated scope",
+  "seen": "2026-11-19"
+ },
+ "aleph-alpha/kolibri-1.1": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "model",
+  "seen": "2026-11-26"
+ },
+ "aleph-alpha/kolibri-1.1-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "model+recipe",
+  "seen": "2026-11-26"
+ },
+ "angelslim/hy4-flash-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-19",
+  "reason": "already in the directory",
+  "seen": "2026-11-20"
+ },
+ "apple/depthpro2": {
+  "decision": "skip",
+  "radar_date": "2026-11-21",
+  "reason": "out of scope for an LLM-hosting directory (pipeline depth-estimation)",
+  "seen": "2026-11-21"
+ },
+ "apple/fastframes-l": {
+  "decision": "skip",
+  "radar_date": "2026-11-19",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-video)",
+  "seen": "2026-11-19"
+ },
+ "atomicchat/inkling-2-mini-uncensored-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-26"
+ },
+ "baidu/ernie-5.5-flash-preview": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "derived",
+  "seen": "2026-11-26"
+ },
+ "bartowski/qwen3.5-4b-qwen3.8-27b-draft-gguf": {
+  "decision": "review",
+  "radar_date": "2026-11-18",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-19"
+ },
+ "black-forest-labs/flux-3-image-klein-comfy": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-to-image)",
+  "seen": "2026-11-26"
+ },
+ "bottlecapai/thinkingcap-nvidia-nemotron-3.5-lightning-30b-a3b": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "already in the directory",
+  "seen": "2026-11-23"
+ },
+ "cactus-compute/nemotron-3.5-120b-cq": {
+  "decision": "review",
+  "radar_date": "2026-11-13",
+  "reason": "gated repo: licence/access terms need a human read",
+  "seen": "2026-11-19"
+ },
+ "ccore/ccore-web-coder-4b": {
+  "decision": "add",
+  "radar_date": "2026-11-21",
+  "reason": "derived",
+  "seen": "2026-11-21"
+ },
+ "ccore/qwen3-1.7b-glb-3d-coder": {
+  "decision": "skip",
+  "radar_date": "2026-11-12",
+  "reason": "sub-2B edge model (1.72B), outside the directory's stated scope",
+  "seen": "2026-11-19"
+ },
+ "ccore/qwen3.5-4b-3d-coder": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "already in the directory",
+  "seen": "2026-11-23"
+ },
+ "ccore/qwen3.5-4b-glb-3d-coder": {
+  "decision": "add",
+  "radar_date": "2026-11-23",
+  "reason": "derived",
+  "seen": "2026-11-23"
+ },
+ "chatrlabs/qwen-image-2.1-uncensored-omni-quantized": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-image)",
+  "seen": "2026-11-26"
+ },
+ "cloudflare/clairic-flash": {
+  "decision": "add",
+  "radar_date": "2026-11-20",
+  "reason": "derived",
+  "seen": "2026-11-20"
+ },
+ "comfy-org/minimax-h3-image": {
+  "decision": "skip",
+  "radar_date": "2026-11-12",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-image)",
+  "seen": "2026-11-19"
+ },
+ "davidau/qwen3.8-27b-turbo-fable-cold-fusion-735-882-heretic-uncensored-neo-coder-max-mtp-gguf": {
+  "decision": "review",
+  "radar_date": "2026-11-24",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-26"
+ },
+ "deepseek-ai/deepseek-v4.1-flash-1017": {
+  "decision": "skip",
+  "radar_date": "2026-11-25",
+  "reason": "too big for any listed hardware class (~503.7 GB at 4-bit)",
+  "seen": "2026-11-26"
+ },
+ "docling-project/deskforge-gemma4-e4b": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "already in the directory",
+  "seen": "2026-11-23"
+ },
+ "edge0/edge0-145b-nvfp4": {
+  "decision": "review",
+  "radar_date": "2026-11-15",
+  "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+  "seen": "2026-11-19"
+ },
+ "edge0/edge0-145b-q3k": {
+  "decision": "review",
+  "radar_date": "2026-11-13",
+  "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+  "seen": "2026-11-19"
+ },
+ "facebook/sam-3d-body-dinov3": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "no weights in the repo yet",
+  "seen": "2026-11-26"
+ },
+ "facebook/sam3": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "out of scope for an LLM-hosting directory (pipeline mask-generation)",
+  "seen": "2026-11-26"
+ },
+ "harness-hub/qwen3.8-27b-hermes-adapted": {
+  "decision": "skip",
+  "radar_date": "2026-11-20",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-20"
+ },
+ "harness-hub/qwen3.8-27b-opencode-adapted": {
+  "decision": "skip",
+  "radar_date": "2026-11-19",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-19"
+ },
+ "harness-hub/qwen3.8-27b-pi-adapted": {
+  "decision": "skip",
+  "radar_date": "2026-11-18",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-19"
+ },
+ "harness-hub/qwen3.8-27b-think-pi-adapted": {
+  "decision": "skip",
+  "radar_date": "2026-11-25",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-26"
+ },
+ "higurashi-ai/haru-4b": {
+  "decision": "skip",
+  "radar_date": "2026-11-15",
+  "reason": "out of scope for an LLM-hosting directory (pipeline audio-to-audio)",
+  "seen": "2026-11-19"
+ },
+ "inclusionai/ling-3.2-air": {
+  "decision": "add",
+  "radar_date": "2026-11-24",
+  "reason": "model",
+  "seen": "2026-11-26"
+ },
+ "inclusionai/lingsante-3.1-flash": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "too big for any listed hardware class (~377.6 GB at 4-bit)",
+  "seen": "2026-11-26"
+ },
+ "inclusionai/zwz2-9b": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "already in the directory",
+  "seen": "2026-11-23"
+ },
+ "incoai/inkling-2-mini-dflash2": {
+  "decision": "review",
+  "radar_date": "2026-11-25",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-26"
+ },
+ "infatoshi/phonon-refiner-1.7b": {
+  "decision": "skip",
+  "radar_date": "2026-11-12",
+  "reason": "sub-2B edge model (1.73B), outside the directory's stated scope",
+  "seen": "2026-11-19"
+ },
+ "inworld/voice-isolator": {
+  "decision": "skip",
+  "radar_date": "2026-11-25",
+  "reason": "out of scope for an LLM-hosting directory (pipeline audio-to-audio)",
+  "seen": "2026-11-26"
+ },
+ "krafton/raon-1-mini": {
+  "decision": "add",
+  "radar_date": "2026-11-26",
+  "reason": "model",
+  "seen": "2026-11-26"
+ },
+ "lakonik/pi-h3": {
+  "decision": "skip",
+  "radar_date": "2026-11-26",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-text-to-video)",
+  "seen": "2026-11-26"
+ },
+ "lightricks/ltx-2.5": {
+  "decision": "skip",
+  "radar_date": "2026-11-16",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-to-video)",
+  "seen": "2026-11-19"
+ },
+ "llamaindex/ocria-1": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "derived",
+  "seen": "2026-11-26"
+ },
+ "llamaindex/ocria-nano-1": {
+  "decision": "skip",
+  "radar_date": "2026-11-25",
+  "reason": "no weights in the repo yet",
+  "seen": "2026-11-26"
+ },
+ "lucebox/inkling-2-mini-fast-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-26",
+  "reason": "recipe",
+  "seen": "2026-11-26"
+ },
+ "maxwell-model/maxwell-v1-flash": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "already in the directory",
+  "seen": "2026-11-26"
+ },
+ "meituan-longcat/longcat-video-avatar-1.6": {
+  "decision": "add",
+  "radar_date": "2026-11-24",
+  "reason": "model+recipe",
+  "seen": "2026-11-26"
+ },
+ "memtensor/memt-1.0-pro": {
+  "decision": "skip",
+  "radar_date": "2026-11-26",
+  "reason": "too big for any listed hardware class (~372.7 GB at 4-bit)",
+  "seen": "2026-11-26"
+ },
+ "microsoft/userrepgen-4b": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "already in the directory",
+  "seen": "2026-11-23"
+ },
+ "minimaxai/minimax-h3-image": {
+  "decision": "skip",
+  "radar_date": "2026-11-11",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-image)",
+  "seen": "2026-11-19"
+ },
+ "ml-intern-lab/qwen3.5-0.8b-weight-space-programming": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "sub-2B edge model (0.87B), outside the directory's stated scope",
+  "seen": "2026-11-23"
+ },
+ "moonshotai/kimi-k3.1-pro": {
+  "decision": "skip",
+  "radar_date": "2026-11-10",
+  "reason": "too big for any listed hardware class (~1834.9 GB at 4-bit)",
+  "seen": "2026-11-19"
+ },
+ "n4ze3m/tiny-voca": {
+  "decision": "skip",
+  "radar_date": "2026-11-19",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-speech)",
+  "seen": "2026-11-19"
+ },
+ "nari-labs/qwen3.8-27b-nariq-gguf": {
+  "decision": "review",
+  "radar_date": "2026-11-25",
+  "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+  "seen": "2026-11-26"
+ },
+ "numind/nuextract3": {
+  "decision": "add",
+  "radar_date": "2026-11-23",
+  "reason": "derived",
+  "seen": "2026-11-23"
+ },
+ "nvidia/glm-5.3-nvfp4": {
+  "decision": "skip",
+  "radar_date": "2026-11-15",
+  "reason": "too big for any listed hardware class (~497.2 GB at 4-bit)",
+  "seen": "2026-11-19"
+ },
+ "nvidia/nemotron-labs-image-30b-a3b": {
+  "decision": "skip",
+  "radar_date": "2026-11-26",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-image)",
+  "seen": "2026-11-26"
+ },
+ "nvidia/nvidia-nemotron-3.5-bolt-e4b-4gb": {
+  "decision": "add",
+  "radar_date": "2026-11-20",
+  "reason": "derived",
+  "seen": "2026-11-20"
+ },
+ "nvidia/nvidia-nemotron-3.5-transcribe-30b-a4b": {
+  "decision": "skip",
+  "radar_date": "2026-11-10",
+  "reason": "out of scope for an LLM-hosting directory (pipeline automatic-speech-recognition)",
+  "seen": "2026-11-19"
+ },
+ "nvidia/qwen3.5-0.8b-qwen3.8-27b-draft": {
+  "decision": "review",
+  "radar_date": "2026-11-26",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-26"
+ },
+ "nvidia/qwen3.5-4b-qwen3.8-27b-draft": {
+  "decision": "review",
+  "radar_date": "2026-11-18",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-19"
+ },
+ "orcarouter/inkling-2-mini-abliterated-gguf": {
+  "decision": "review",
+  "radar_date": "2026-11-25",
+  "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+  "seen": "2026-11-26"
+ },
+ "peasantsmith/ernie-5.5-flash-preview-maya-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "model+recipe",
+  "seen": "2026-11-26"
+ },
+ "prism-ml/ternary-bonsai-2.5-27b-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "derived",
+  "seen": "2026-11-26"
+ },
+ "qvac/botpsy-0.8b": {
+  "decision": "skip",
+  "radar_date": "2026-11-13",
+  "reason": "sub-2B edge model (0.85B), outside the directory's stated scope",
+  "seen": "2026-11-19"
+ },
+ "qwen/qwen3-0.6b": {
+  "decision": "skip",
+  "radar_date": "2026-11-26",
+  "reason": "sub-2B edge model (0.75B), outside the directory's stated scope",
+  "seen": "2026-11-26"
+ },
+ "qwen/qwen3.6-35b-a3b": {
+  "decision": "add",
+  "radar_date": "2026-11-26",
+  "reason": "model",
+  "seen": "2026-11-26"
+ },
+ "qwen/qwen3.8-27b": {
+  "decision": "skip",
+  "radar_date": "2026-11-15",
+  "reason": "already in the directory",
+  "seen": "2026-11-19"
+ },
+ "qwen/qwen3.8-flash-next": {
+  "decision": "review",
+  "radar_date": "2026-11-25",
+  "reason": "gated repo: licence/access terms need a human read",
+  "seen": "2026-11-26"
+ },
+ "radixark/daisyrose-27b": {
+  "decision": "add",
+  "radar_date": "2026-11-20",
+  "reason": "derived",
+  "seen": "2026-11-20"
+ },
+ "rasyosef/lfm3-1.7b-dspark": {
+  "decision": "review",
+  "radar_date": "2026-11-23",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-23"
+ },
+ "rikiyat/qwen3.5-0.8b-weight-space-programming": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "sub-2B edge model (0.87B), outside the directory's stated scope",
+  "seen": "2026-11-23"
+ },
+ "saidutta69/lfm3-1.7b-claude-fable5.1": {
+  "decision": "skip",
+  "radar_date": "2026-11-13",
+  "reason": "sub-2B edge model (1.73B), outside the directory's stated scope",
+  "seen": "2026-11-19"
+ },
+ "scantist/glm-5.3-slim-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-11",
+  "reason": "quant of zai-org/GLM-5.3 (~753.33B): the base model is too big for any listed class",
+  "seen": "2026-11-19"
+ },
+ "sensenova/sensenova-loop-9b": {
+  "decision": "review",
+  "radar_date": "2026-11-18",
+  "reason": "gated repo: licence/access terms need a human read",
+  "seen": "2026-11-19"
+ },
+ "sentinel7/h3": {
+  "decision": "add",
+  "radar_date": "2026-11-24",
+  "reason": "model",
+  "seen": "2026-11-26"
+ },
+ "sparset/thinklite-27b": {
+  "decision": "skip",
+  "radar_date": "2026-11-23",
+  "reason": "already in the directory",
+  "seen": "2026-11-23"
+ },
+ "speridlabs/idol": {
+  "decision": "skip",
+  "radar_date": "2026-11-10",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-to-3d)",
+  "seen": "2026-11-19"
+ },
+ "strata-engine/inkling-2-mini-strata": {
+  "decision": "skip",
+  "radar_date": "2026-11-25",
+  "reason": "no weights in the repo yet",
+  "seen": "2026-11-26"
+ },
+ "sulphurai/sulphur-3": {
+  "decision": "add",
+  "radar_date": "2026-11-24",
+  "reason": "derived",
+  "seen": "2026-11-26"
+ },
+ "tencent/hy4": {
+  "decision": "skip",
+  "radar_date": "2026-11-21",
+  "reason": "too big for any listed hardware class (~511.1 GB at 4-bit)",
+  "seen": "2026-11-21"
+ },
+ "tencent/hy4-flash": {
+  "decision": "skip",
+  "radar_date": "2026-11-19",
+  "reason": "already in the directory",
+  "seen": "2026-11-20"
+ },
+ "tencent/hy4-preview": {
+  "decision": "skip",
+  "radar_date": "2026-11-17",
+  "reason": "too big for any listed hardware class (~514.8 GB at 4-bit)",
+  "seen": "2026-11-19"
+ },
+ "tencent/qwen3.8-27b-dspine-b16": {
+  "decision": "review",
+  "radar_date": "2026-11-10",
+  "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+  "seen": "2026-11-19"
+ },
+ "tensorfold/qwen3.8-flash-next-tfq3": {
+  "decision": "add",
+  "radar_date": "2026-11-26",
+  "reason": "model+recipe",
+  "seen": "2026-11-26"
+ },
+ "tenstrip/10eros-max": {
+  "decision": "skip",
+  "radar_date": "2026-11-24",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-text-to-video)",
+  "seen": "2026-11-26"
+ },
+ "thinkingmachines/inkling-2-mini": {
+  "decision": "add",
+  "radar_date": "2026-11-21",
+  "reason": "model",
+  "seen": "2026-11-21"
+ },
+ "thinkingmachines/inkling-2-small": {
+  "decision": "skip",
+  "radar_date": "2026-11-13",
+  "reason": "too big for any listed hardware class (~392.1 GB at 4-bit)",
+  "seen": "2026-11-19"
+ },
+ "unsloth/inkling-2-mini-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-21",
+  "reason": "model+recipe",
+  "seen": "2026-11-21"
+ },
+ "unsloth/qwen3.8-27b-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-12",
+  "reason": "already in the directory",
+  "seen": "2026-11-19"
+ },
+ "yasakani-dev/qwen3.8-27b-yasakani-quality": {
+  "decision": "skip",
+  "radar_date": "2026-11-15",
+  "reason": "no weights in the repo yet",
+  "seen": "2026-11-19"
+ },
+ "zai-org/glm-5.3": {
+  "decision": "skip",
+  "radar_date": "2026-11-15",
+  "reason": "too big for any listed hardware class (~497.2 GB at 4-bit)",
+  "seen": "2026-11-19"
+ },
+ "zai-org/glm-5.3-flash": {
+  "decision": "add",
+  "radar_date": "2026-11-25",
+  "reason": "model",
+  "seen": "2026-11-26"
+ },
+ "zyphra/zonos3-mini": {
+  "decision": "skip",
+  "radar_date": "2026-11-10",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-to-speech)",
+  "seen": "2026-11-19"
+ }
+}

@@ -1,0 +1,289 @@
+{
+ "engines": {
+  "Basalt": {
+   "count": 1,
+   "examples": [
+    "https://x.com/WillSeettzz/status/2125540948192948513"
+   ],
+   "first_seen": "2026-11-26"
+  },
+  "Ingine (named in replies; repo not verified)": {
+   "count": 1,
+   "examples": [
+    "https://x.com/net_termina/status/2124923558744727666"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "InklingEngine": {
+   "count": 1,
+   "examples": [
+    "https://x.com/tensorfish/status/2124975715141689818"
+   ],
+   "first_seen": "2026-11-25"
+  },
+  "Magnitude": {
+   "count": 5,
+   "examples": [
+    "https://x.com/akshay_pachaar/status/2125573832039891119",
+    "https://x.com/tomgreenwald/status/2125349154507641143",
+    "https://x.com/tomgreenwald/status/2125348896805175791"
+   ],
+   "first_seen": "2026-11-25"
+  },
+  "Project Maya": {
+   "count": 1,
+   "examples": [
+    "https://x.com/ItsmeAjayKV/status/2124665734861111767"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "Strata": {
+   "count": 7,
+   "examples": [
+    "https://huggingface.co/AngelSlim/Hy4-flash-GGUF",
+    "https://x.com/uctive/status/2125181271936524665",
+    "https://x.com/TeksEdge/status/2124601310599422302"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "TensorFold": {
+   "count": 11,
+   "examples": [
+    "https://x.com/MiaAI_lab/status/2125539171443892321",
+    "https://x.com/niklaslenz_ai/status/2125622415820476862",
+    "https://x.com/pratikg/status/2125743920806293745"
+   ],
+   "first_seen": "2026-11-25"
+  },
+  "custom Zig + sm_120a CUDA engine": {
+   "count": 2,
+   "examples": [
+    "https://x.com/tensorfish/status/2124975715141689818"
+   ],
+   "first_seen": "2026-11-25"
+  },
+  "gr8": {
+   "count": 1,
+   "examples": [
+    "https://x.com/coffeedev/status/2125020872662773811"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "ik_llama.cpp": {
+   "count": 4,
+   "examples": [
+    "https://x.com/jifarthing/status/2125007766544617833"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "not stated": {
+   "count": 3,
+   "examples": [
+    "https://x.com/yume_arasaki/status/2124925408412086607",
+    "https://x.com/lotar_vk/status/2124987924370333786",
+    "https://x.com/Helios_Rises/status/2124935877348708495"
+   ],
+   "first_seen": "2026-11-24"
+  }
+ },
+ "file_size": {
+  "unsloth/Inkling-2-Mini-GGUF UNSLOTH UD GGUF": {
+   "count": 1,
+   "examples": [
+    "https://x.com/UnslothAI/status/2124898356770263382"
+   ],
+   "first_seen": "2026-11-24"
+  }
+ },
+ "hardware": {
+  "AMD EPYC 7642 (CPU-only)": {
+   "count": 2,
+   "examples": [
+    "https://x.com/superalesha/status/2125682626056839259"
+   ],
+   "first_seen": "2026-11-26"
+  },
+  "AMD Radeon AI PRO R9700 32GB": {
+   "count": 1,
+   "examples": [
+    "https://huggingface.co/Lucebox/Inkling-2-Mini-Fast-GGUF"
+   ],
+   "first_seen": "2026-11-26"
+  },
+  "M2 Ultra": {
+   "count": 1,
+   "examples": [
+    "https://x.com/CerebralCoding_/status/2124832169939853781"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "M4 Pro": {
+   "count": 3,
+   "examples": [
+    "https://x.com/CerebralCoding_/status/2124832169939853781",
+    "https://x.com/_ARahim_/status/2124611718039150874"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "M5 Max": {
+   "count": 5,
+   "examples": [
+    "https://x.com/crazyMLguy/status/2125003225288032408",
+    "https://x.com/atomic_chat_hq/status/2124953436055564594",
+    "https://x.com/TeksEdge/status/2124601310599422302"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "M5 Ultra": {
+   "count": 2,
+   "examples": [
+    "https://x.com/CerebralCoding_/status/2125590555124211835"
+   ],
+   "first_seen": "2026-11-26"
+  },
+  "Mac (Apple Silicon; model not stated)": {
+   "count": 1,
+   "examples": [
+    "https://x.com/MooncastOnline/status/2124906585483083937"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "Mac mini M5 Pro 48GB": {
+   "count": 1,
+   "examples": [
+    "https://x.com/tomgreenwald/status/2125348896805175791"
+   ],
+   "first_seen": "2026-11-25"
+  },
+  "One RTX 5060 Ti 16GB": {
+   "count": 1,
+   "examples": [
+    "https://x.com/niklaslenz_ai/status/2125255622346310086"
+   ],
+   "first_seen": "2026-11-25"
+  },
+  "RTX 4060 Ti 16GB": {
+   "count": 1,
+   "examples": [
+    "https://x.com/Lucaslobosarq/status/2125555480550617486"
+   ],
+   "first_seen": "2026-11-26"
+  },
+  "RTX 5060 Ti 16GB + CPU offload (n-cpu-moe 8)": {
+   "count": 1,
+   "examples": [
+    "https://x.com/redStapler_twit/status/2124852518538952709"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "V100 32GB": {
+   "count": 1,
+   "examples": [
+    "https://x.com/donlee21480/status/2124930812147839441"
+   ],
+   "first_seen": "2026-11-24"
+  },
+  "V100 32GB (200W limit)": {
+   "count": 1,
+   "examples": [
+    "https://x.com/donlee21480/status/2124930812147839441"
+   ],
+   "first_seen": "2026-11-24"
+  }
+ },
+ "hold_days": 14,
+ "not_on_hf": {},
+ "repos_needing_a_call": {
+  "aj9o9/qwen3.8-27b-dspine-b16-gguf": {
+   "decision": "review",
+   "radar_date": "2026-11-10",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-19"
+  },
+  "bartowski/qwen3.5-4b-qwen3.8-27b-draft-gguf": {
+   "decision": "review",
+   "radar_date": "2026-11-18",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-19"
+  },
+  "cactus-compute/nemotron-3.5-120b-cq": {
+   "decision": "review",
+   "radar_date": "2026-11-13",
+   "reason": "gated repo: licence/access terms need a human read",
+   "seen": "2026-11-19"
+  },
+  "davidau/qwen3.8-27b-turbo-fable-cold-fusion-735-882-heretic-uncensored-neo-coder-max-mtp-gguf": {
+   "decision": "review",
+   "radar_date": "2026-11-24",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-26"
+  },
+  "edge0/edge0-145b-nvfp4": {
+   "decision": "review",
+   "radar_date": "2026-11-15",
+   "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+   "seen": "2026-11-19"
+  },
+  "edge0/edge0-145b-q3k": {
+   "decision": "review",
+   "radar_date": "2026-11-13",
+   "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+   "seen": "2026-11-19"
+  },
+  "incoai/inkling-2-mini-dflash2": {
+   "decision": "review",
+   "radar_date": "2026-11-25",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-26"
+  },
+  "nari-labs/qwen3.8-27b-nariq-gguf": {
+   "decision": "review",
+   "radar_date": "2026-11-25",
+   "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+   "seen": "2026-11-26"
+  },
+  "nvidia/qwen3.5-0.8b-qwen3.8-27b-draft": {
+   "decision": "review",
+   "radar_date": "2026-11-26",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-26"
+  },
+  "nvidia/qwen3.5-4b-qwen3.8-27b-draft": {
+   "decision": "review",
+   "radar_date": "2026-11-18",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-19"
+  },
+  "orcarouter/inkling-2-mini-abliterated-gguf": {
+   "decision": "review",
+   "radar_date": "2026-11-25",
+   "reason": "GGUF files with no standard quant naming (custom layout / maker's own engine)",
+   "seen": "2026-11-26"
+  },
+  "qwen/qwen3.8-flash-next": {
+   "decision": "review",
+   "radar_date": "2026-11-25",
+   "reason": "gated repo: licence/access terms need a human read",
+   "seen": "2026-11-26"
+  },
+  "rasyosef/lfm3-1.7b-dspark": {
+   "decision": "review",
+   "radar_date": "2026-11-23",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-23"
+  },
+  "sensenova/sensenova-loop-9b": {
+   "decision": "review",
+   "radar_date": "2026-11-18",
+   "reason": "gated repo: licence/access terms need a human read",
+   "seen": "2026-11-19"
+  },
+  "tencent/qwen3.8-27b-dspine-b16": {
+   "decision": "review",
+   "radar_date": "2026-11-10",
+   "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
+   "seen": "2026-11-19"
+  }
+ },
+ "updated": "2026-11-26"
+}

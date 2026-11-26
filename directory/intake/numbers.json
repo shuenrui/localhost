@@ -1,0 +1,642 @@
+{
+ "056b78ff565f72bf": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tensorfish/status/2124975715141689818",
+  "why": "engine 'custom Zig + sm_120a CUDA engine' is not one the directory lists"
+ },
+ "0749b342a841879d": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2125349154507641143",
+  "why": "engine 'Magnitude' is not one the directory lists"
+ },
+ "08e3f96487820e4d": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit"
+ },
+ "095b6a14b7ec0102": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "qwen3-8-27b-unspecified-llama-cpp-gpu-24gb-chuck-wolfe"
+ },
+ "0fe943868669571b": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "134a3a10fc0cec14": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/yume_arasaki/status/2124925408412086607",
+  "why": "engine 'not stated' is not one the directory lists"
+ },
+ "1933d8e4af4fc5f1": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/CerebralCoding_/status/2124832169939853781",
+  "why": "hardware 'M4 Pro' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "1a79757faf73ba05": {
+  "date": "2026-11-26",
+  "done": true,
+  "src": "https://x.com/Lucaslobosarq/status/2125555480550617486",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "1ac9f697ab9d041b": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2124983831178387772",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "1b1f0282ef6ba040": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/ItsmeAjayKV/status/2124665734861111767",
+  "why": "engine 'Project Maya' is not one the directory lists"
+ },
+ "1bd8051555f87a6b": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai"
+ },
+ "1c2aa163b9029755": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit"
+ },
+ "1c2e51c1cd2dff54": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "ternary-bonsai-2-5-27b-ptq1-0-llama-cpp-gpu-12gb-dogukanurker"
+ },
+ "1c3efef7a426ae1f": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/jifarthing/status/2125007766544617833",
+  "why": "engine 'ik_llama.cpp' is not one the directory lists"
+ },
+ "1c6dd889604bf3a2": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "hy4-flash-q4-k-m-llama-cpp-mac-128gb-angelslim"
+ },
+ "211fc89477a0aefc": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2124983831178387772",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "27029fe1be4722c1": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/donlee21480/status/2124930812147839441",
+  "why": "hardware 'V100 32GB (200W limit)' matches no directory hardware class"
+ },
+ "27255f83ea01661f": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit"
+ },
+ "2beb8b3cb0728181": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/net_termina/status/2124923558744727666",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "2bec78c8f85dbf8d": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "ternary-bonsai-2-5-27b-ptq1-0-llama-cpp-gpu-12gb-dogukanurker"
+ },
+ "2cb6c4db7f9c590c": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2125348896805175791",
+  "why": "engine 'Magnitude' is not one the directory lists"
+ },
+ "2d2eb5872a159e29": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai"
+ },
+ "2ea967d7206c9901": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/bebuu_ai/status/2124743277144670297",
+  "why": "hardware 'M5 Max' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "3181258361a494a1": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "inkling-2-mini-nvfp4-vllm-rtx-5090-niklaslenz-ai"
+ },
+ "353c71e9be145344": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "3547f9f3afbecfb0": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-dgx-spark-niklaslenz-ai"
+ },
+ "3c13c71fdd2750c2": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2125175069693407565",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "3e243691d5ac7a25": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/MooncastOnline/status/2124906585483083937",
+  "why": "hardware 'Mac (Apple Silicon; model not stated)' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "42fbd7be57d9a523": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2125348896805175791",
+  "why": "engine 'Magnitude' is not one the directory lists"
+ },
+ "472cd17a630bbd09": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tensorfish/status/2124975715141689818",
+  "why": "engine 'custom Zig + sm_120a CUDA engine' is not one the directory lists"
+ },
+ "4e08f20bf2437a19": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai"
+ },
+ "50d2faa505ecc66e": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/CerebralCoding_/status/2124832169939853781",
+  "why": "hardware 'M2 Ultra' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "50f00cea9da1b9e4": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/niklaslenz_ai/status/2125622415820476862",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "537aff4f8b118acf": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2125175069693407565",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "5420c65c5b61b6ff": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2125539171443892321",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "550c9d09f7d7369d": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/akshay_pachaar/status/2125573832039891119",
+  "why": "engine 'Magnitude' is not one the directory lists"
+ },
+ "570af91ead24e8ab": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/CerebralCoding_/status/2125590555124211835",
+  "why": "hardware 'M5 Ultra' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "5835f9301c1acea8": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/uctive/status/2125181271936524665",
+  "why": "engine 'STRATA' is not one the directory lists"
+ },
+ "58b484d5d591c702": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "5a8c784b86bbd041": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/lotar_vk/status/2124987924370333786",
+  "why": "engine 'not stated' is not one the directory lists"
+ },
+ "5d3561be8ad1338b": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2125348896805175791",
+  "why": "hardware 'Mac mini M5 Pro 48GB' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "64c81de179ac0446": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-q4-unsloth-ud-llama-cpp-gpu-24gb-itsmeajaykv"
+ },
+ "6a9024153eddf1c3": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://huggingface.co/Lucebox/Inkling-2-Mini-Fast-GGUF",
+  "why": "hardware 'AMD Radeon AI PRO R9700 32GB' matches no directory hardware class"
+ },
+ "6b38bb4d01e64bb0": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/bebuu_ai/status/2124743277144670297",
+  "why": "the number is not in the quote"
+ },
+ "6c6947bfc7a919c1": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/TeksEdge/status/2124601310599422302",
+  "why": "engine 'Strata' is not one the directory lists"
+ },
+ "7225792ba9dd2567": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/superalesha/status/2125682626056839259",
+  "why": "hardware 'AMD EPYC 7642 (CPU-only)' matches no directory hardware class"
+ },
+ "7361940393639041": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "hy4-flash-q4-k-m-llama-cpp-mac-128gb-angelslim"
+ },
+ "74a590c1d20db018": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai"
+ },
+ "75ddff7f5d5b3332": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit"
+ },
+ "77b74b6ece622425": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/jifarthing/status/2125007766544617833",
+  "why": "the number is not in the quote"
+ },
+ "78525ab344ec6adb": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit"
+ },
+ "7cb538b08a337a02": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "hy4-flash-spark-4bit-fast-llama-cpp-dgx-spark-angelslim"
+ },
+ "7db898d8f9d7eb0f": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/Lucaslobosarq/status/2125555480550617486",
+  "why": "hardware 'RTX 4060 Ti 16GB' matches no directory hardware class"
+ },
+ "8423fe0804ebd8d2": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/redStapler_twit/status/2124852518538952709",
+  "why": "2-GPU run; the directory's hardware classes are single boxes"
+ },
+ "84c5d30109549d3f": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/pratikg/status/2125743920806293745",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "85a57657dd714b4c": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/coffeedev/status/2125020872662773811",
+  "why": "2-GPU run; the directory's hardware classes are single boxes"
+ },
+ "85cd1d364b0c7a30": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/niklaslenz_ai/status/2125622415820476862",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "88f72fb500a85296": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "8c3d8c90704760e3": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/crazyMLguy/status/2125003225288032408",
+  "why": "hardware 'M5 Max' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "8d5d3031d2529b75": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://huggingface.co/AngelSlim/Hy4-flash-GGUF",
+  "why": "engine 'Strata' is not one the directory lists"
+ },
+ "8e755374b9ed5613": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/jifarthing/status/2125007766544617833",
+  "why": "engine 'ik_llama.cpp' is not one the directory lists"
+ },
+ "8ff36e62e0ed0d61": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/puhcko/status/2124936935248379963",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "9088ae21954de7be": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/CerebralCoding_/status/2124832169939853781",
+  "why": "the number is not in the quote"
+ },
+ "99c5d765a8c2f6fd": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/_ARahim_/status/2124611718039150874",
+  "why": "hardware 'M4 Pro' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "99e6f114e713ce9d": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/redStapler_twit/status/2124852518538952709",
+  "why": "hardware 'RTX 5060 Ti 16GB + CPU offload (n-cpu-moe 8)' matches no directory hardware class"
+ },
+ "9a5d6050bff9ff2b": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/UnslothAI/status/2124898356770263382",
+  "why": "file size for UNSLOTH UD GGUF in unsloth/Inkling-2-Mini-GGUF not found on Hugging Face"
+ },
+ "9a904e3bc546cd6b": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2125175069693407565",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "9b5cee573c7e5081": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/superalesha/status/2125682626056839259",
+  "why": "hardware 'AMD EPYC 7642 (CPU-only)' matches no directory hardware class"
+ },
+ "9df4f47497cb599a": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/TeksEdge/status/2124601310599422302",
+  "why": "hardware 'M5 Max' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "9fb26ce7369798b8": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/uctive/status/2125181271936524665",
+  "why": "engine 'STRATA' is not one the directory lists"
+ },
+ "a4b81f3ebd0cdfae": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/net_termina/status/2124923558744727666",
+  "why": "engine 'Ingine (named in replies; repo not verified)' is not one the directory lists"
+ },
+ "a864938600bd9da7": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-dgx-spark-niklaslenz-ai"
+ },
+ "a8e67224172a2765": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/WillSeettzz/status/2125540948192948513",
+  "why": "engine 'Basalt' is not one the directory lists"
+ },
+ "a9294f5da051360a": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/coffeedev/status/2125020872662773811",
+  "why": "engine 'gr8' is not one the directory lists"
+ },
+ "ab1cee046fb4e5b3": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "ternary-bonsai-2-5-27b-ternary-1-76bpw-mlx-lm-mac-64gb-pratikg"
+ },
+ "ab9baa58da650a0f": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2124983831178387772",
+  "why": "the number is not in the quote"
+ },
+ "ae71754263b5ff6b": {
+  "date": "2026-11-23",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai"
+ },
+ "afb3c064b4487436": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/uctive/status/2125181271936524665",
+  "why": "engine 'STRATA' is not one the directory lists"
+ },
+ "b3fa0696c37f21b9": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/atomic_chat_hq/status/2124953436055564594",
+  "why": "hardware 'M5 Max' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "b69c538819ad89b9": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+  "why": "hardware 'One RTX 5060 Ti 16GB' matches no directory hardware class"
+ },
+ "b6a3b9e7b1d99019": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "b7c889b654b5512e": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "b85e82d69cc0eccc": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/CerebralCoding_/status/2125590555124211835",
+  "why": "hardware 'M5 Ultra' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "b88869a9fc7538da": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "hy4-flash-spark-4bit-fast-llama-cpp-dgx-spark-angelslim"
+ },
+ "bbb191df01d28250": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/donlee21480/status/2124930812147839441",
+  "why": "hardware 'V100 32GB' matches no directory hardware class"
+ },
+ "bdf211f8c6ce2335": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/niklaslenz_ai/status/2125622415820476862",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "c0e12a974f57ae48": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/MiaAI_lab/status/2125175069693407565",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "c388525b39e71fc4": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2125175069693407565",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "c619569e2b1d783c": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/uctive/status/2125181271936524665",
+  "why": "engine 'STRATA' is not one the directory lists"
+ },
+ "c6874b97e72d6ac4": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/TeksEdge/status/2124601310599422302",
+  "why": "engine 'Strata' is not one the directory lists"
+ },
+ "c7b6431097a65964": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "c83034ecf52f791d": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/Helios_Rises/status/2124935877348708495",
+  "why": "engine 'not stated' is not one the directory lists"
+ },
+ "cbb30724d6579916": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2125348896805175791",
+  "why": "engine 'Magnitude' is not one the directory lists"
+ },
+ "cc7a08d952878447": {
+  "date": "2026-11-26",
+  "done": false,
+  "src": "https://x.com/niklaslenz_ai/status/2125622415820476862",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "d174479722adc36d": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+  "why": "2-GPU run; the directory's hardware classes are single boxes"
+ },
+ "d7f376369961fb9f": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/_ARahim_/status/2124611718039150874",
+  "why": "hardware 'M4 Pro' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "dbf59452d430ad83": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-dgx-spark-niklaslenz-ai"
+ },
+ "e00155e171b75c7a": {
+  "date": "2026-11-26",
+  "done": true,
+  "src": "https://x.com/ura_soul/status/2125381597440426341",
+  "why": "the number is not in the quote"
+ },
+ "e04ef13dcd2a30e1": {
+  "date": "2026-11-26",
+  "done": true,
+  "setup": "ternary-bonsai-2-5-27b-ternary-1-76bpw-llama-cpp-mac-64gb-pratikg"
+ },
+ "e0b63adb710c098f": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/jifarthing/status/2125007766544617833",
+  "why": "engine 'ik_llama.cpp' is not one the directory lists"
+ },
+ "e15c329a374b1511": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/ViC305/status/2125282526885478640",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "e36fa47ed9cdb40d": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/bebuu_ai/status/2124743277144670297",
+  "why": "hardware 'M5 Max' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "e4dec246159c3934": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/tensorfish/status/2124975715141689818",
+  "why": "engine 'InklingEngine' is not one the directory lists"
+ },
+ "e4fea1a445029f78": {
+  "date": "2026-11-25",
+  "done": true,
+  "setup": "inkling-2-mini-nvfp4-sglang-dgx-spark-niklaslenz-ai"
+ },
+ "e8df187238ddf348": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "ec9823d03e116624": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+  "why": "2-GPU run; the directory's hardware classes are single boxes"
+ },
+ "ef880739cd1fa145": {
+  "date": "2026-11-24",
+  "done": false,
+  "src": "https://x.com/jifarthing/status/2125007766544617833",
+  "why": "engine 'ik_llama.cpp' is not one the directory lists"
+ },
+ "efd2dbd86935de2f": {
+  "date": "2026-11-25",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2125175069693407565",
+  "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "f44c178bbc3e9b9e": {
+  "date": "2026-11-24",
+  "done": true,
+  "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-rtx-5090-niklaslenz-ai"
+ },
+ "fa6729797a5f50e7": {
+  "date": "2026-11-24",
+  "done": true,
+  "src": "https://x.com/niklaslenz_ai/status/2124983831178387772",
+  "why": "quote not found verbatim in the saved sources"
+ },
+ "fbe42ca9c5992e4e": {
+  "date": "2026-11-25",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2125065880698495103",
+  "why": "4-GPU run; the directory's hardware classes are single boxes"
+ }
+}
