@@ -1,0 +1,108 @@
+{
+  "id": "inkling-2-mini-nvfp4-sglang-dgx-spark-niklaslenz-ai",
+  "title": "Inkling-2-Mini NVFP4 on SGLang, NVIDIA DGX Spark (reported by @niklaslenz_ai)",
+  "slug_note": "Numbers @niklaslenz_ai posted for this file on this hardware; we have not run it.",
+  "model": "inkling-2-mini",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 96527,
+    "checkpoint": "thinkingmachines/Inkling-2-Mini",
+    "publisher": "thinkingmachines",
+    "quant": "nvfp4",
+    "quant_detail": "NVFP4, 20.16 GB",
+    "format": "safetensors",
+    "size_gb": 20.16,
+    "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini"
+  },
+  "engine": {
+    "id": "sglang",
+    "config": "as described in the post (SGLang version not stated)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 24,
+    "disk_gb": 20.16,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install SGLang (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The post gives no full run command; see the source post for the author's setup."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 61.2,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-24",
+      "source": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "context": "DGX Spark, SGLang, NVFP4, draft model on; lab's NVFP4 checkpoint; TTFT after 32K drops 142 s to 10 s",
+      "conditions": {
+        "context_label": "draft model on; lab's NVFP4 checkpoint; TTFT after 32K drops",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-622346310086",
+        "quality_status": "unchecked"
+      },
+      "id": "r001"
+    }
+  ],
+  "provenance_tier": "forum",
+  "caveats": [
+    "Community-reported: @niklaslenz_ai posted these numbers; we have not run this recipe. Picked up by the Local Hosting Radar (2026-11-25)."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-622346310086",
+      "quote": "One DGX Spark: 61.2 tok/s on SGLang, the lab's NVFP4 checkpoint, draft model on"
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "niklaslenz-ai-622346310086",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2125255622346310086"
+        ],
+        "locator": "post 2125255622346310086, Radar 2026-11-25",
+        "note": "Verbatim: \"One DGX Spark: 61.2 tok/s on SGLang, the lab's NVFP4 checkpoint, draft model on\" (checked against the Radar's saved sources)."
+      }
+    ]
+  },
+  "updated": "2026-11-26",
+  "schema_version": 2
+}

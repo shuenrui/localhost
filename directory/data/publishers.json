@@ -420,6 +420,30 @@
       "kind": "builder",
       "role": "Added by the Radar intake from its Hugging Face org page.",
       "url": "https://huggingface.co/numind"
+    },
+    "zai-org": {
+      "name": "Z.ai",
+      "kind": "lab",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/zai-org"
+    },
+    "llamaindex": {
+      "name": "llamaindex",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/llamaindex"
+    },
+    "peasantsmith": {
+      "name": "peasantsmith",
+      "kind": "quant-shop",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/peasantsmith"
+    },
+    "lucebox": {
+      "name": "Lucebox",
+      "kind": "quant-shop",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/Lucebox"
     }
   }
 }

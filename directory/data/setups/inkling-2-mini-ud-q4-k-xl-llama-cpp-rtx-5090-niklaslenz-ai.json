@@ -68,6 +68,69 @@
         "quality_status": "unchecked"
       },
       "id": "r001"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 86.5,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-24",
+      "source": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "context": "RTX 5090 32GB, llama.cpp b12631, UD-Q4_K_XL, one chat, 512 output tokens, median of 2",
+      "conditions": {
+        "context_label": "one chat, 512 output tokens, median of 2",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-622346310086",
+        "quality_status": "unchecked"
+      },
+      "id": "r002"
+    },
+    {
+      "metric": "decode_agg",
+      "value": 125.9,
+      "unit": "tok/s",
+      "concurrency": 4,
+      "provenance": "forum",
+      "date": "2026-11-24",
+      "source": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "context": "RTX 5090 32GB, llama.cpp b12631, UD-Q4_K_XL, Four requests at once, total",
+      "conditions": {
+        "context_label": "Four requests at once, total",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-622346310086",
+        "quality_status": "unchecked"
+      },
+      "id": "r003"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 86.4,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-23",
+      "source": "https://x.com/niklaslenz_ai/status/2124983831178387772",
+      "context": "RTX 5090 32GB, llama.cpp b12631, UD-Q4_K_XL, after a short prompt; 70.3 tok/s after a 64K prompt",
+      "conditions": {
+        "context_label": "after a short prompt; 70.3 tok/s after a 64K prompt",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-831178387772",
+        "quality_status": "unchecked"
+      },
+      "id": "r004"
     }
   ],
   "provenance_tier": "forum",
@@ -86,6 +149,20 @@
       "note": "@niklaslenz_ai's post with the numbers",
       "lineage_id": "niklaslenz-ai-414337999359",
       "quote": "llama.cpp b12631, Unsloth UD-Q4_K_XL, no draft model: 86.7 and 86.7 tok/s"
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-622346310086",
+      "quote": "Inkling 2 Mini writes 86.5 tok/s on an RTX 5090, 34.8 on a DGX Spark and 22.5 on two RTX 5060 Ti. One file, one engine."
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2124983831178387772",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-831178387772",
+      "quote": "Inkling goes from 86.4 to 70.3 after 64K"
     }
   ],
   "evidence": {
@@ -100,9 +177,29 @@
         ],
         "locator": "post 2124490414337999359, Radar 2026-11-23",
         "note": "Verbatim: \"llama.cpp b12631, Unsloth UD-Q4_K_XL, no draft model: 86.7 and 86.7 tok/s\" (checked against the Radar's saved sources)."
+      },
+      {
+        "id": "niklaslenz-ai-622346310086",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2125255622346310086"
+        ],
+        "locator": "post 2125255622346310086, Radar 2026-11-25",
+        "note": "Verbatim: \"Inkling 2 Mini writes 86.5 tok/s on an RTX 5090, 34.8 on a DGX Spark and 22.5 on two RTX 5060 Ti. One file, one engine.\" (checked against the Radar's saved sources)."
+      },
+      {
+        "id": "niklaslenz-ai-831178387772",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2124983831178387772"
+        ],
+        "locator": "post 2124983831178387772, Radar 2026-11-24",
+        "note": "Verbatim: \"Inkling goes from 86.4 to 70.3 after 64K\" (checked against the Radar's saved sources)."
       }
     ]
   },
-  "updated": "2026-11-23",
+  "updated": "2026-11-26",
   "schema_version": 2
 }

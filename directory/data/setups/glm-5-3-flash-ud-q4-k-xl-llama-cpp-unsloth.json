@@ -1,0 +1,67 @@
+{
+  "id": "glm-5-3-flash-ud-q4-k-xl-llama-cpp-unsloth",
+  "title": "GLM-5.3-Flash UD-Q4_K_XL on llama.cpp (unsloth)",
+  "slug_note": "199.71 GB GGUF from unsloth/GLM-5.3-Flash-GGUF; untested.",
+  "model": "glm-5-3-flash",
+  "status": "untested",
+  "variation": {
+    "license": "MIT",
+    "downloads": 738989,
+    "checkpoint": "unsloth/GLM-5.3-Flash-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q4",
+    "quant_detail": "UD-Q4_K_XL, 199.71 GB (also published: BF16, Q8_0, UD-IQ1_M, UD-IQ1_S, UD-IQ2_XXS, UD-IQ3_XXS)",
+    "format": "gguf",
+    "size_gb": 199.71,
+    "url": "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF",
+    "revision": "a38483c8cd5df544f53d70fb281afe97369d5ab6",
+    "revision_note": "HF main at intake (2026-11-26)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "mac-256gb"
+  ],
+  "requirements": {
+    "memory_gb": 222,
+    "disk_gb": 199.71,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-25, story \"Magnitude: open-source engine that spills MoE experts down to SSD\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-26",
+  "schema_version": 2
+}

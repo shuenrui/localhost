@@ -1,0 +1,167 @@
+{
+  "id": "inkling-2-mini-ud-q4-k-xl-llama-cpp-dgx-spark-niklaslenz-ai",
+  "title": "Inkling-2-Mini UD-Q4_K_XL on llama.cpp, NVIDIA DGX Spark (reported by @niklaslenz_ai)",
+  "slug_note": "Numbers @niklaslenz_ai posted for this file on this hardware; we have not run it.",
+  "model": "inkling-2-mini",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 2445633,
+    "checkpoint": "unsloth/Inkling-2-Mini-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q4",
+    "quant_detail": "UD-Q4_K_XL, 17.63 GB",
+    "format": "gguf",
+    "size_gb": 17.63,
+    "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as described in the post (llama.cpp b12631)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 21,
+    "disk_gb": 17.63,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The post gives no full run command; see the source post for the author's setup."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 34.8,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-24",
+      "source": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "context": "DGX Spark, llama.cpp b12631, UD-Q4_K_XL, one chat, 512 output tokens, median of 2",
+      "conditions": {
+        "context_label": "one chat, 512 output tokens, median of 2",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-622346310086",
+        "quality_status": "unchecked"
+      },
+      "id": "r001"
+    },
+    {
+      "metric": "decode_agg",
+      "value": 41.9,
+      "unit": "tok/s",
+      "concurrency": 4,
+      "provenance": "forum",
+      "date": "2026-11-24",
+      "source": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "context": "DGX Spark, llama.cpp b12631, UD-Q4_K_XL, Four requests at once, total",
+      "conditions": {
+        "context_label": "Four requests at once, total",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-622346310086",
+        "quality_status": "unchecked"
+      },
+      "id": "r002"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 31.8,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-23",
+      "source": "https://x.com/jifarthing/status/2125007766544617833",
+      "context": "DGX Spark, llama.cpp, UD-Q8 (22.87 GB), same file: llama.cpp 31.8 t/s vs ik_llama 25.8 t/s; KLD 0.0089 vs 0.0024",
+      "conditions": {
+        "context_label": "same file: llama.cpp 31.8 t/s vs ik_llama 25.8 t/s; KLD 0.00",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "jifarthing-766544617833",
+        "quality_status": "unchecked"
+      },
+      "id": "r003"
+    }
+  ],
+  "provenance_tier": "forum",
+  "caveats": [
+    "Community-reported: @niklaslenz_ai posted these numbers; we have not run this recipe. Picked up by the Local Hosting Radar (2026-11-25)."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2125255622346310086",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-622346310086",
+      "quote": "Inkling 2 Mini writes 86.5 tok/s on an RTX 5090, 34.8 on a DGX Spark and 22.5 on two RTX 5060 Ti. One file, one engine."
+    },
+    {
+      "url": "https://x.com/jifarthing/status/2125007766544617833",
+      "kind": "post",
+      "note": "@jifarthing's post with the numbers",
+      "lineage_id": "jifarthing-766544617833",
+      "quote": "llama.cpp still generates faster on that file, 31.8 against 25.8 t/s"
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "niklaslenz-ai-622346310086",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2125255622346310086"
+        ],
+        "locator": "post 2125255622346310086, Radar 2026-11-25",
+        "note": "Verbatim: \"Inkling 2 Mini writes 86.5 tok/s on an RTX 5090, 34.8 on a DGX Spark and 22.5 on two RTX 5060 Ti. One file, one engine.\" (checked against the Radar's saved sources)."
+      },
+      {
+        "id": "jifarthing-766544617833",
+        "actor": "@jifarthing",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/jifarthing/status/2125007766544617833"
+        ],
+        "locator": "post 2125007766544617833, Radar 2026-11-24",
+        "note": "Verbatim: \"llama.cpp still generates faster on that file, 31.8 against 25.8 t/s\" (checked against the Radar's saved sources)."
+      }
+    ]
+  },
+  "updated": "2026-11-26",
+  "schema_version": 2
+}

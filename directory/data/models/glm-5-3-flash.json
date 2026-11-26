@@ -1,0 +1,32 @@
+{
+  "id": "glm-5-3-flash",
+  "name": "GLM-5.3-Flash",
+  "family": "GLM",
+  "generation": "glm",
+  "line": "GLM",
+  "publisher": "zai-org",
+  "released": "2026-08-25",
+  "released_note": "HF repo created 2026-08-25 (API createdAt).",
+  "license": "MIT",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 321.32
+  },
+  "context": {
+    "native": 1048576,
+    "max": 1048576
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/zai-org/GLM-5.3-Flash",
+  "summary": "zai-org's GLM-5.3-Flash: about 321.32B parameters (mixture of experts), licence MIT. About 212.1 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-25; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-26"
+  },
+  "updated": "2026-11-26"
+}

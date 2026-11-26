@@ -1,0 +1,75 @@
+{
+  "id": "kolibri-1-1-bf16-vllm-aleph-alpha",
+  "title": "Kolibri-1.1 BF16 on vLLM (Aleph-Alpha)",
+  "slug_note": "77.54 GB safetensors from Aleph-Alpha/Kolibri-1.1; untested.",
+  "model": "kolibri-1-1",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 837,
+    "checkpoint": "Aleph-Alpha/Kolibri-1.1",
+    "publisher": "aleph-alpha",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 77.54 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 77.54,
+    "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1.1",
+    "revision": "bfc33150d363f55a86cd4f0f7f79711deb9e0361",
+    "revision_note": "HF main at intake (2026-11-26)"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 87,
+    "disk_gb": 77.54,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/Aleph-Alpha/Kolibri-1.1",
+    "command": "vllm serve Aleph-Alpha/Kolibri-1.1 --reasoning-parser kolibri1 --tool-call-parser kolibri1 --enable-auto-tool-choice",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install vLLM (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "vllm serve Aleph-Alpha/Kolibri-1.1 --reasoning-parser kolibri1 --tool-call-parser kolibri1 --enable-auto-tool-choice"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-25, story \"Kolibri 1.1 (Aleph Alpha): 75B/3.44B MoE, Apache 2.0, official GGUFs down to 16.6 GB\"). Nothing on this page is measured yet."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1.1",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-26",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": false,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

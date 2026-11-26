@@ -1,0 +1,70 @@
+{
+  "id": "ocria-1-q4-k-m-llama-cpp-mradermacher",
+  "title": "OCRia-1 Q4_K_M on llama.cpp (mradermacher)",
+  "slug_note": "3.1 GB GGUF from mradermacher/OCRia-1-GGUF; untested.",
+  "model": "ocria-1",
+  "status": "untested",
+  "variation": {
+    "license": "Other (custom licence)",
+    "downloads": 281,
+    "checkpoint": "mradermacher/OCRia-1-GGUF",
+    "publisher": "mradermacher",
+    "quant": "gguf-q4",
+    "quant_detail": "Q4_K_M, 3.1 GB (also published: F16, IQ4_XS, Q2_K, Q3_K_L, Q3_K_M, Q3_K_S)",
+    "format": "gguf",
+    "size_gb": 3.1,
+    "url": "https://huggingface.co/mradermacher/OCRia-1-GGUF",
+    "revision": "c1fdd4e2d2a8db88e519bc7060592a688a5de9eb",
+    "revision_note": "HF main at intake (2026-11-26)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-8gb",
+    "mac-8gb"
+  ],
+  "requirements": {
+    "memory_gb": 5,
+    "disk_gb": 3.1,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/mradermacher/OCRia-1-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-25, story \"LlamaIndex opens OCRia-1: 4B document parser you can run locally\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up).",
+    "Custom or missing licence tag on the HF repo: read the card's terms before commercial use."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/mradermacher/OCRia-1-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-26",
+  "schema_version": 2
+}

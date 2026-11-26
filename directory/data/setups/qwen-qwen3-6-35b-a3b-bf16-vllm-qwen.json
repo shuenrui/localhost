@@ -1,0 +1,75 @@
+{
+  "id": "qwen-qwen3-6-35b-a3b-bf16-vllm-qwen",
+  "title": "Qwen3.6-35B-A3B BF16 on SGLang (Qwen)",
+  "slug_note": "71.9 GB safetensors from Qwen/Qwen3.6-35B-A3B; untested.",
+  "model": "qwen-qwen3-6-35b-a3b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 3207136,
+    "checkpoint": "Qwen/Qwen3.6-35B-A3B",
+    "publisher": "qwen",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 71.9 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 71.9,
+    "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+    "revision": "345d467b117d1fd5eda9b879a5988de9ae5f47a7",
+    "revision_note": "HF main at intake (2026-11-26)"
+  },
+  "engine": {
+    "id": "sglang",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "rtx-pro-6000"
+  ],
+  "requirements": {
+    "memory_gb": 81,
+    "disk_gb": 71.9,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+    "command": "python -m sglang.launch_server --model-path Qwen/Qwen3.6-35B-A3B --port 8000 --tp-size 8 --mem-fraction-static 0.8 --context-length 262144 --reasoning-parser qwen3",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install SGLang (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "python -m sglang.launch_server --model-path Qwen/Qwen3.6-35B-A3B --port 8000 --tp-size 8 --mem-fraction-static 0.8 --context-length 262144 --reasoning-parser qwen3"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-26, story \"Magnitude makes the SSD a memory tier — read the replies before the demo\"). Nothing on this page is measured yet."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-26",
+  "schema_version": 2,
+  "capabilities": {
+    "vision": true,
+    "video": false,
+    "tools": false,
+    "thinking": false,
+    "long_context": 262144,
+    "max_context": 262144
+  }
+}

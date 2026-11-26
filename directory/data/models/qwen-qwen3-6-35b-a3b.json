@@ -1,0 +1,32 @@
+{
+  "id": "qwen-qwen3-6-35b-a3b",
+  "name": "Qwen3.6-35B-A3B",
+  "family": "Qwen",
+  "generation": "3.6",
+  "line": "Qwen",
+  "publisher": "qwen",
+  "released": "2026-04-15",
+  "released_note": "HF repo created 2026-04-15 (API createdAt).",
+  "license": "Apache-2.0",
+  "architecture": {
+    "kind": "moe",
+    "params_total_b": 35.95
+  },
+  "context": {
+    "native": 262144,
+    "max": 262144
+  },
+  "modalities": [
+    "text",
+    "image"
+  ],
+  "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+  "summary": "Qwen's Qwen3.6-35B-A3B: about 35.95B parameters (mixture of experts), licence Apache-2.0. About 23.7 GB at 4-bit. Added from the Local Hosting Radar of 2026-11-26; nothing measured on our hardware yet.",
+  "practical_baseline": {
+    "status": "not_verified",
+    "setup": null,
+    "reason": "Added from the Radar; no reported or measured run recorded yet.",
+    "reviewed": "2026-11-26"
+  },
+  "updated": "2026-11-26"
+}

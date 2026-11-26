@@ -1,0 +1,69 @@
+{
+  "id": "ternary-bonsai-2-5-27b-q1-0-llama-cpp-prism-ml",
+  "title": "Ternary-Bonsai-2.5-27B Q1_0 on llama.cpp (prism-ml)",
+  "slug_note": "5.99 GB GGUF from prism-ml/Ternary-Bonsai-2.5-27B-GGUF; untested.",
+  "model": "ternary-bonsai-2-5-27b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 59366,
+    "checkpoint": "prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+    "publisher": "prismml",
+    "quant": "other",
+    "quant_detail": "Q1_0, 5.99 GB (also published: Q2_0)",
+    "format": "gguf",
+    "size_gb": 5.99,
+    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+    "revision": "28a7093cc25bc151cc2b284c5570f12ce343fdcf",
+    "revision_note": "HF main at intake (2026-11-26)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-12gb",
+    "mac-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 9,
+    "disk_gb": 5.99,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-25, story \"Ternary Bonsai 2.5 27B: a 27B agentic model in a 6 GB file\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-26",
+  "schema_version": 2
+}
