@@ -1,0 +1,86 @@
+{
+  "id": "inkling-2-mini-ud-iq2-xxs-llama-cpp-gpu-12gb-dogukanurker",
+  "title": "Inkling-2-Mini UD-IQ2_XXS on llama.cpp, 12 GB consumer GPU (setup shared by @DogukanUrker)",
+  "slug_note": "Run command @DogukanUrker posted for this file on this hardware; we have not run it.",
+  "model": "inkling-2-mini",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 2445633,
+    "checkpoint": "unsloth/Inkling-2-Mini-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q2",
+    "quant_detail": "UD-IQ2_XXS, 8.49 GB",
+    "format": "gguf",
+    "size_gb": 8.49,
+    "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as written in the post",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-12gb"
+  ],
+  "requirements": {
+    "memory_gb": 11,
+    "disk_gb": 8.49,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+    "command": "llama-server -m Inkling-2-Mini-UD-IQ2_XXS.gguf -ngl 99 -c 262144 -fa on --jinja -np 1 --cache-type-k q4_0 --cache-type-v q4_0 -b 2048 -ub 16 --temp 1.0 --top-p 1.0 --top-k 0 --min-p 0.0 --reasoning on",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "llama-server -m Inkling-2-Mini-UD-IQ2_XXS.gguf -ngl 99 -c 262144 -fa on --jinja -np 1 --cache-type-k q4_0 --cache-type-v q4_0 -b 2048 -ub 16 --temp 1.0 --top-p 1.0 --top-k 0 --min-p 0.0 --reasoning on"
+      }
+    ]
+  },
+  "measurements": [],
+  "provenance_tier": null,
+  "caveats": [
+    "Shared on social: @DogukanUrker posted this command (2026-11-22); we have not run it. Picked up by the Local Hosting Radar."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://x.com/DogukanUrker/status/2124072810431537504",
+      "kind": "post",
+      "note": "@DogukanUrker's post with this command",
+      "lineage_id": "dogukanurker-810431537504",
+      "quote": "llama-server -m Inkling-2-Mini-UD-IQ2_XXS.gguf -ngl 99 -c 262144 -fa on --jinja -np 1 --cache-type-k q4_0 --cache-type-v q4_0 -b 2048 -ub 16 --temp 1.0 --top-p 1.0 --top-k 0 --min-p 0.0 --reasoning on"
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "dogukanurker-810431537504",
+        "actor": "@DogukanUrker",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/DogukanUrker/status/2124072810431537504"
+        ],
+        "locator": "post 2124072810431537504, Radar 2026-11-22",
+        "note": "Run command copied word-for-word from the post (checked against the Radar's saved sources)."
+      }
+    ]
+  },
+  "updated": "2026-11-26",
+  "schema_version": 2
+}

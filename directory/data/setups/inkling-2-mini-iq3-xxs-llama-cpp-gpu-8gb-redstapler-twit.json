@@ -1,0 +1,223 @@
+{
+  "id": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit",
+  "title": "Inkling-2-Mini IQ3_XXS on llama.cpp, 8 GB laptop or desktop GPU (reported by @redStapler_twit)",
+  "slug_note": "Numbers @redStapler_twit posted for this file on this hardware; we have not run it.",
+  "model": "inkling-2-mini",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 2445633,
+    "checkpoint": "unsloth/Inkling-2-Mini-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q3",
+    "quant_detail": "IQ3_XXS, 11.66 GB",
+    "format": "gguf",
+    "size_gb": 11.66,
+    "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as described in the post (llama.cpp b12649)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "gpu-8gb"
+  ],
+  "requirements": {
+    "memory_gb": 15,
+    "disk_gb": 11.66,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The post gives no full run command; see the source post for the author's setup."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 32.6,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-25",
+      "source": "https://x.com/redStapler_twit/status/2125619861149954245",
+      "context": "RTX 4060 8GB + CPU, llama.cpp b12649, IQ3_XXS, 100k context, Q4 KV cache",
+      "conditions": {
+        "context_label": "100k context, Q4 KV cache",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "redstapler-twit-861149954245",
+        "quality_status": "unchecked"
+      },
+      "id": "r001"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 24.3,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-25",
+      "source": "https://x.com/redStapler_twit/status/2125619861149954245",
+      "context": "RTX 4060 8GB + CPU, llama.cpp b12649, Q4_K_M, 100k context, Q4 KV cache",
+      "conditions": {
+        "context_label": "100k context, Q4 KV cache",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "redstapler-twit-861149954245",
+        "quality_status": "unchecked"
+      },
+      "id": "r002"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 27.2,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-25",
+      "source": "https://x.com/redStapler_twit/status/2125619861149954245",
+      "context": "RTX 4060 8GB + CPU, llama.cpp b12649, Q3_K_XL, 100k context, Q4 KV cache",
+      "conditions": {
+        "context_label": "100k context, Q4 KV cache",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "redstapler-twit-861149954245",
+        "quality_status": "unchecked"
+      },
+      "id": "r003"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 22.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-23",
+      "source": "https://x.com/analogalok/status/2124937493258932336",
+      "context": "RTX 4060 8GB + 16GB RAM, llama.cpp b12651, UD-Q3_K_XL, ctx-size 18000; short prompt and 10,823-token prompt both 22.0 tok/s",
+      "conditions": {
+        "context_label": "ctx-size 18000; short prompt and 10,823-token prompt both 22",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "analogalok-493258932336",
+        "quality_status": "unchecked"
+      },
+      "id": "r004"
+    },
+    {
+      "metric": "prefill_tok_s",
+      "value": 88.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-23",
+      "source": "https://x.com/analogalok/status/2124937493258932336",
+      "context": "RTX 4060 8GB + 16GB RAM, llama.cpp b12651, UD-Q3_K_XL, 10,823-token prompt",
+      "conditions": {
+        "context_label": "10,823-token prompt",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "analogalok-493258932336",
+        "quality_status": "unchecked"
+      },
+      "id": "r005"
+    }
+  ],
+  "provenance_tier": "forum",
+  "caveats": [
+    "Community-reported: @redStapler_twit posted these numbers; we have not run this recipe. Picked up by the Local Hosting Radar (2026-11-26)."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://x.com/redStapler_twit/status/2125619861149954245",
+      "kind": "post",
+      "note": "@redStapler_twit's post with the numbers",
+      "lineage_id": "redstapler-twit-861149954245",
+      "quote": "32.60 tok/s on 8 GB VRAM. Inkling 2 Mini really did it!"
+    },
+    {
+      "url": "https://x.com/analogalok/status/2124937493258932336",
+      "kind": "post",
+      "note": "@analogalok's post with the numbers",
+      "lineage_id": "analogalok-493258932336",
+      "quote": "pushed Inkling 2 Mini (26.4B looped MoE) from 17.1 -> 22.0 tok/s on my 8GB RTX 4060 (+29% faster, zero quality loss)"
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "redstapler-twit-861149954245",
+        "actor": "@redStapler_twit",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/redStapler_twit/status/2125619861149954245"
+        ],
+        "locator": "post 2125619861149954245, Radar 2026-11-26",
+        "note": "Verbatim: \"32.60 tok/s on 8 GB VRAM. Inkling 2 Mini really did it!\" (checked against the Radar's saved sources)."
+      },
+      {
+        "id": "analogalok-493258932336",
+        "actor": "@analogalok",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/analogalok/status/2124937493258932336"
+        ],
+        "locator": "post 2124937493258932336, Radar 2026-11-24",
+        "note": "Verbatim: \"pushed Inkling 2 Mini (26.4B looped MoE) from 17.1 -> 22.0 tok/s on my 8GB RTX 4060 (+29% faster, zero quality loss)\" (checked against the Radar's saved sources)."
+      }
+    ],
+    "open_questions": [
+      {
+        "id": "fit-not-stated",
+        "type": "other",
+        "question": "The source reports running this 11.66 GB file on 8 GB laptop or desktop GPU (RTX 4060 / 4060 Laptop / 4070 Laptop class) (7.5 GB usable); how it fits (CPU offload, partial layers, mmap) is not stated.",
+        "blocks": [
+          "fit_claim"
+        ],
+        "owner": "radar-intake",
+        "status": "open",
+        "source": "https://x.com/redStapler_twit/status/2125619861149954245",
+        "locator": "post 2125619861149954245, Radar 2026-11-26"
+      }
+    ]
+  },
+  "updated": "2026-11-26",
+  "schema_version": 2
+}
