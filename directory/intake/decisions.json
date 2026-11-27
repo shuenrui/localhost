@@ -173,6 +173,12 @@
   "reason": "out of scope for an LLM-hosting directory (pipeline mask-generation)",
   "seen": "2026-11-26"
  },
+ "frontiersmind/lumma-fev-4b-v2": {
+  "decision": "skip",
+  "radar_date": "2026-11-27",
+  "reason": "out of scope for an LLM-hosting directory (pipeline text-classification)",
+  "seen": "2026-11-27"
+ },
  "harness-hub/qwen3.8-27b-hermes-adapted": {
   "decision": "skip",
   "radar_date": "2026-11-20",
@@ -190,6 +196,18 @@
   "radar_date": "2026-11-18",
   "reason": "LoRA adapter, not runnable weights on its own",
   "seen": "2026-11-19"
+ },
+ "harness-hub/qwen3.8-27b-super-adapter": {
+  "decision": "skip",
+  "radar_date": "2026-11-27",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-27"
+ },
+ "harness-hub/qwen3.8-27b-super-adapter-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-27",
+  "reason": "LoRA adapter, not runnable weights on its own",
+  "seen": "2026-11-27"
  },
  "harness-hub/qwen3.8-27b-think-pi-adapted": {
   "decision": "skip",
@@ -238,6 +256,18 @@
   "radar_date": "2026-11-25",
   "reason": "out of scope for an LLM-hosting directory (pipeline audio-to-audio)",
   "seen": "2026-11-26"
+ },
+ "ista-daslab/inkling-2-mini-gsq-rco-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-27",
+  "reason": "recipe",
+  "seen": "2026-11-27"
+ },
+ "kandinskylab/kandinsky-imagesr-2.0": {
+  "decision": "skip",
+  "radar_date": "2026-11-27",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-to-image)",
+  "seen": "2026-11-27"
  },
  "krafton/raon-1-mini": {
   "decision": "add",
@@ -437,11 +467,23 @@
   "reason": "sub-2B edge model (0.87B), outside the directory's stated scope",
   "seen": "2026-11-23"
  },
+ "sahenjp/ternary-bonsai-2.5-27b-qsa-gguf": {
+  "decision": "add",
+  "radar_date": "2026-11-27",
+  "reason": "derived",
+  "seen": "2026-11-27"
+ },
  "saidutta69/lfm3-1.7b-claude-fable5.1": {
   "decision": "skip",
   "radar_date": "2026-11-13",
   "reason": "sub-2B edge model (1.73B), outside the directory's stated scope",
   "seen": "2026-11-19"
+ },
+ "sand-ai/magi-2-preview": {
+  "decision": "skip",
+  "radar_date": "2026-11-27",
+  "reason": "out of scope for an LLM-hosting directory (pipeline image-text-to-video)",
+  "seen": "2026-11-27"
  },
  "scantist/glm-5.3-slim-gguf": {
   "decision": "skip",

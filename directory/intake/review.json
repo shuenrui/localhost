@@ -47,13 +47,20 @@
    "first_seen": "2026-11-24"
   },
   "TensorFold": {
-   "count": 11,
+   "count": 13,
    "examples": [
-    "https://x.com/MiaAI_lab/status/2125539171443892321",
-    "https://x.com/niklaslenz_ai/status/2125622415820476862",
-    "https://x.com/pratikg/status/2125743920806293745"
+    "https://x.com/ashxhart/status/2126056575710188011",
+    "https://x.com/ashxhart/status/2126079300260475147",
+    "https://x.com/MiaAI_lab/status/2125539171443892321"
    ],
    "first_seen": "2026-11-25"
+  },
+  "arcangel": {
+   "count": 1,
+   "examples": [
+    "https://x.com/txl420/status/2125798275165102439"
+   ],
+   "first_seen": "2026-11-27"
   },
   "custom Zig + sm_120a CUDA engine": {
    "count": 2,
@@ -76,14 +83,30 @@
    ],
    "first_seen": "2026-11-24"
   },
-  "not stated": {
-   "count": 3,
+  "mlx-serve": {
+   "count": 2,
    "examples": [
+    "https://x.com/CerebralCoding_/status/2125877745158607113",
+    "https://x.com/niklaslenz_ai/status/2125975365013422118"
+   ],
+   "first_seen": "2026-11-27"
+  },
+  "not stated": {
+   "count": 4,
+   "examples": [
+    "https://x.com/christopherowen/status/2125957886564053046",
     "https://x.com/yume_arasaki/status/2124925408412086607",
-    "https://x.com/lotar_vk/status/2124987924370333786",
-    "https://x.com/Helios_Rises/status/2124935877348708495"
+    "https://x.com/lotar_vk/status/2124987924370333786"
    ],
    "first_seen": "2026-11-24"
+  },
+  "oMLX": {
+   "count": 4,
+   "examples": [
+    "https://x.com/jundotkim/status/2125956304976114170",
+    "https://x.com/CerebralCoding_/status/2125973653661561227"
+   ],
+   "first_seen": "2026-11-27"
   }
  },
  "file_size": {
@@ -96,12 +119,33 @@
   }
  },
  "hardware": {
+  "A10G 24GB": {
+   "count": 1,
+   "examples": [
+    "https://x.com/sahenjpn/status/2125929830718017728"
+   ],
+   "first_seen": "2026-11-27"
+  },
   "AMD EPYC 7642 (CPU-only)": {
    "count": 2,
    "examples": [
     "https://x.com/superalesha/status/2125682626056839259"
    ],
    "first_seen": "2026-11-26"
+  },
+  "AMD EPYC 7642 (CPU-only, 32 threads)": {
+   "count": 1,
+   "examples": [
+    "https://x.com/superalesha/status/2126041962272690479"
+   ],
+   "first_seen": "2026-11-27"
+  },
+  "AMD EPYC 7642 (CPU-only, 4 threads)": {
+   "count": 1,
+   "examples": [
+    "https://x.com/superalesha/status/2125682626056839259"
+   ],
+   "first_seen": "2026-11-27"
   },
   "AMD Radeon AI PRO R9700 32GB": {
    "count": 1,
@@ -116,6 +160,13 @@
     "https://x.com/CerebralCoding_/status/2124832169939853781"
    ],
    "first_seen": "2026-11-24"
+  },
+  "M3 Ultra": {
+   "count": 1,
+   "examples": [
+    "https://x.com/pjain/status/2125982238894628992"
+   ],
+   "first_seen": "2026-11-27"
   },
   "M4 Pro": {
    "count": 3,
@@ -162,6 +213,13 @@
    ],
    "first_seen": "2026-11-25"
   },
+  "RTX 3080 10GB": {
+   "count": 1,
+   "examples": [
+    "https://x.com/santmun__/status/2125816054991716365"
+   ],
+   "first_seen": "2026-11-27"
+  },
   "RTX 4060 Ti 16GB": {
    "count": 1,
    "examples": [
@@ -175,6 +233,13 @@
     "https://x.com/redStapler_twit/status/2124852518538952709"
    ],
    "first_seen": "2026-11-24"
+  },
+  "Tesla T4 16GB": {
+   "count": 2,
+   "examples": [
+    "https://x.com/sahenjpn/status/2125929830718017728"
+   ],
+   "first_seen": "2026-11-27"
   },
   "V100 32GB": {
    "count": 1,
@@ -285,5 +350,5 @@
    "seen": "2026-11-19"
   }
  },
- "updated": "2026-11-26"
+ "updated": "2026-11-27"
 }
