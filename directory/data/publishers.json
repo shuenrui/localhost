@@ -444,6 +444,12 @@
       "kind": "quant-shop",
       "role": "Added by the Radar intake from its Hugging Face org page.",
       "url": "https://huggingface.co/Lucebox"
+    },
+    "sahenjp": {
+      "name": "sahenjp",
+      "kind": "builder",
+      "role": "Added by the Radar intake from its Hugging Face org page.",
+      "url": "https://huggingface.co/sahenjp"
     }
   }
 }

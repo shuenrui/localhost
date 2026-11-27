@@ -131,6 +131,27 @@
         "quality_status": "unchecked"
       },
       "id": "r004"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 86.62,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-26",
+      "source": "https://x.com/niklaslenz_ai/status/2125975365013422118",
+      "context": "RTX 5090 32GB, llama.cpp b12631, UD-Q4_K_XL",
+      "conditions": {
+        "context_label": "as posted",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-365013422118",
+        "quality_status": "unchecked"
+      },
+      "id": "r005"
     }
   ],
   "provenance_tier": "forum",
@@ -163,6 +184,13 @@
       "note": "@niklaslenz_ai's post with the numbers",
       "lineage_id": "niklaslenz-ai-831178387772",
       "quote": "Inkling goes from 86.4 to 70.3 after 64K"
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2125975365013422118",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-365013422118",
+      "quote": " Mini, llama.cpp b12631, UD-Q4_K_XL: 86.35 code, 86.62 prose tok/s"
     }
   ],
   "evidence": {
@@ -197,9 +225,19 @@
         ],
         "locator": "post 2124983831178387772, Radar 2026-11-24",
         "note": "Verbatim: \"Inkling goes from 86.4 to 70.3 after 64K\" (checked against the Radar's saved sources)."
+      },
+      {
+        "id": "niklaslenz-ai-365013422118",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2125975365013422118"
+        ],
+        "locator": "post 2125975365013422118, Radar 2026-11-27",
+        "note": "Verbatim: \" Mini, llama.cpp b12631, UD-Q4_K_XL: 86.35 code, 86.62 prose tok/s\" (checked against the Radar's saved sources)."
       }
     ]
   },
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "schema_version": 2
 }

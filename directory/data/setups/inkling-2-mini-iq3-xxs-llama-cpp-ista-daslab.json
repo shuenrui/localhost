@@ -1,0 +1,69 @@
+{
+  "id": "inkling-2-mini-iq3-xxs-llama-cpp-ista-daslab",
+  "title": "Inkling-2-Mini IQ3_XXS on llama.cpp (ISTA-DASLab)",
+  "slug_note": "10.61 GB GGUF from ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF; untested.",
+  "model": "inkling-2-mini",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 0,
+    "checkpoint": "ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF",
+    "publisher": "ista-daslab",
+    "quant": "gguf-q3",
+    "quant_detail": "IQ3_XXS, 10.61 GB (also published: BF16, IQ2_S, IQ3_S, Q2_K_XL, Q8_0)",
+    "format": "gguf",
+    "size_gb": 10.61,
+    "url": "https://huggingface.co/ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF",
+    "revision": "f0da1097633dd7c2f5733e4077cff861be122245",
+    "revision_note": "HF main at intake (2026-11-27)"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "not stated on the card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "gpu-24gb",
+    "mac-16gb"
+  ],
+  "requirements": {
+    "memory_gb": 14,
+    "disk_gb": 10.61,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The model card records no run command; follow the card's own instructions."
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-27, story \"Radar raw signal: HF TRENDING (top 30; age = days since repo created)\"). Nothing on this page is measured yet.",
+    "No run command on the model card, so none is shown here (the directory never makes one up)."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-27",
+  "schema_version": 2
+}

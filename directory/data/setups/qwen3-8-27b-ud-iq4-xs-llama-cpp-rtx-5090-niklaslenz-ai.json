@@ -1,0 +1,108 @@
+{
+  "id": "qwen3-8-27b-ud-iq4-xs-llama-cpp-rtx-5090-niklaslenz-ai",
+  "title": "Qwen3.8-27B UD-IQ4_XS on llama.cpp, NVIDIA GeForce RTX 5090 (reported by @niklaslenz_ai)",
+  "slug_note": "Numbers @niklaslenz_ai posted for this file on this hardware; we have not run it.",
+  "model": "qwen3-8-27b",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 8181570,
+    "checkpoint": "unsloth/Qwen3.8-27B-GGUF",
+    "publisher": "unsloth",
+    "quant": "gguf-q4",
+    "quant_detail": "UD-IQ4_XS, 14.35 GB",
+    "format": "gguf",
+    "size_gb": 14.35,
+    "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF"
+  },
+  "engine": {
+    "id": "llama-cpp",
+    "config": "as described in the post (llama.cpp b12675)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "rtx-5090"
+  ],
+  "requirements": {
+    "memory_gb": 18,
+    "disk_gb": 14.35,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install llama.cpp (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The post gives no full run command; see the source post for the author's setup."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 85.23,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-26",
+      "source": "https://x.com/niklaslenz_ai/status/2125975365013422118",
+      "context": "RTX 5090 32GB, llama.cpp b12675, UD-IQ4_XS",
+      "conditions": {
+        "context_label": "as posted",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "niklaslenz-ai-365013422118",
+        "quality_status": "unchecked"
+      },
+      "id": "r001"
+    }
+  ],
+  "provenance_tier": "forum",
+  "caveats": [
+    "Community-reported: @niklaslenz_ai posted these numbers; we have not run this recipe. Picked up by the Local Hosting Radar (2026-11-27)."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://x.com/niklaslenz_ai/status/2125975365013422118",
+      "kind": "post",
+      "note": "@niklaslenz_ai's post with the numbers",
+      "lineage_id": "niklaslenz-ai-365013422118",
+      "quote": "llama.cpp b12675: 84.76 code, 85.23 prose tok/s"
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "niklaslenz-ai-365013422118",
+        "actor": "@niklaslenz_ai",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/niklaslenz_ai/status/2125975365013422118"
+        ],
+        "locator": "post 2125975365013422118, Radar 2026-11-27",
+        "note": "Verbatim: \"llama.cpp b12675: 84.76 code, 85.23 prose tok/s\" (checked against the Radar's saved sources)."
+      }
+    ]
+  },
+  "updated": "2026-11-27",
+  "schema_version": 2
+}
