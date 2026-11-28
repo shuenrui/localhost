@@ -1,0 +1,67 @@
+{
+  "id": "tess-4-5-26b-a3b-bf16-vllm-migtissera",
+  "title": "Tess-4.5-26B-A3B BF16 on SGLang (migtissera)",
+  "slug_note": "20.16 GB safetensors from migtissera/Tess-4.5-26B-A3B; untested.",
+  "model": "tess-4-5-26b-a3b",
+  "status": "untested",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 0,
+    "checkpoint": "migtissera/Tess-4.5-26B-A3B",
+    "publisher": "migtissera",
+    "quant": "bf16",
+    "quant_detail": "weights as published, 20.16 GB of safetensors",
+    "format": "safetensors",
+    "size_gb": 20.16,
+    "url": "https://huggingface.co/migtissera/Tess-4.5-26B-A3B",
+    "revision": "aa4682763e42c4efd0bf8209d8aa5986f731c691",
+    "revision_note": "HF main at intake (2026-11-28)"
+  },
+  "engine": {
+    "id": "sglang",
+    "config": "as written on the model card",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark",
+    "rtx-5090"
+  ],
+  "requirements": {
+    "memory_gb": 24,
+    "disk_gb": 20.16,
+    "min_vram_gb": null,
+    "notes": "Estimate: file size x 1.1 plus 2 GB KV headroom. Not measured."
+  },
+  "run": {
+    "repo": "https://huggingface.co/migtissera/Tess-4.5-26B-A3B",
+    "command": "sglang serve --model-path migtissera/Tess-4.5-26B-A3B --tp 1 --reasoning-parser inkling --tool-call-parser inkling2 --enable-multimodal --host 0.0.0.0 --port 30000",
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install SGLang (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "cmd",
+        "text": "sglang serve --model-path migtissera/Tess-4.5-26B-A3B --tp 1 --reasoning-parser inkling --tool-call-parser inkling2 --enable-multimodal --host 0.0.0.0 --port 30000"
+      }
+    ]
+  },
+  "measurements": [],
+  "caveats": [
+    "Untested: added from the Local Hosting Radar (2026-11-28, Model scout section). Nothing on this page is measured yet."
+  ],
+  "provenance_tier": null,
+  "sources": [
+    {
+      "url": "https://huggingface.co/migtissera/Tess-4.5-26B-A3B",
+      "kind": "model",
+      "note": "model card (all facts on this page)"
+    }
+  ],
+  "updated": "2026-11-28",
+  "schema_version": 2
+}

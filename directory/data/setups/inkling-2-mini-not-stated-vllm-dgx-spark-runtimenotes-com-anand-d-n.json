@@ -1,0 +1,129 @@
+{
+  "id": "inkling-2-mini-not-stated-vllm-dgx-spark-runtimenotes-com-anand-d-n",
+  "title": "Inkling-2-Mini NOT STATED on vLLM, NVIDIA DGX Spark (reported by @runtimenotes.com (Anand D N))",
+  "slug_note": "Numbers @runtimenotes.com (Anand D N) posted for this file on this hardware; we have not run it.",
+  "model": "inkling-2-mini",
+  "status": "reported",
+  "variation": {
+    "license": "Apache-2.0",
+    "downloads": 155741,
+    "checkpoint": "thinkingmachines/Inkling-2-Mini",
+    "publisher": "thinkingmachines",
+    "quant": "bf16",
+    "quant_detail": "NOT STATED, 20.16 GB",
+    "format": "safetensors",
+    "size_gb": 20.16,
+    "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini"
+  },
+  "engine": {
+    "id": "vllm",
+    "config": "as described in the post (vllm version not stated)",
+    "image": null,
+    "requires_fork": false,
+    "draft_model": null,
+    "spec_decode": "none",
+    "flags": []
+  },
+  "hardware": [
+    "dgx-spark"
+  ],
+  "requirements": {
+    "memory_gb": 24,
+    "disk_gb": 20.16,
+    "min_vram_gb": null,
+    "notes": "Estimate from the file size; the post did not give memory use."
+  },
+  "run": {
+    "repo": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+    "command": null,
+    "steps": [
+      {
+        "kind": "do",
+        "text": "Install vLLM (see Step 0 in Quick start)."
+      },
+      {
+        "kind": "do",
+        "text": "The post gives no full run command; see the source post for the author's setup."
+      }
+    ]
+  },
+  "measurements": [
+    {
+      "metric": "decode_per_stream",
+      "value": 101.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-27",
+      "source": "https://runtimenotes.com/blog/getting-101-tok-s-from-inkling-2-mini-in-vllm-on-one-gb10/",
+      "context": "NVIDIA GB10, vllm, not stated, single request, 131,072-token ctx kept",
+      "conditions": {
+        "context_label": "single request, 131,072-token ctx kept",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "runtimenotes-com-anand-d-n",
+        "quality_status": "unchecked"
+      },
+      "id": "r001"
+    },
+    {
+      "metric": "decode_agg",
+      "value": 195.7,
+      "unit": "tok/s",
+      "concurrency": 4,
+      "provenance": "forum",
+      "date": "2026-11-27",
+      "source": "https://runtimenotes.com/blog/getting-101-tok-s-from-inkling-2-mini-in-vllm-on-one-gb10/",
+      "context": "NVIDIA GB10, vllm, not stated, aggregate, four concurrent requests",
+      "conditions": {
+        "context_label": "aggregate, four concurrent requests",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "runtimenotes-com-anand-d-n",
+        "quality_status": "unchecked"
+      },
+      "id": "r002"
+    }
+  ],
+  "provenance_tier": "forum",
+  "caveats": [
+    "Community-reported: @runtimenotes.com (Anand D N) posted these numbers; we have not run this recipe. Picked up by the Local Hosting Radar (2026-11-28)."
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+      "kind": "model",
+      "note": "model files"
+    },
+    {
+      "url": "https://runtimenotes.com/blog/getting-101-tok-s-from-inkling-2-mini-in-vllm-on-one-gb10/",
+      "kind": "post",
+      "note": "@runtimenotes.com (Anand D N)'s post with the numbers",
+      "lineage_id": "runtimenotes-com-anand-d-n",
+      "quote": "101 tok/s for a single request."
+    }
+  ],
+  "evidence": {
+    "rubric_version": "1.0",
+    "lineages": [
+      {
+        "id": "runtimenotes-com-anand-d-n",
+        "actor": "@runtimenotes.com (Anand D N)",
+        "kind": "builder_reply",
+        "sources": [
+          "https://runtimenotes.com/blog/getting-101-tok-s-from-inkling-2-mini-in-vllm-on-one-gb10/"
+        ],
+        "locator": "post , Radar 2026-11-28",
+        "note": "Verbatim: \"101 tok/s for a single request.\" (checked against the Radar's saved sources)."
+      }
+    ]
+  },
+  "updated": "2026-11-28",
+  "schema_version": 2
+}

@@ -68,6 +68,27 @@
         "quality_status": "unchecked"
       },
       "id": "r001"
+    },
+    {
+      "metric": "decode_per_stream",
+      "value": 83.0,
+      "unit": "tok/s",
+      "concurrency": 1,
+      "provenance": "forum",
+      "date": "2026-11-27",
+      "source": "https://x.com/latentone_/status/2126322922742759656",
+      "context": "DGX Spark, sglang, not stated, greedy, 1k context, bundled draft model",
+      "conditions": {
+        "context_label": "greedy, 1k context, bundled draft model",
+        "hardware_count": 1
+      },
+      "evidence": {
+        "level": "c2_observation",
+        "method_grade": "author_report",
+        "lineage_id": "latentone-922742759656",
+        "quality_status": "unchecked"
+      },
+      "id": "r002"
     }
   ],
   "provenance_tier": "forum",
@@ -86,6 +107,13 @@
       "note": "@niklaslenz_ai's post with the numbers",
       "lineage_id": "niklaslenz-ai-622346310086",
       "quote": "One DGX Spark: 61.2 tok/s on SGLang, the lab's NVFP4 checkpoint, draft model on"
+    },
+    {
+      "url": "https://x.com/latentone_/status/2126322922742759656",
+      "kind": "post",
+      "note": "@latentone_'s post with the numbers",
+      "lineage_id": "latentone-922742759656",
+      "quote": "the bundled draft model took greedy decode from 37 to 83 tok/s at 1k context"
     }
   ],
   "evidence": {
@@ -100,9 +128,19 @@
         ],
         "locator": "post 2125255622346310086, Radar 2026-11-25",
         "note": "Verbatim: \"One DGX Spark: 61.2 tok/s on SGLang, the lab's NVFP4 checkpoint, draft model on\" (checked against the Radar's saved sources)."
+      },
+      {
+        "id": "latentone-922742759656",
+        "actor": "@latentone_",
+        "kind": "builder_reply",
+        "sources": [
+          "https://x.com/latentone_/status/2126322922742759656"
+        ],
+        "locator": "post 2126322922742759656, Radar 2026-11-28",
+        "note": "Verbatim: \"the bundled draft model took greedy decode from 37 to 83 tok/s at 1k context\" (checked against the Radar's saved sources)."
       }
     ]
   },
-  "updated": "2026-11-26",
+  "updated": "2026-11-28",
   "schema_version": 2
 }

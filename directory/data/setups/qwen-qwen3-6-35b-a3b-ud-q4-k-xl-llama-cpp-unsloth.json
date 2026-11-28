@@ -53,7 +53,8 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-26, story \"Magnitude makes the SSD a memory tier — read the replies before the demo\"). Nothing on this page is measured yet."
+    "Untested: added from the Local Hosting Radar (2026-11-26, story \"Magnitude makes the SSD a memory tier — read the replies before the demo\"). Nothing on this page is measured yet.",
+    "Ran as written on our DGX Spark on 2026-11-27: did not work (no usable bench output). Raw: spark:~/lab/queue/results/qwen-qwen3-6-35b-a3b-ud-q4-k-xl-llama-cpp-unsloth-spark.json"
   ],
   "provenance_tier": null,
   "sources": [
@@ -63,6 +64,6 @@
       "note": "model card (all facts on this page)"
     }
   ],
-  "updated": "2026-11-26",
+  "updated": "2026-11-28",
   "schema_version": 2
 }

@@ -53,7 +53,8 @@
   },
   "measurements": [],
   "caveats": [
-    "Untested: added from the Local Hosting Radar (2026-11-25, story \"Kolibri 1.1 (Aleph Alpha): 75B/3.44B MoE, Apache 2.0, official GGUFs down to 16.6 GB\"). Nothing on this page is measured yet."
+    "Untested: added from the Local Hosting Radar (2026-11-25, story \"Kolibri 1.1 (Aleph Alpha): 75B/3.44B MoE, Apache 2.0, official GGUFs down to 16.6 GB\"). Nothing on this page is measured yet.",
+    "Ran as written on our DGX Spark on 2026-11-27: did not work (error loading model: check_tensor_dims: tensor 'blk.0.ffn_gate_inp.weight' not found). Raw: spark:~/lab/queue/results/kolibri-1-1-q4-k-m-llama-cpp-aleph-alpha-spark.json"
   ],
   "provenance_tier": null,
   "sources": [
@@ -63,6 +64,6 @@
       "note": "model card (all facts on this page)"
     }
   ],
-  "updated": "2026-11-26",
+  "updated": "2026-11-28",
   "schema_version": 2
 }
