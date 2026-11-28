@@ -21,15 +21,6 @@
    ],
    "first_seen": "2026-11-25"
   },
-  "Magnitude": {
-   "count": 5,
-   "examples": [
-    "https://x.com/akshay_pachaar/status/2125573832039891119",
-    "https://x.com/tomgreenwald/status/2125349154507641143",
-    "https://x.com/tomgreenwald/status/2125348896805175791"
-   ],
-   "first_seen": "2026-11-25"
-  },
   "Project Maya": {
    "count": 1,
    "examples": [
@@ -46,15 +37,6 @@
    ],
    "first_seen": "2026-11-24"
   },
-  "TensorFold": {
-   "count": 13,
-   "examples": [
-    "https://x.com/ashxhart/status/2126056575710188011",
-    "https://x.com/ashxhart/status/2126079300260475147",
-    "https://x.com/MiaAI_lab/status/2125539171443892321"
-   ],
-   "first_seen": "2026-11-25"
-  },
   "arcangel": {
    "count": 1,
    "examples": [
@@ -70,8 +52,9 @@
    "first_seen": "2026-11-25"
   },
   "gr8": {
-   "count": 1,
+   "count": 2,
    "examples": [
+    "https://x.com/mmastrac/status/2126366441087922318",
     "https://x.com/coffeedev/status/2125020872662773811"
    ],
    "first_seen": "2026-11-24"
@@ -82,6 +65,15 @@
     "https://x.com/jifarthing/status/2125007766544617833"
    ],
    "first_seen": "2026-11-24"
+  },
+  "magnitude": {
+   "count": 7,
+   "examples": [
+    "https://x.com/tomgreenwald/status/2126387304541339827",
+    "https://x.com/akshay_pachaar/status/2125573832039891119",
+    "https://x.com/tomgreenwald/status/2125349154507641143"
+   ],
+   "first_seen": "2026-11-25"
   },
   "mlx-serve": {
    "count": 2,
@@ -107,6 +99,15 @@
     "https://x.com/CerebralCoding_/status/2125973653661561227"
    ],
    "first_seen": "2026-11-27"
+  },
+  "tensorfold": {
+   "count": 17,
+   "examples": [
+    "https://x.com/MiaAI_lab/status/2126259007698440271",
+    "https://x.com/MiaAI_lab/status/2126264744289902942",
+    "https://x.com/ashxhart/status/2126056575710188011"
+   ],
+   "first_seen": "2026-11-25"
   }
  },
  "file_size": {
@@ -119,6 +120,13 @@
   }
  },
  "hardware": {
+  "8GB laptop GPU": {
+   "count": 1,
+   "examples": [
+    "https://x.com/analogalok/status/2126219278655602902"
+   ],
+   "first_seen": "2026-11-28"
+  },
   "A10G 24GB": {
    "count": 1,
    "examples": [
@@ -186,8 +194,9 @@
    "first_seen": "2026-11-24"
   },
   "M5 Ultra": {
-   "count": 2,
+   "count": 3,
    "examples": [
+    "https://x.com/CerebralCoding_/status/2126230441187213370",
     "https://x.com/CerebralCoding_/status/2125590555124211835"
    ],
    "first_seen": "2026-11-26"
@@ -254,6 +263,13 @@
     "https://x.com/donlee21480/status/2124930812147839441"
    ],
    "first_seen": "2026-11-24"
+  },
+  "Xeon, 8 vCPUs, 8 GB RAM, no GPU": {
+   "count": 2,
+   "examples": [
+    "https://x.com/swarogan/status/2126320172617109737"
+   ],
+   "first_seen": "2026-11-28"
   }
  },
  "hold_days": 14,
@@ -300,6 +316,12 @@
    "radar_date": "2026-11-25",
    "reason": "speculative-decoding helper: belongs on its base model's recipe as a draft_model, not a new entry",
    "seen": "2026-11-26"
+  },
+  "migtissera/tess-4.5-26b-a3b-gguf": {
+   "decision": "review",
+   "radar_date": "2026-11-28",
+   "reason": "file sizes look partial (0.75 GB for a 26.39B model)",
+   "seen": "2026-11-28"
   },
   "nari-labs/qwen3.8-27b-nariq-gguf": {
    "decision": "review",
@@ -350,5 +372,5 @@
    "seen": "2026-11-19"
   }
  },
- "updated": "2026-11-27"
+ "updated": "2026-11-28"
 }

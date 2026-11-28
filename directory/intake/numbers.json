@@ -5,6 +5,18 @@
   "src": "https://x.com/tensorfish/status/2124975715141689818",
   "why": "engine 'custom Zig + sm_120a CUDA engine' is not one the directory lists"
  },
+ "060a2b8f74b8553a": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2126259007698440271",
+  "why": "engine 'tensorfold' is not one the directory lists"
+ },
+ "074404d10474a5a7": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/CerebralCoding_/status/2126230441187213370",
+  "why": "hardware 'M5 Ultra' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
  "0749b342a841879d": {
   "date": "2026-11-26",
   "done": false,
@@ -21,17 +33,34 @@
   "done": true,
   "setup": "qwen3-8-27b-unspecified-llama-cpp-gpu-24gb-chuck-wolfe"
  },
+ "0fa519e87ee13d6b": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2126259007698440271",
+  "why": "engine 'tensorfold' is not one the directory lists"
+ },
  "0fb4550de76f7170": {
   "date": "2026-11-27",
   "done": false,
   "src": "https://x.com/jundotkim/status/2125956304976114170",
   "why": "engine 'oMLX' is not one the directory lists"
  },
+ "0fd5eaaf26f10ad1": {
+  "date": "2026-11-28",
+  "done": true,
+  "setup": "inkling-2-mini-not-stated-vllm-dgx-spark-runtimenotes-com-anand-d-n"
+ },
  "0fe943868669571b": {
   "date": "2026-11-25",
   "done": true,
   "src": "https://x.com/wei_wang/status/2125065880698495103",
   "why": "4-GPU run; the directory's hardware classes are single boxes"
+ },
+ "112f4ae36156ad1f": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/swarogan/status/2126320172617109737",
+  "why": "hardware 'Xeon, 8 vCPUs, 8 GB RAM, no GPU' matches no directory hardware class"
  },
  "12804137d040ec7d": {
   "date": "2026-11-27",
@@ -50,6 +79,12 @@
   "done": false,
   "src": "https://x.com/CerebralCoding_/status/2124832169939853781",
   "why": "hardware 'M4 Pro' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "1a3ac17063d9dd9c": {
+  "date": "2026-11-28",
+  "done": true,
+  "src": "https://x.com/CK2084/status/2126432207564665333",
+  "why": "2-GPU run; the directory's hardware classes are single boxes"
  },
  "1a79757faf73ba05": {
   "date": "2026-11-26",
@@ -95,6 +130,12 @@
   "done": true,
   "setup": "hy4-flash-q4-k-m-llama-cpp-mac-128gb-angelslim"
  },
+ "1d88d679c95d884f": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2126387304541339827",
+  "why": "engine 'magnitude' is not one the directory lists"
+ },
  "1f415a69cbdafcf7": {
   "date": "2026-11-27",
   "done": false,
@@ -117,6 +158,12 @@
   "date": "2026-11-26",
   "done": true,
   "setup": "inkling-2-mini-iq3-xxs-llama-cpp-gpu-8gb-redstapler-twit"
+ },
+ "2a1c4dbe5adb85c4": {
+  "date": "2026-11-28",
+  "done": true,
+  "src": "https://x.com/CerebralCoding_/status/2126230441187213370",
+  "why": "the number is not in the quote"
  },
  "2beb8b3cb0728181": {
   "date": "2026-11-24",
@@ -150,6 +197,12 @@
   "date": "2026-11-25",
   "done": true,
   "setup": "inkling-2-mini-nvfp4-vllm-rtx-5090-niklaslenz-ai"
+ },
+ "34c1f165dda177a0": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/tomgreenwald/status/2126387304541339827",
+  "why": "engine 'magnitude' is not one the directory lists"
  },
  "353c71e9be145344": {
   "date": "2026-11-25",
@@ -257,17 +310,35 @@
   "src": "https://x.com/lotar_vk/status/2124987924370333786",
   "why": "engine 'not stated' is not one the directory lists"
  },
+ "5d2adb5de1275753": {
+  "date": "2026-11-28",
+  "done": true,
+  "src": "https://runtimenotes.com/blog/getting-101-tok-s-from-inkling-2-mini-in-vllm-on-one-gb10/",
+  "why": "the number is not in the quote"
+ },
  "5d3561be8ad1338b": {
   "date": "2026-11-25",
   "done": false,
   "src": "https://x.com/tomgreenwald/status/2125348896805175791",
   "why": "hardware 'Mac mini M5 Pro 48GB' matches no directory hardware class (Mac memory not stated or not a listed size)"
  },
+ "5e1fb5a0c557c065": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/swarogan/status/2126320172617109737",
+  "why": "hardware 'Xeon, 8 vCPUs, 8 GB RAM, no GPU' matches no directory hardware class"
+ },
  "5f6ef774a2747094": {
   "date": "2026-11-27",
   "done": false,
   "src": "https://x.com/pjain/status/2125982238894628992",
   "why": "hardware 'M3 Ultra' matches no directory hardware class (Mac memory not stated or not a listed size)"
+ },
+ "63e3e42630c914e5": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/mmastrac/status/2126366441087922318",
+  "why": "engine 'gr8' is not one the directory lists"
  },
  "64c81de179ac0446": {
   "date": "2026-11-24",
@@ -358,6 +429,11 @@
   "src": "https://x.com/redStapler_twit/status/2124852518538952709",
   "why": "2-GPU run; the directory's hardware classes are single boxes"
  },
+ "84bb6b2f1b2763dc": {
+  "date": "2026-11-28",
+  "done": true,
+  "setup": "inkling-2-mini-nvfp4-sglang-dgx-spark-niklaslenz-ai"
+ },
  "84c5d30109549d3f": {
   "date": "2026-11-26",
   "done": false,
@@ -412,6 +488,12 @@
   "src": "https://x.com/jifarthing/status/2125007766544617833",
   "why": "engine 'ik_llama.cpp' is not one the directory lists"
  },
+ "8e9c8d38d2c18f72": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/analogalok/status/2126219278655602902",
+  "why": "hardware '8GB laptop GPU' matches no directory hardware class"
+ },
  "8fb91822ccb32ac4": {
   "date": "2026-11-27",
   "done": true,
@@ -440,6 +522,12 @@
   "done": false,
   "src": "https://x.com/ashxhart/status/2126056575710188011",
   "why": "engine 'TensorFold' is not one the directory lists"
+ },
+ "97cc363284ad4d07": {
+  "date": "2026-11-28",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2126484725975875996",
+  "why": "quote not found verbatim in the saved sources"
  },
  "99c5d765a8c2f6fd": {
   "date": "2026-11-24",
@@ -488,11 +576,23 @@
   "src": "https://x.com/sahenjpn/status/2125929830718017728",
   "why": "hardware 'A10G 24GB' matches no directory hardware class"
  },
+ "9fad5b7ab72b5a84": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2126259007698440271",
+  "why": "engine 'tensorfold' is not one the directory lists"
+ },
  "9fb26ce7369798b8": {
   "date": "2026-11-25",
   "done": false,
   "src": "https://x.com/uctive/status/2125181271936524665",
   "why": "engine 'STRATA' is not one the directory lists"
+ },
+ "a4118949c31ef1be": {
+  "date": "2026-11-28",
+  "done": false,
+  "src": "https://x.com/MiaAI_lab/status/2126264744289902942",
+  "why": "engine 'tensorfold' is not one the directory lists"
  },
  "a4b81f3ebd0cdfae": {
   "date": "2026-11-24",
@@ -610,6 +710,12 @@
   "src": "https://x.com/CerebralCoding_/status/2125973653661561227",
   "why": "engine 'oMLX' is not one the directory lists"
  },
+ "c57c3e5dfb665253": {
+  "date": "2026-11-28",
+  "done": true,
+  "src": "https://x.com/CK2084/status/2126432207564665333",
+  "why": "2-GPU run; the directory's hardware classes are single boxes"
+ },
  "c619569e2b1d783c": {
   "date": "2026-11-25",
   "done": false,
@@ -621,6 +727,12 @@
   "done": false,
   "src": "https://x.com/TeksEdge/status/2124601310599422302",
   "why": "engine 'Strata' is not one the directory lists"
+ },
+ "c75f48686725f1bc": {
+  "date": "2026-11-28",
+  "done": true,
+  "src": "https://x.com/wei_wang/status/2126484725975875996",
+  "why": "quote not found verbatim in the saved sources"
  },
  "c7b6431097a65964": {
   "date": "2026-11-25",
@@ -680,6 +792,11 @@
   "date": "2026-11-25",
   "done": true,
   "setup": "inkling-2-mini-ud-q4-k-xl-llama-cpp-dgx-spark-niklaslenz-ai"
+ },
+ "dc57ac35ed68ff00": {
+  "date": "2026-11-28",
+  "done": true,
+  "setup": "inkling-2-mini-not-stated-vllm-dgx-spark-runtimenotes-com-anand-d-n"
  },
  "e00155e171b75c7a": {
   "date": "2026-11-26",

@@ -5,6 +5,12 @@
   "reason": "out of scope for an LLM-hosting directory (pipeline text-to-image)",
   "seen": "2026-11-19"
  },
+ "ai-sage/gigachat4-708b-a41b": {
+  "decision": "skip",
+  "radar_date": "2026-11-28",
+  "reason": "too big for any listed hardware class (~468.8 GB at 4-bit)",
+  "seen": "2026-11-28"
+ },
  "aj-gonzalez/coder-lfm3-1.7b-k3.1-pro": {
   "decision": "skip",
   "radar_date": "2026-11-13",
@@ -269,6 +275,12 @@
   "reason": "out of scope for an LLM-hosting directory (pipeline image-to-image)",
   "seen": "2026-11-27"
  },
+ "kindlingai/glm-5.3-exlr8-k2-k3-k4": {
+  "decision": "skip",
+  "radar_date": "2026-11-28",
+  "reason": "too big for any listed hardware class (~252.0 GB at 4-bit)",
+  "seen": "2026-11-28"
+ },
  "krafton/raon-1-mini": {
   "decision": "add",
   "radar_date": "2026-11-26",
@@ -286,6 +298,12 @@
   "radar_date": "2026-11-16",
   "reason": "out of scope for an LLM-hosting directory (pipeline image-to-video)",
   "seen": "2026-11-19"
+ },
+ "llama-swap/lfm3-1.7b-helpagent": {
+  "decision": "skip",
+  "radar_date": "2026-11-28",
+  "reason": "sub-2B edge model (1.73B), outside the directory's stated scope",
+  "seen": "2026-11-28"
  },
  "llamaindex/ocria-1": {
   "decision": "add",
@@ -328,6 +346,18 @@
   "radar_date": "2026-11-23",
   "reason": "already in the directory",
   "seen": "2026-11-23"
+ },
+ "migtissera/tess-4.5-26b-a3b": {
+  "decision": "add",
+  "radar_date": "2026-11-28",
+  "reason": "derived",
+  "seen": "2026-11-28"
+ },
+ "migtissera/tess-4.5-26b-a3b-gguf": {
+  "decision": "review",
+  "radar_date": "2026-11-28",
+  "reason": "file sizes look partial (0.75 GB for a 26.39B model)",
+  "seen": "2026-11-28"
  },
  "minimaxai/minimax-h3-image": {
   "decision": "skip",
@@ -526,6 +556,12 @@
   "radar_date": "2026-11-24",
   "reason": "derived",
   "seen": "2026-11-26"
+ },
+ "tencent/hy-mt3-30b-a3b-gguf": {
+  "decision": "skip",
+  "radar_date": "2026-11-28",
+  "reason": "out of scope for an LLM-hosting directory (pipeline translation)",
+  "seen": "2026-11-28"
  },
  "tencent/hy4": {
   "decision": "skip",

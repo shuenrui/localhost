@@ -40,6 +40,7 @@
  },
  {
   "added": "2026-11-26",
+  "build": "12035",
   "command": "llama-server --temp 1.0 --top-p 0.99 --top-k 128 -hf Aleph-Alpha/Kolibri-1.1-GGUF:Q4_K_M",
   "dispatched": "2026-11-26",
   "qid": "kolibri-1-1-q4-k-m-llama-cpp-aleph-alpha-spark",
@@ -47,10 +48,12 @@
   "repo": "Aleph-Alpha/Kolibri-1.1-GGUF",
   "setup": "kolibri-1-1-q4-k-m-llama-cpp-aleph-alpha",
   "size_gb": 45.51,
-  "status": "dispatched"
+  "status": "failed",
+  "tested": "2026-11-27"
  },
  {
   "added": "2026-11-26",
+  "build": "12035",
   "command": "./llama.cpp/llama-server -hf unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q4_K_XL -ngl 99 -c 8192 -fa on -np 1 --spec-type draft-mtp --spec-draft-n-max 2",
   "dispatched": "2026-11-26",
   "qid": "qwen-qwen3-6-35b-a3b-ud-q4-k-xl-llama-cpp-unsloth-spark",
@@ -58,6 +61,7 @@
   "repo": "unsloth/Qwen3.6-35B-A3B-MTP-GGUF",
   "setup": "qwen-qwen3-6-35b-a3b-ud-q4-k-xl-llama-cpp-unsloth",
   "size_gb": 22.85,
-  "status": "dispatched"
+  "status": "failed",
+  "tested": "2026-11-27"
  }
 ]
